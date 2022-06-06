@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zhcn">
+<head>
+    <meta charset="utf-8"/>
+	<!-- 设置页面必须禁止缓存,否则某些设置可能有变化后无更新 -->
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    <title>Start-Set</title>
+    <!-- 页面通用CSS -->
+    <link rel="stylesheet" href="CSS/public-webrender.css">
+    <script src="JS/jquery-1.12.4.min.js"></script>
+    <!-- 页面通用方法，应当在Jquery之后加载 -->
+    <script src="JS/public-function.js"></script>
+    <style>
+        /* 通用顶部提示栏样式 */
+        .loadBarTop {
+            background-color: black;
+            opacity: 0.6;
+            left: 50vw;
+            top: 0;
+            width: 100vw;
+            height: 6vh;
+            text-align: center;
+            position: absolute;
+            transform: translate(-50%, 0%);
+            -webkit-transform: translate(-50%, 0%);
+            -moz-transform: translate(-50%, 0%);
+        }
+		
+        .loadBarTop p {
+            font-size: 14px;
+            position: absolute;
+            color: white;
+            top: 3vh;
+            left: 50vw;
+            width: 100vw;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+        }
+		
+        /* 页面背景图样式 */
+        .backgroundImg {
+            width: 102%;
+            height: 102vh;
+            background: url(IMG/background.jpg) center no-repeat;
+            background-size: 100% 100%;
+            position: absolute;
+            left: -1%;
+            top: -1%;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+        }
+		
+        /* 右边轮播图标志 */
+        #imgIndexBox {
+            right: 2vh;
+            top: 50vh;
+            width: 2vw;
+            text-align: center;
+            position: absolute;
+            transform: translate(0, -50%);
+            -webkit-transform: translate(0, -50%);
+            -moz-transform: translate(0, -50%);
+            overflow: hidden;
+        }
+        #imgIndexBox span {
+            display: list-item;
+            background-color: #ffffff;
+            margin: 12px 0;
+            border-radius: 50%;
+            opacity: 0.8;
+            width: 14px;
+            height: 14px;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+        }
+        #imgIndexBox span.active {
+            background-color: #00d300;
+        }
+
+        .centerBox {
+            top: 52vh;
+            left: 50vw;
+            width: 400px;
+            height: 360px;
+            position: absolute;
+            background-color: white;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -webkit-box-shadow: 0 0 20px 1px #646464bd;
+            -moz-box-shadow: 0 0 20px 1px #646464bd;
+            box-shadow: 0 0 20px 1px #646464bd;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+			border: 1px solid #008000;
+        }
+        .centerBox .centerDiv {
+            margin: 9% 9%;
+            width: 82%;
+            height: 90%;
+        }
+        .centerBox .centerDiv .centerLine {
+            height: 16%;
+        }
+        .centerLine input {
+
+        }
+        .centerLine input[type="text"], .centerLine input[type="number"] {
+            width: 100%;
+            height: 70%;
+            border-color: rgba(170, 170, 170, .8);
+            border-top-width: 0;
+            border-left-width: 0;
+            border-right-width: 0;
+            border-bottom-width: 1px;
+            padding-left: 0;
+            outline-width: 0;
+            font-size: 16px;
+        }
+        .centerLine input[type="text"]:focus, .centerLine input[type="number"]:focus {
+            border-color: #008000;
+        }
+        .centerLine input[type="button"] {
+            width: 100%;
+            height: 70%;
+            color: white;
+            background-color: #008000;
+            border-width: 0;
+            cursor: pointer;
+            outline-width: 0;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+        }
+
+        .centerLine input[type="button"]:hover {
+            border-width: 0;
+            /*background-color: #42b157;*/
+			background-color: #008000;
+            -webkit-transition: all 0.2s linear;
+            -moz-transition: all 0.2s linear;
+            -o-transition: all 0.2s linear;
+            transition: all 0.2s linear;
+			border: 2px solid #f9a14b;
+        }
+
+        .centerLine p {
+            color: #1b1b1b;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div class="backgroundImg"></div>
+<div class="loadBarTop">
+    <p>页面动态标题</p>
+</div>
+<div class="centerBox">
+    <div class="centerDiv">
+        <div class="centerLine">
+            <p>控制台地址</p>
+        </div>
+        <div class="centerLine" style="margin-top: -14px;">
+            <input id="控制台地址" type="text" placeholder="例如 Connect.starmc.cn 或 8.8.8.8">
+        </div>
+        <div class="centerLine">
+            <p>控制台端口</p>
+        </div>
+        <div class="centerLine" style="margin-top: -14px;">
+            <input id="控制台端口" type="number" minlength="1" maxlength="5" class="input" placeholder="专用于控制台服务端口 (非开服端口)">
+        </div>
+        <div class="centerLine" style="margin-top: 20px">
+            <input type="button" onclick="Program_Save()" value="保存设置">
+        </div>
+        <div class="centerLine">
+			<input type="button" onclick="Program_Clear()" value="清理客户端垃圾文件">
+        </div>
+    </div>
+</div>
+<div id="imgIndexBox">
+    <span></span>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    /*启动器功能-保存控制台连接信息*/
+    function Program_Save() {
+        var 控制台地址 = $('#控制台地址').val();
+        var 控制台端口 = $('#控制台端口').val();
+        
+        if (控制台地址 == '') {
+            /*参数不完整则不做处理*/
+			Prevent_OpenTipsFloatingWindow('温馨提示','还未填写完整，地址没写怎么连接！')
+        } else if (控制台端口 == '') {
+            /*内容不完整则不做处理*/
+			Prevent_OpenTipsFloatingWindow('温馨提示','还未填写完整，端口没写怎么连接！')
+        } else {
+			/*Prevent_OpenWaitFloatingWindow_Load('请耐心等待，正在处理中')*/
+			StarLauncher_CommandFunction('Start_SetSconnent', 控制台地址, 控制台端口);
+        }
+        return false;
+    }
+
+    /*启动器功能-清理客户端垃圾文件功能*/
+    function Program_Clear() {
+		/*Prevent_OpenWaitFloatingWindow_Load('请耐心等待，正在处理中');*/
+        StarLauncher_CommandFunction('Start_SetClientGarbage');
+		return false;
+    }
+
+    /*页面内部事件-修改页面标题*/
+    function setTitleBarHeight(height) {
+        $('.loadBarTop').stop(true, true).animate({height: height + 'vh'}, 500);
+        $('.loadBarTop p').stop(true, true).animate({top: (height / 2) + 'vh'}, 500);
+        return true;
+    }
+
+    /*页面内部事件-修改标题字号*/
+    function setTitleFontSize(size) {
+        $('.loadBarTop p').stop(true, true).animate({'font-size': size + 'px'}, 500);
+        return true;
+    }
+
+    /*页面内部事件-修改标题栏背景颜色*/
+    function setTitleBarColor(color) {
+        $('.loadBarTop').stop(true, true).animate({'background-color': color}, 500);
+        return true;
+    }
+
+    /*页面内部事件-修改标题内容*/
+    function setTitle(title) {
+        $('.loadBarTop p').html(title);
+        return true;
+    }
+
+    /*页面内部事件-加载页面背景轮播图和动态标题*/
+    function Launcher_JSONS(Start_WEB) {
+        if (Start_WEB) {
+            if (Start_WEB.hasOwnProperty('Set') &&
+                Start_WEB.Set.hasOwnProperty('background') &&
+                Start_WEB.Set.hasOwnProperty('title')
+            ) {
+                var backgroundPaths = Start_WEB.Set.background;
+                var backgroundTitles = Start_WEB.Set.title;
+                var titleIndex = 0;
+                setTitle(backgroundTitles[titleIndex]);
+                titleIndex = (titleIndex + 1) % backgroundTitles.length;
+                setInterval(function () {
+                    setTitle(backgroundTitles[titleIndex]);
+                    titleIndex = (titleIndex + 1) % backgroundTitles.length;
+                }, 1000 * +Start_WEB.Set.title_switchtime);
+                $('#imgIndexBox').empty();
+                for (var n = 0; n < backgroundPaths.length; n++) {
+                    $('#imgIndexBox').append('<span></span>');
+                }
+                $('#imgIndexBox span:nth-child(1)').addClass('active');
+                var imageIndex = 0;
+                $('.backgroundImg').css('background-image', 'url(' + backgroundPaths[imageIndex] + ')');
+                $('#imgIndexBox span:nth-child(' + (imageIndex + 1) + ')').addClass('active').siblings().removeClass('active');
+                imageIndex = (imageIndex + 1) % backgroundPaths.length;
+                setInterval(function () {
+                    $('.backgroundImg').css('background-image', 'url(' + backgroundPaths[imageIndex] + ')');
+                    $('#imgIndexBox span:nth-child(' + (imageIndex + 1) + ')').addClass('active').siblings().removeClass('active');
+                    imageIndex = (imageIndex + 1) % backgroundPaths.length;
+                }, 1000 * +Start_WEB.Set.background_switchtime);
+            } else {
+                /*读取失败则使用默认值*/
+            }
+        } else {
+            /*读取失败则使用默认值*/
+        }
+    }
+
+</script>
+
+<!-- 导入根目录Json文件.添加时间变量在尾部避免文件缓存 -->
+<script type="text/javascript">
+	// 解决数据文件可能存在缓存文件,资源连接直接添加时间戳
+	var 局_时间戳 = new Date().getTime();
+	document.write('<script type="text/javascript" src="MineLauncher_Set.json?timestamp=' + 局_时间戳 + '"><\/script>');
+</script>
+
+</html>

@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- 设置页面必须禁止缓存,否则某些设置可能有变化后无更新 -->
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    <title>role</title>
+    <!-- 页面通用CSS -->
+    <script src="JS/jquery-1.7.2.min.js"></script>
+    <!-- 页面通用方法,应当在Jquery之后加载 -->
+    <link rel="stylesheet" href="CSS/public-webrender.css">
+	<script src="JS/public-function.js"></script>
+    <style>
+        /* 通用顶部提示栏样式 */
+        .loadBarTop {
+            background-color: black;
+            opacity: 0.6;
+            left: 50vw;
+            top: 0;
+            width: 100vw;
+            height: 6vh;
+            text-align: center;
+            position: absolute;
+            transform: translate(-50%, 0%);
+            -webkit-transform: translate(-50%, 0%);
+            -moz-transform: translate(-50%, 0%);
+        }
+
+        .loadBarTop p {
+            font-size: 14px;
+            position: absolute;
+            color: white;
+            top: 3vh;
+            left: 50vw;
+            width: 100vw;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+        }
+
+        /* 页面背景图样式 */
+        .backgroundImg {
+            width: 102%;
+            height: 102vh;
+            background: url(IMG/background.jpg) center no-repeat;
+            background-size: 100% 100%;
+            position: absolute;
+            left: -1%;
+            top: -1%;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+        }
+
+        /* 右边轮播图标志 */
+        #imgIndexBox {
+            right: 2vh;
+            top: 50vh;
+            width: 2vw;
+            text-align: center;
+            position: absolute;
+            transform: translate(0, -50%);
+            -webkit-transform: translate(0, -50%);
+            -moz-transform: translate(0, -50%);
+            overflow: hidden;
+        }
+
+        #imgIndexBox span {
+            display: list-item;
+            background-color: #ffffff;
+            margin: 12px 0;
+            border-radius: 50%;
+            opacity: 0.8;
+            width: 14px;
+            height: 14px;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+        }
+
+        #imgIndexBox span.active {
+            background-color: #00d300;
+        }
+    </style>
+    <style>
+        .rolemain {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background-color: rgb(47, 47, 47);
+        }
+
+        input[type=text]:focus {
+            outline: none;
+        }
+    </style>
+    <!-- 标题样式 -->
+    <style>
+        .header {
+            height: 10%;
+            background-color: rgb(59, 59, 59);
+            padding-left: 15px;
+            padding-right: 10px;
+            /*border-bottom: 3px solid rgba(37, 37, 37, 0.75);*/
+        }
+
+        .header .title {
+            width: 60%;
+            color: rgb(146, 146, 146);
+            /* line-height: 45px; */
+            font-size: 14px;
+            float: left;
+            height: 100%;
+            line-height: 58px;
+            margin-left: 4px;
+        }
+
+        .Setsetup {
+            float: right;
+            width: 30%;
+            height: 100%;
+        }
+
+        #return {
+            float: right;
+            position: relative;
+            top: 20%;
+            height: 60%;
+            width: 45%;
+            background-color: rgb(59, 59, 59);
+            color: white;
+            border: 1px solid rgb(106, 106, 106);
+        }
+
+        #return span {
+            float: right;
+            width: 44%;
+            line-height: 30px;
+            padding-right: 20px;
+        }
+
+        #return img {
+            float: left;
+            height: 76%;
+            width: 24%;
+            position: relative;
+            left: 10px;
+            top: 3.2px;
+        }
+    </style>
+    <!-- 栏目标题样式  content-->
+    <style>
+        .content {
+            width: 100%;
+            height: 90%;
+            background-color: rgb(47, 47, 47);
+            /* background-color: red; */
+            /* overflow: auto; */
+            display: flex;
+        }
+
+        .columnTitle {
+            /* 总宽 27% */
+            width: 22%;
+            height: 96%;
+            /* padding: 25px 20px; */
+            background-color: rgb(37, 37, 37);
+            padding: 2.8% 2.8%;
+
+        }
+
+        .columnCon {
+            width: 69%;
+            height: 96%;
+            background-color: rgb(47, 47, 47);
+            padding: 2%;
+        }
+
+        .columnTitle button {
+            width: 100%;
+            height: 38px;
+            /* background-color: rgb(16, 124, 16); */
+            background-color: rgb(59, 59, 59);
+            border: 0px;
+            margin-bottom: 12px;
+            color: rgb(201, 201, 201);
+            font-size: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .img1 {
+            position: absolute;
+            top: 6px;
+            height: 50px;
+            right: -10px;
+        }
+    </style>
+    <!-- 内容样式 -->
+    <style>
+        .Tips {
+            height: 25px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            border: 1px solid rgb(127, 127, 127);
+        }
+
+        .Tips img {
+            height: 70%;
+            margin-right: 10px;
+        }
+
+        .Tips span {
+            display: inline-block;
+            margin-top: -2px;
+            height: 100%;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            color: #fa7a00;
+        }
+
+        .conTitle {
+            font-size: 12px;
+            color: rgb(201, 201, 201);
+            margin-bottom: 15px;
+        }
+
+        .input input {
+            width: 241.4px;
+            height: 26px;
+            background-color: rgb(29, 29, 29);
+            border: 1px solid rgb(85, 85, 85);
+            color: white;
+            padding-left: 8px;
+			padding-right: 8px;
+            margin-bottom: 4px;
+            font-size: 12px;
+        }
+
+        .input {
+            display: flex;
+            align-items: center;
+        }
+
+        .input button {
+            cursor: pointer;
+            margin-left: 16px;
+            margin-top: -5px;
+            height: 26px;
+            width: 15%;
+            font-size: 12px;
+            border: 0;
+            background-color: rgb(250, 122, 0);
+            border: 1px solid #ffffff;
+            color: white;
+        }
+
+        .platform,
+        .emailform {
+            padding-bottom: 15px;
+            margin-top: 15px;
+        }
+
+        .platform,
+        .emailform {
+            border-bottom: 1px solid rgb(121, 121, 121);
+        }
+
+        .显示状态_显示 {
+            display: show;
+        }
+
+        .显示状态_隐藏 {
+            display: none;
+        }
+
+        .psbtn {
+            margin-top: 30px;
+            height: 36px;
+            width: 42%;
+            background-color: rgb(16, 124, 16);
+            border: 0.5px solid rgb(175, 175, 175);
+            /* color: rgb(236, 236, 236); */
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .duihao {
+            margin-left: 16px;
+            margin-top: -5px;
+            width: 16px;
+            height: 16px;
+            /*background-color: rgb(16, 124, 16);*/
+            line-height: 16px;
+        }
+
+        .duihao img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <style>
+        .loginContent::-webkit-scrollbar {
+            width: 10px;
+            height: 100%;
+            background-color: rgba(158, 157, 157, 0);
+        }
+
+        .loginContent::-webkit-scrollbar-thumb {
+            background-color: rgb(250, 120, 0);
+        }
+
+        .loginContent {
+            height: 410px;
+            /* background: red; */
+            overflow-y: auto;
+            display: flex;
+            margin-top: 20px;
+            border-top: 1px solid rgb(102, 102, 102);
+        }
+
+        .loginContent::-webkit-scrollbar {
+            width: 10px;
+            height: 100%;
+            background-color: rgba(158, 157, 157, 0);
+        }
+
+        .loginContent::-webkit-scrollbar-thumb {
+            background-color: rgb(250, 120, 0);
+        }
+
+        .loginContent .time {
+            width: 30%;
+        }
+
+        .loginContent .identification {
+            width: 32%;
+        }
+
+        .loginContent .address {
+            width: 38%;
+        }
+
+        .loginContent .timetitle {
+            font-size: 10px;
+            color: rgb(255, 255, 255);
+            padding-left: 10px;
+            height: 30px;
+            background-color: rgb(59, 59, 59);
+            line-height: 30px;
+        }
+
+        .timeContent,
+        .addressContent,
+        .identificationCon {
+            padding-top: 5px;
+        }
+
+        .loginContent p {
+            font-size: 12px;
+            height: 20px;
+            line-height: 25px;
+            padding-left: 10px;
+            color: rgb(198, 198, 198);
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .con1 {
+            padding-right: 10px;
+        }
+
+        .con1 p {
+            float: left;
+            width: 50%;
+        }
+
+        .con1 button {
+            margin-top: 4px;
+            float: right;
+            height: 18px;
+            width: 60px;
+            font-size: 10px;
+            background-color: rgb(59, 59, 59);
+            border: 0;
+            color: rgb(198, 198, 198);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="rolemain">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="title">溟灵 - 角色资料</div>
+            <div class="Setsetup">
+                <button id="return" onclick="内部_返回首页('return_main')" style="cursor: pointer;">
+                    <img src="./CSS/user_info_icon/箭头_上一页.svg" alt=""><span>返回</span></button>
+            </div>
+        </div>
+        <div class="content">
+            <!-- 侧边栏 -->
+            <div class="columnTitle">
+                <button style="background-color: rgb(16, 124, 16);" id="绑定平台信息_显示夹" onclick="内部_侧边栏切换显示(id)" value="1">
+                    <img src="./CSS/user_info_icon/图标_平台绑定.svg" alt="" class="img1">
+                    多平台绑定
+                </button>
+                <button id="登录密码_显示夹" onclick="内部_侧边栏切换显示(id)" value="0">
+                    <img src="./CSS/user_info_icon/图标_密码.svg" alt="" class="img1">
+                    登录密码
+                </button>
+                <button id="安全密保_显示夹" onclick="内部_侧边栏切换显示(id)" value="0">
+                    <img src="./CSS/user_info_icon/图标_密保.svg " alt="" class="img1">
+                    安全密保
+                </button>
+                <button id="历史登录信息_显示夹" onclick="内部_侧边栏切换显示(id);内部_分割线UI处理()" value="0">
+                    <img src="./CSS/user_info_icon/图标_历史登录信息.svg" alt="" class="img1">
+                    历史登录信息
+                </button>
+            </div>
+            <!-- 平台绑定 -->
+            <div class="columnCon " id="columnCon1">
+                <div class="Tips"><img src="./CSS/user_info_icon/图标_感叹号.svg" alt=""><span>绑定其他信息后,
+                        可以通过绑定后的信息进行快速登录等角色操作</span></div>
+                <!-- QQ账号 -->
+                <div class="platform">
+                    <div class="conTitle">QQ号码</div>
+                    <div class="input">
+                        <!--  -->
+                        <input type="text" name="输入框_QQ号码框" id="输入框_QQ号码框" readonly='readonly'>
+                        <button id="按钮_绑定QQ按钮" class="显示状态_隐藏" onclick="内部_打开扣扣验证窗口()">立刻绑定</button>
+                        <div class="duihao 显示状态_隐藏" id="显示_绑定QQ成功_勾_图标"><img src="./CSS/user_info_icon/图标_对勾.svg" alt=""></div>
+                    </div>
+                </div>
+                <!-- 邮箱账号 -->
+                <div class="emailform">
+                    <div class="conTitle">邮箱账号</div>
+                    <div class="input">
+                        <input type="text" name="输入框_邮箱号码" id="输入框_邮箱号码">
+                        <button onclick="内部_发送邮箱验证码功能()" id="按钮_绑定邮箱_发送验证码"
+                            style="background-color: rgb(59, 59, 59);border:1px solid rgb(121, 121, 121)">发送验证码</button>
+                        <div class="duihao 显示状态_隐藏" id="显示_绑定邮箱成功_勾_图标"><img src="./CSS/user_info_icon/图标_对勾.svg" alt=""></div>
+                    </div>
+                    <div class="conTitle 显示状态_隐藏" style="margin-top: 15px;" id="标签_邮箱验证码">邮箱验证码</div>
+                    <div class="input 显示状态_隐藏" id="显示组_邮箱验证码">
+                        <input type="text" name="输入框_邮箱_验证码" id="输入框_邮箱_验证码">
+                        <button id="绑定2_2" onclick="内部_邮箱验证填写完成_开始绑定()">立刻绑定</button>
+                    </div>
+                </div>
+                <!-- 微软正版绑定 -->
+                <div class="mcform" style="padding-bottom: 20px;margin-top: 20px;">
+                    <div class="conTitle">正版游戏账户(微软)</div>
+                    <div class="input">
+                        <input type="text" readonly='readonly' name="输入框_微软正版框" id="输入框_微软正版框">
+                        <button id="按钮_绑定微软正版按钮" onclick="内部_打开微软验证窗口()">立刻绑定</button>
+                        <div class="duihao 显示状态_隐藏" id="显示_绑定微软正版成功_勾_图标"><img src="./CSS/user_info_icon/图标_对勾.svg" alt=""></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 修改密码 -->
+            <div class="columnCon 显示状态_隐藏" id="columnCon2">
+                <div class="Tips"><img src="./CSS/user_info_icon/图标_感叹号.svg" alt=""><span>建议定期修改密码, 密码建议符合安全性强度,
+                        否则可能存在安全隐患</span></div>
+                <!-- 原密码 -->
+                <div class="platform">
+                    <div class="conTitle">原登录密码</div>
+                    <div class="input">
+                        <input type="text" id="输入框_原密码" name="输入框_原密码">
+                    </div>
+                </div>
+                <!-- 新密码 -->
+                <div class="emailform" style="border-bottom:0px solid rgb(121, 121, 121);">
+                    <div class="conTitle">新登录密码</div>
+                    <div class="input">
+                        <input type="text" id="输入框_新密码" name="输入框_新密码">
+                    </div>
+                </div>
+                <!-- 确定新密码 -->
+                <div class="mcform">
+                    <div class="conTitle">确定一次新密码</div>
+                    <div class="input">
+                        <input type="text" id="输入框_确定新密码" name="输入框_确定新密码">
+                    </div>
+                </div>
+                <button class="psbtn" onclick="内部_修改登录密码事件()">修改登录密码</button>
+            </div>
+            <!-- 修改密保 -->
+            <div class="columnCon 显示状态_隐藏" id="columnCon3">
+                <div class="Tips"><img src="./CSS/user_info_icon/图标_感叹号.svg" alt=""><span>密保相当于账户口令, 方便忘记密码时候验证使用,
+                        也建议定期修改并牢记</span></div>
+                <!-- 原密保 -->
+                <div class="platform">
+                    <div class="conTitle">原安全密保</div>
+                    <div class="input">
+                        <input type="text" name="输入框_原密保" id="输入框_原密保">
+                    </div>
+                </div>
+                <!-- 新密码 -->
+                <div class="emailform" style="border-bottom:0px solid rgb(121, 121, 121);">
+                    <div class="conTitle">新安全密保</div>
+                    <div class="input">
+                        <input type="text" name="输入框_新密保" id="输入框_新密保">
+                    </div>
+                </div>
+                <!-- 确定新密码 -->
+                <div class="mcform">
+                    <div class="conTitle">确定一次新密保</div>
+                    <div class="input">
+                        <input type="text" name="输入框_确定新密保" id="输入框_确定新密保">
+                    </div>
+                </div>
+                <button class="psbtn" onclick="内部_修改安全密保事件()">修改安全密保</button>
+            </div>
+            <!-- 登录信息 -->
+            <div class="columnCon 显示状态_隐藏" id="columnCon4">
+                <div class="Tips"><img src="./CSS/user_info_icon/图标_感叹号.svg" alt=""><span>如果发现存在异地登录, 建议先直接修改信息,
+                        然后联系服主处理, 并检查游戏内有无数据损失</span>
+                </div>
+                <div class="loginContent">
+                    <div class="time">
+                        <div class="timetitle" id="timetitle">
+                            时间点
+                        </div>
+                        <div class="timeContent" id="getTime">
+                        </div>
+                    </div>
+                    <!-- 标识 -->
+                    <div class="identification">
+                        <div class="timetitle" id="timetitle">
+                            操作标识
+                        </div>
+                        <div class="identificationCon" id="getidentification">
+                        </div>
+                    </div>
+                    <div class="address">
+                        <div class="timetitle">
+                            登陆地址
+                        </div>
+                        <div class="addressContent" id="getaddress">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 调试时生成显示数据 
+        <script>
+            $(document).ready(function () {
+                // time address 赋值 测试使用 
+                time1 = ['2022年5月10日17:39:00', '2022年5月10日18:39:00', '2022年5月10日19:39:00', '2022年5月10日18:39:00', '2022年5月10日19:39:00', '2022年5月10日18:39:00', '2022年5月10日19:39:00', '2022年5月10日18:39:00', '2022年5月10日19:39:00', '2022年5月10日18:39:00', '2022年5月10日19:39:00', '2022年5月10日19:39:00', '2022年5月10日18:39:00', '2022年5月10日19:39:00', '2022年5月10日19:39:00', '2022年5月10日18:39:00', '2022年5月10日19:39:00']
+                address1 = ['128.0.0.1', '128.0.0.1', '129.0.0.1', '128.0.0.1', '129.0.0.1', '128.0.0.1', '129.0.0.1', '128.0.0.1', '129.0.0.1', '128.0.0.1', '129.0.0.1', '129.0.0.1', '128.0.0.1', '129.0.0.1', '129.0.0.1', '128.0.0.1', '129.0.0.1']
+                identificationCon1 = ['软件端正常登录', '软件端正常登录', '软件端正常登录', '软件端正常登录', '软件端正常登录', '软件端正常登录', '软件端正常登录', '软件端正常登录', '软件端正常登录', '软件端正常登录', '软件端正常登录', '软件端正常登录', '软件端正常登录', '软件端正常登录', '软件端正常登录', '软件端正常登录', '软件端正常登录']
+                let i = 0
+                let getTime = ''
+                let getaddress = ''
+                let getidentification = ''
+                while (i < time1.length) {
+                    if (time1.length == address1.length && identificationCon1.length == address1.length) {
+                        getTime = '<p>' + time1[i] + '</p>'
+                        document.getElementById('getTime').innerHTML += getTime
+                        id = "id=显示_历史登录表项_" + (i + 1)
+                        getaddress = '<div class="con1"><p ' + id + ' >' + address1[i] + '</p><button onclick="内部_按钮_获取地址归属地(' + (i + 1) + ')" >查询属地</button></div>'
+                        document.getElementById('getaddress').innerHTML += getaddress
+                        getidentification = '<p>' + identificationCon1[i] + '</p>'
+                        document.getElementById('getidentification').innerHTML += getidentification
+                        i++;
+                    } else {
+                        break;
+                    }
+                }
+            });
+        </script> -->
+
+        <!-- 页面功能集 -->
+        <script type="text/javascript">
+
+            var Start_WEB_L = {};
+
+            function Launcher_JSONS(Start_WEB) {
+                Start_WEB_L = Start_WEB;
+            }
+			
+            function 内部_返回首页(功能标识) {
+                StarLauncher_CommandFunction('User_info_function', 'return_main')
+                // 按钮显示点击特效
+                targetid = document.getElementById('return')
+                targetid.style.border = '1px solid #ffffff'
+                setTimeout(() => {
+                    targetid.style.border = '1px solid rgb(106, 106, 106)'
+                }, 200)
+            }
+
+            function 内部_打开扣扣验证窗口() {
+                /*Prevent_OpenWaitFloatingWindow_Load('正在等待您在新窗口中完成绑定验证')*/
+                StarLauncher_CommandFunction('User_info_function', 'opne_qqbind_verification');
+                return false;
+            }
+
+            function 内部_打开微软验证窗口() {
+                /*Prevent_OpenWaitFloatingWindow_Load('正在等待您在新窗口中完成绑定验证')*/
+                StarLauncher_CommandFunction('User_info_function', 'opne_wminebind_verification');
+                return false;
+            }
+
+            function 内部_发送邮箱验证码功能() {
+                if ($("#输入框_邮箱号码").val() == '') {
+                    Prevent_OpenTipsFloatingWindow('温馨提示', '还未填写完整，收件邮箱都没写怎么验证！')
+                } else {
+                    // 显示验证码输入框部分
+                    $('#标签_邮箱验证码').removeClass('显示状态_隐藏');
+                    $('#标签_邮箱验证码').addClass('显示状态_显示');
+                    $('#显示组_邮箱验证码').removeClass('显示状态_隐藏');
+                    $('#显示组_邮箱验证码').addClass('显示状态_显示');
+                    // 发送给启动器进行处理
+                    StarLauncher_CommandFunction('User_info_function', 'mail_send_vercode', $("#输入框_邮箱号码").val())
+                }
+            }
+
+            function 内部_邮箱验证填写完成_开始绑定() {
+                let 接收验证码的邮箱 = $("#输入框_邮箱号码").val()
+                if (接收验证码的邮箱 == "" || 接收验证码的邮箱 == null || 接收验证码的邮箱 == undefined) {
+                    Prevent_OpenTipsFloatingWindow('温馨提示', '还未填写完整，收件邮箱都没写怎么验证！')
+                    return false
+                }
+                let 邮箱验证码 = $("#输入框_邮箱_验证码").val()
+                if (邮箱验证码 == "" || 邮箱验证码 == null || 邮箱验证码 == undefined) {
+                    Prevent_OpenTipsFloatingWindow('温馨提示', '还未填写完整，邮箱验证码不能为空！')
+                    return false
+                }
+                // 开始验证邮箱登录
+                Prevent_OpenWaitFloatingWindow_Load('正在验证邮箱中,请耐心等待');
+                // 发送给启动器进行处理 (页面标识，功能分类，邮箱号码，验证码)
+                StarLauncher_CommandFunction('User_info_function', 'mail_bind_info', $("#输入框_邮箱号码").val(), $("#输入框_邮箱_验证码").val())
+            }
+
+            function 内部_侧边栏切换显示(id) {
+                if (id == '绑定平台信息_显示夹') {
+                    $('#绑定平台信息_显示夹').css('background', 'rgb(16, 124, 16)')
+                    $('#登录密码_显示夹').css('background', 'rgb(59, 59, 59)')
+                    $('#安全密保_显示夹').css('background', 'rgb(59, 59, 59)')
+                    $('#历史登录信息_显示夹').css('background', 'rgb(59, 59, 59)')
+                    $('#columnCon1').removeClass('显示状态_隐藏')
+                    $('#columnCon1').addClass('显示状态_显示')
+                    $('#columnCon2').addClass('显示状态_隐藏');
+                    $('#columnCon3').addClass('显示状态_隐藏');
+                    $('#columnCon4').addClass('显示状态_隐藏');
+                } else if (id == '登录密码_显示夹') {
+                    $('#登录密码_显示夹').css('background', 'rgb(16, 124, 16)')
+                    $('#绑定平台信息_显示夹').css('background', 'rgb(59, 59, 59)')
+                    $('#安全密保_显示夹').css('background', 'rgb(59, 59, 59)')
+                    $('#历史登录信息_显示夹').css('background', 'rgb(59, 59, 59)')
+                    $('#columnCon2').removeClass('显示状态_隐藏')
+                    $('#columnCon2').addClass('显示状态_显示')
+                    $('#columnCon1').addClass('显示状态_隐藏');
+                    $('#columnCon3').addClass('显示状态_隐藏');
+                    $('#columnCon4').addClass('显示状态_隐藏');
+                } else if (id == '安全密保_显示夹') {
+                    $('#安全密保_显示夹').css('background', 'rgb(16, 124, 16)')
+                    $('#绑定平台信息_显示夹').css('background', 'rgb(59, 59, 59)')
+                    $('#登录密码_显示夹').css('background', 'rgb(59, 59, 59)')
+                    $('#历史登录信息_显示夹').css('background', 'rgb(59, 59, 59)')
+                    $('#columnCon3').removeClass('显示状态_隐藏')
+                    $('#columnCon3').addClass('显示状态_显示')
+                    $('#columnCon2').addClass('显示状态_隐藏');
+                    $('#columnCon1').addClass('显示状态_隐藏');
+                    $('#columnCon4').addClass('显示状态_隐藏');
+                } else if (id == '历史登录信息_显示夹') {
+                    $('#历史登录信息_显示夹').css('background', 'rgb(16, 124, 16)')
+                    $('#绑定平台信息_显示夹').css('background', 'rgb(59, 59, 59)')
+                    $('#登录密码_显示夹').css('background', 'rgb(59, 59, 59)')
+                    $('#安全密保_显示夹').css('background', 'rgb(59, 59, 59)')
+                    $('#columnCon4').removeClass('显示状态_隐藏')
+                    $('#columnCon4').addClass('显示状态_显示')
+                    $('#columnCon2').addClass('显示状态_隐藏');
+                    $('#columnCon3').addClass('显示状态_隐藏');
+                    $('#columnCon1').addClass('显示状态_隐藏');
+                }
+            }
+			
+			function 内部_修改登录密码事件() {
+				// 覆盖一次正则格式后显示的内容
+                var password_rule = Start_WEB_L.Set.password_rule;
+				
+				var v_原密码 = $("#输入框_原密码").val();
+				$('#输入框_原密码').val(v_原密码.match(password_rule));
+				var v_新密码 = $("#输入框_新密码").val();
+				$('#输入框_新密码').val(v_新密码.match(password_rule));
+
+                if ($("#输入框_原密码").val() == '' || $("#输入框_原密码").val() == null || $("#输入框_原密码").val() == undefined) {
+                    Prevent_OpenTipsFloatingWindow('操作失败', '原登录密码不能为空内容')
+                    return false;
+                }
+                if ($('#输入框_新密码').val() == '' || $('#输入框_新密码').val() == null || $('#输入框_新密码').val() == undefined) {
+                    Prevent_OpenTipsFloatingWindow('操作失败', '新登录密码和二次确认密码不能为空内容')
+                    return false;
+                }
+                if ($('#输入框_新密码').val() != $("#输入框_确定新密码").val()) {
+                    Prevent_OpenTipsFloatingWindow('操作失败', '新登录密码两次输入内容不匹配')
+                    return false;
+                }
+                // 发送给启动器进行处理 (页面标识，功能分类，原密码，新密码)
+                StarLauncher_CommandFunction('User_info_function', 'change_password', $("#输入框_原密码").val(), $('#输入框_新密码').val())
+			}
+			
+			function 内部_修改安全密保事件() {
+				// 覆盖一次正则格式后显示的内容
+                var sprotect_rule = Start_WEB_L.Set.sprotect_rule;
+				
+				var v_原密保 = $("#输入框_原密保").val();
+				$('#输入框_原密保').val(v_原密保.match(sprotect_rule));
+				var v_新密保 = $("#输入框_新密保").val();
+				$('#输入框_新密保').val(v_新密保.match(sprotect_rule));
+
+                if ($("#输入框_原密保").val() == '' || $("#输入框_原密保").val() == null || $("#输入框_原密保").val() == undefined) {
+                    Prevent_OpenTipsFloatingWindow('操作失败', '原安全密保不能为空内容')
+                    return false;
+                }
+                if ($('#输入框_新密保').val() == '' || $('#输入框_新密保').val() == null || $('#输入框_新密保').val() == undefined) {
+                    Prevent_OpenTipsFloatingWindow('操作失败', '新安全密保和二次确认密保不能为空内容')
+                    return false;
+                }
+                if ($('#输入框_新密保').val() != $("#输入框_确定新密保").val()) {
+                    Prevent_OpenTipsFloatingWindow('操作失败', '新安全密保两次输入内容不匹配')
+                    return false;
+                }
+                // 发送给启动器进行处理 (页面标识，功能分类，原密保，新密保)
+                StarLauncher_CommandFunction('User_info_function', 'change_safasignal', $("#输入框_原密保").val(), $('#输入框_新密保').val())
+			}
+
+            function 内部_按钮_获取地址归属地(a) {
+                // 获取表项ID
+                id = '#显示_历史登录表项_' + a;
+                访问地址 = 'https://www.ip138.com/iplookup.asp?ip=' + $(id).html() + '&action=2';
+                window.open(访问地址);
+            }
+			
+            function 内部_分割线UI处理() {
+                var i = 1;
+                var fg = setInterval(() => {
+                    if ($('.identificationCon').height() <= 420) {
+                        $('.time').css('borderRight', '1px solid rgb(102, 102, 102)')
+                        $('.identification').css('borderRight', '1px solid rgb(102, 102, 102)')
+
+                    } else {
+                        $('.time').css('borderRight', '0px solid rgb(102, 102, 102)')
+                        $('.identification').css('borderRight', '0px solid rgb(102, 102, 102)')
+                        $('.timeContent').css('borderRight', '1px solid rgb(102, 102, 102)')
+                        $('.identificationCon').css('borderRight', '1px solid rgb(102, 102, 102)')
+                        $('.timetitle').css('borderRight', '1px solid rgb(102, 102, 102)')
+                    }
+                    i++;
+                    if (i >= 5) {
+                        clearInterval(this.fg)
+                    }
+                }, 100)
+            }
+			
+
+        </script>
+        <!-- 启动器交互功能合集 -->
+        <script>
+            /* 启动器交互-设置平台信息绑定信息(全部) */
+            function User_Info_Setbindrecords_ALL(QQ号码, 邮箱账户, 微软正版账户) {
+                // 如果无数据则那个项目未被绑定
+                if (QQ号码 == '' || QQ号码 == null || QQ号码 == undefined) {
+                    $('#按钮_绑定QQ按钮').removeClass('显示状态_隐藏')
+                    $('#按钮_绑定QQ按钮').addClass('显示状态_显示')
+                    $('#显示_绑定QQ成功_勾_图标').addClass('显示状态_隐藏')
+                    $('#输入框_QQ号码框').val('')
+                } else {
+                    $('#按钮_绑定QQ按钮').addClass('显示状态_隐藏')
+                    $('#显示_绑定QQ成功_勾_图标').removeClass('显示状态_隐藏')
+                    $('#显示_绑定QQ成功_勾_图标').addClass('显示状态_显示')
+                    $('#输入框_QQ号码框').val(QQ号码)
+                }
+                if (邮箱账户 == '' || 邮箱账户 == null || 邮箱账户 == undefined) {
+                    $('#按钮_绑定邮箱_发送验证码').removeClass('显示状态_隐藏')
+                    $('#按钮_绑定邮箱_发送验证码').addClass('显示状态_显示')
+                    $('#显示_绑定邮箱成功_勾_图标').addClass('显示状态_隐藏')
+                    $('#输入框_邮箱号码').val('')
+                } else {
+                    $('#按钮_绑定邮箱_发送验证码').addClass('显示状态_隐藏')
+                    $('#显示_绑定邮箱成功_勾_图标').removeClass('显示状态_隐藏')
+                    $('#显示_绑定邮箱成功_勾_图标').addClass('显示状态_显示')
+					
+                    $('#标签_邮箱验证码').addClass('显示状态_隐藏')
+                    $('#显示组_邮箱验证码').addClass('显示状态_隐藏')
+					
+                    输入框_邮箱号码.readOnly = 'readonly'
+                    $('#输入框_邮箱号码').val(邮箱账户)
+                }
+                if (微软正版账户 == '' || 微软正版账户 == null || 微软正版账户 == undefined) {
+                    $('#按钮_绑定微软正版按钮').removeClass('显示状态_隐藏')
+                    $('#按钮_绑定微软正版按钮').addClass('显示状态_显示')
+                    $('#显示_绑定微软正版成功_勾_图标').addClass('显示状态_隐藏')
+                    $('#输入框_微软正版框').val('')
+                } else {
+                    $('#按钮_绑定微软正版按钮').addClass('显示状态_隐藏')
+                    $('#显示_绑定微软正版成功_勾_图标').removeClass('显示状态_隐藏')
+                    $('#显示_绑定微软正版成功_勾_图标').addClass('显示状态_显示')
+                    $('#输入框_微软正版框').val(微软正版账户)
+                }
+                return false;
+            }
+
+            /* 启动器交互-设置平台信息绑定信息(QQ) */
+            function User_Info_Setbindrecords_QQ(QQ号码) {
+                // 如果无数据则那个项目未被绑定
+                if (QQ号码 == '' || QQ号码 == null || QQ号码 == undefined) {
+                    $('#按钮_绑定QQ按钮').removeClass('显示状态_隐藏')
+                    $('#按钮_绑定QQ按钮').addClass('显示状态_显示')
+                    $('#显示_绑定QQ成功_勾_图标').addClass('显示状态_隐藏')
+                    $('#输入框_QQ号码框').val('')
+                } else {
+                    $('#按钮_绑定QQ按钮').addClass('显示状态_隐藏')
+                    $('#显示_绑定QQ成功_勾_图标').removeClass('显示状态_隐藏')
+                    $('#显示_绑定QQ成功_勾_图标').addClass('显示状态_显示')
+                    $('#输入框_QQ号码框').val(QQ号码)
+                }
+                return false;
+            }
+
+            /* 启动器交互-设置平台信息绑定信息(邮箱账户) */
+            function User_Info_Setbindrecords_MAIL(邮箱账户) {
+                // 如果无数据则那个项目未被绑定
+                if (邮箱账户 == '' || 邮箱账户 == null || 邮箱账户 == undefined) {
+                    $('#按钮_绑定邮箱_发送验证码').removeClass('显示状态_隐藏')
+                    $('#按钮_绑定邮箱_发送验证码').addClass('显示状态_显示')
+                    $('#显示_绑定邮箱成功_勾_图标').addClass('显示状态_隐藏')
+                    $('#输入框_邮箱号码').val('')
+                } else {
+                    $('#按钮_绑定邮箱_发送验证码').addClass('显示状态_隐藏')
+                    $('#显示_绑定邮箱成功_勾_图标').removeClass('显示状态_隐藏')
+                    $('#显示_绑定邮箱成功_勾_图标').addClass('显示状态_显示')
+					
+                    $('#标签_邮箱验证码').addClass('显示状态_隐藏')
+                    $('#显示组_邮箱验证码').addClass('显示状态_隐藏')
+					
+                    输入框_邮箱号码.readOnly = 'readonly'
+                    $('#输入框_邮箱号码').val(邮箱账户)
+                }
+                return false;
+            }
+
+            /* 启动器交互-设置平台信息绑定信息(微软正版账户) */
+            function User_Info_Setbindrecords_WMINE(微软正版账户) {
+                // 如果无数据则那个项目未被绑定
+                if (微软正版账户 == '' || 微软正版账户 == null || 微软正版账户 == undefined) {
+                    $('#按钮_绑定微软正版按钮').removeClass('显示状态_隐藏')
+                    $('#按钮_绑定微软正版按钮').addClass('显示状态_显示')
+                    $('#显示_绑定微软正版成功_勾_图标').addClass('显示状态_隐藏')
+                    $('#输入框_微软正版框').val('')
+                } else {
+                    $('#按钮_绑定微软正版按钮').addClass('显示状态_隐藏')
+                    $('#显示_绑定微软正版成功_勾_图标').removeClass('显示状态_隐藏')
+                    $('#显示_绑定微软正版成功_勾_图标').addClass('显示状态_显示')
+                    $('#输入框_微软正版框').val(微软正版账户)
+                }
+                return false;
+            }
+
+            /* 启动器交互-历史登录列表添加数据项目 */
+            function User_Info_AddHistoricaldatas(时间点, 操作标识, 登录地址) {
+                var 时间点_代码 = '<p>' + 时间点 + '</p>'
+                document.getElementById('getTime').innerHTML += 时间点_代码
+
+                var 登录地址_表项序号 = "id=显示_历史登录表项_" + Date.parse(时间点)
+                var 登录地址_代码 = '<div class="con1"><p ' + 登录地址_表项序号 + ' >' + 登录地址 + '</p><button onclick="内部_按钮_获取地址归属地(' + Date.parse(时间点) + ')" >查询属地</button></div>'
+                document.getElementById('getaddress').innerHTML += 登录地址_代码
+
+                var 操作标识_代码 = '<p>' + 操作标识 + '</p>'
+                document.getElementById('getidentification').innerHTML += 操作标识_代码
+
+                return false;
+            }
+
+            /* 启动器交互-修改登录密码完成事件 */
+            function User_Info_ChangePasswordSuccess(提示文本) {
+                $('#输入框_原密码').val('');
+                $('#输入框_新密码').val('')
+                $('#输入框_确定新密码').val('')
+                Prevent_OpenTipsFloatingWindow('操作提示', 提示文本)
+                return false;
+            }
+
+            /* 启动器交互-修改安全密保完成事件 */
+            function User_Info_ChangeSafasignalSuccess(提示文本) {
+                $('#输入框_原密保').val('');
+                $('#输入框_新密保').val('')
+                $('#输入框_确定新密保').val('')
+                Prevent_OpenTipsFloatingWindow('操作提示', 提示文本)
+                return false;
+            }
+
+            /*页面载入后自动执行*/
+            $(function () {
+                // 设置默认显示
+                User_Info_Setbindrecords_ALL('', '', '')
+                // 获取角色数据
+                StarLauncher_CommandFunction('User_info_function', 'get_userinfodatas');
+                Prevent_OpenWaitFloatingWindow_Load('正在等待获取角色详细数据.请耐心等待')
+				
+				内部_分割线UI处理();
+            })
+
+        </script>
+
+</body>
+
+<!-- 导入根目录Json文件.添加时间变量在尾部避免文件缓存 -->
+<script type="text/javascript">
+	// 解决数据文件可能存在缓存文件,资源连接直接添加时间戳
+	var 局_时间戳 = new Date().getTime();
+	document.write('<script type="text/javascript" src="MineLauncher_Set.json?timestamp=' + 局_时间戳 + '"><\/script>');
+</script>
+
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zhcn">
+<head>
+    <meta charset="utf-8"/>
+	<!-- 设置页面必须禁止缓存,否则某些设置可能有变化后无更新 -->
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    <title>Start</title>
+    <!-- 页面通用CSS -->
+    <link rel="stylesheet" href="CSS/public-webrender.css">
+    <script src="JS/jquery-1.12.4.min.js"></script>
+    <!-- 页面通用方法，应当在Jquery之后加载 -->
+    <script src="JS/public-function.js"></script>
+    <style>
+        /* 通用顶部提示栏样式 */
+        .loadBarTop {
+            background-color: black;
+            opacity: 0.6;
+            left: 50vw;
+            top: 0;
+            width: 100vw;
+            height: 6vh;
+            text-align: center;
+            position: absolute;
+            transform: translate(-50%, 0%);
+            -webkit-transform: translate(-50%, 0%);
+            -moz-transform: translate(-50%, 0%);
+        }
+
+        .loadBarTop p {
+            font-size: 12px;
+            position: absolute;
+            color: white;
+            top: 3vh;
+            left: 50vw;
+            width: 100vw;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+        }
+		
+        /* 页面背景图样式&高斯模糊样式 */
+        .backgroundImg {
+            width: 102%;
+            height: 102vh;
+            background: url(IMG/background.jpg) center no-repeat;
+            background-size: 100% 100%;
+            -webkit-filter: blur(5px);
+            -moz-filter: blur(5px);
+            -o-filter: blur(5px);
+            -ms-filter: blur(5px);
+            filter: blur(5px);
+            position: absolute;
+            left: -1%;
+            top: -1%;
+        }
+
+        /* 加载进度条块 */
+        .loadBar {
+            border-radius: 19px;
+            background-color: white;
+            opacity: 0.6;
+            top: 45vh;
+            left: 50vw;
+            width: 50vw;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px 1px #646464bd;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+        }
+        .loadBarLeft {
+            float: left;
+            height: 16vh;
+            border-right: 1px solid #f7f7f7;
+        }
+        .loadBarLeft.loading span {
+            display: inline-block;
+            width: 8px;
+            height: 100%;
+            border-radius: 4px;
+            background: lightgreen;
+            -webkit-animation: load 1s ease infinite;
+        }
+
+        /* 加载进度条样式 */
+        .progress {
+            background-color: rgba(100, 100, 100, 0.0);
+            border-radius: 5px;
+            position: relative;
+        }
+        .progress-done {
+            background: linear-gradient(to left, rgb(54, 241, 215), rgb(168, 124, 255));
+            box-shadow: 0 3px 3px -5px rgb(92, 92, 92), 0 2px 5px rgb(92, 92, 92);
+            border-radius: 5px;
+            height: 10px;
+            width: 0;
+            transition: width 1s ease 0.3s;
+        }
+
+        @-webkit-keyframes load {
+            0%, 100% {
+                height: 40px;
+                background: lightgreen;
+            }
+            50% {
+                height: 70px;
+                margin: -15px 0;
+                background: lightblue;
+            }
+        }
+
+        .loading span:nth-child(2) {
+            -webkit-animation-delay: 0.2s;
+        }
+
+        .loading span:nth-child(3) {
+            -webkit-animation-delay: 0.4s;
+        }
+
+        .loading span:nth-child(4) {
+            -webkit-animation-delay: 0.6s;
+        }
+
+        .loading span:nth-child(5) {
+            -webkit-animation-delay: 0.8s;
+        }
+
+        .bottomBar {
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            display: none;
+        }
+
+        .bottomBar a, .bottomBar a:link, .bottomBar a:visited, .bottomBar a:active, .bottomBar a:hover {
+            text-decoration: none;
+        }
+
+        .bottomBar a {
+            background-color: #008000;
+            color: white;
+            font-weight: 100;
+            display: inline-block;
+            font-size: 8px;
+            text-align: center;
+            line-height: 5vh;
+            padding-left: 3vw;
+            padding-right: 3vw;
+            margin-left: 1vh;
+            /*border-left: 4px solid #0073ba;*/
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+        }
+
+        .bottomBar a:active {
+        }
+
+        .bottomBar a:hover {
+            background-color: #369f36;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+        }
+
+        .bottomBox {
+            position: absolute;
+            bottom: 0;
+            display: block;
+            width: 100%;
+            background: #ffffff;
+            height: 0;
+            box-shadow: 0 0 20px 9px #747473bd;
+        }
+
+        .bottomLeft {
+            float: left;
+            padding-left: 1vh;
+        }
+
+        .bottomLeft .bottomLeftDiv {
+            line-height: 8vh;
+            font-weight: bold;
+        }
+
+        .bottomRight {
+            float: right;
+            padding-right: 1.5vw;
+        }
+
+        .bottomRight p {
+            line-height: 9.0vh;
+            font-weight: normal;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="backgroundImg"></div>
+<div class="loadBarTop">
+    <p>Loading . . .</p>
+</div>
+<div class="loadBar">
+    <div class="progress">
+        <div class="progress-done" id="progress-speed" style="width: 0"></div>
+    </div>
+</div>
+<div class="bottomBar">
+    <div class="bottomBox">
+        <div class="bottomLeft">
+            <div class="bottomLeftDiv">
+                <a href="https://jq.qq.com/?_wv=1027&k=zXkbgCwm" target="_blank">加入交流群</a>
+            </div>
+        </div>
+        <div class="bottomRight">
+            <p>溟灵服务器专用客户端.</p>
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    /*发送初始化设置启动器窗口界面的参数*/
+    function Launcher_JSONS(Start_Json) {
+        if (Start_Json) {
+            if (Start_Json.hasOwnProperty('StarLauncher') &&
+                Start_Json.StarLauncher.hasOwnProperty('title') &&
+                Start_Json.StarLauncher.hasOwnProperty('wide') &&
+                Start_Json.StarLauncher.hasOwnProperty('high')
+            ) {
+                /*参数值顺序固定: Start_SetLauncherHwnd,标题,宽度,高度 不可乱序*/
+                StarLauncher_CommandFunction('Start_SetLauncherHwnd', Start_Json.StarLauncher.title, Start_Json.StarLauncher.wide, Start_Json.StarLauncher.high);
+            } else {
+                /*读取失败则使用默认值*/
+                StarLauncher_CommandFunction('Start_SetLauncherHwnd', 'StarLauncher 5.0', '902', '592');
+            }
+        } else {
+            /*读取失败则使用默认值*/
+            StarLauncher_CommandFunction('Start_SetLauncherHwnd', 'StarLauncher 5.0', '902', '592');
+        }
+    }
+
+    /*固定本页更新显示功能: Start_ReturnSataus */
+    function Start_ReturnSataus(状态, 进度, 提示) {
+        $('#progress-speed').css('width', 进度 + '%');
+        $('.loadBarTop p').html(提示);
+
+        if (状态 == '0') {
+            $('.loadBar').hide();
+        } else if (状态 == '1') {
+            $('.loadBar').show();
+        } else {
+            /*其他参数则不做处理*/
+        }
+        return true;
+    }
+
+
+    $(function () {
+        /*Start_ReturnSataus('0, 0, 页面初始化中');*/
+        $(".bottomBar").show();
+        $(".bottomBox").stop(true, true).animate({height: "9.0vh"}, 1000);
+    })
+
+</script>
+
+<!-- 导入根目录Json文件.添加时间变量在尾部避免文件缓存 -->
+<script type="text/javascript">
+	// 解决数据文件可能存在缓存文件,资源连接直接添加时间戳
+	var 局_时间戳 = new Date().getTime();
+	document.write('<script type="text/javascript" src="MineLauncher_Set.json?timestamp=' + 局_时间戳 + '"><\/script>');
+</script>
+
+</html>

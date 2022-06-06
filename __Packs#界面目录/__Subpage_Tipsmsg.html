@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html lang="zhcn">
+<head>
+    <meta charset="utf-8"/>
+	<!-- 设置页面必须禁止缓存,否则某些设置可能有变化后无更新 -->
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    <title>Register</title>
+    <!-- 页面通用CSS -->
+    <link rel="stylesheet" href="CSS/public-webrender.css">
+    <script src="JS/jquery-1.12.4.min.js"></script>
+    <!-- 页面通用方法，应当在Jquery之后加载 -->
+    <script src="JS/public-function.js"></script>
+</head>
+<body>
+<!--    通用样式-->
+<style>
+    .topLine {
+        height: 42px;
+    }
+
+    .topLine p {
+        color: white;
+        font-size: 0.4rem;
+        padding-left: 18px;
+		font-size: 12px;
+        /*font-weight: 600;*/
+        line-height: 42px;
+        background-color: #008000;
+        border-style: solid;
+        border-width: 0 0 1px 0;
+        /*border-color: #ffc000;*/
+    }
+
+    .contentDiv p {
+        border-color: rgba(170, 170, 170, .8);
+        border-top-width: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        border-bottom-width: 0;
+        padding-left: 0;
+        outline-width: 0;
+        font-size: 18px;
+    }
+    input.topBotton {
+        transform: translate(0%, 0%);
+        background-size: 42%;
+        background-repeat: no-repeat;
+        background-position: 13px;
+        position: absolute;
+        width: 42px;
+        height: 42px;
+        right: 1px;
+        top: 1px;
+    }
+    .userSpan {
+        font-size: 12px;
+        line-height: 32px;
+    }
+</style>
+<!--    通用结束-->
+<!--    消息框样式-->
+<style>
+	@font-face{
+		font-family:main_custom_font;
+		src:url('CSS/fonts/庞门正道细线体.ttf');
+	}
+
+    #消息显示夹 {
+        top: 50vh;
+        left: 50vw;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background-color: white;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-box-shadow: 0 0 20px 1px #646464bd;
+        -moz-box-shadow: 0 0 20px 1px #646464bd;
+        box-shadow: 0 0 20px 1px #646464bd;
+        -webkit-transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+    }
+
+    #消息显示夹 .centerDiv {
+        width: 100%;
+        height: 100%;
+        background-color: #f3f3f3;
+		-border: 1px solid #FA7A00;
+    }
+
+    #消息显示夹 .bottomLine input[type="button"] {
+        margin: 14px 14px 0px 0px;
+        padding: 4px 40px;
+        font-size: 12px;
+        float: right;
+        color: white;
+        border-radius: 2px;
+        background-color: #008000;
+        border-width: 0;
+        cursor: pointer;
+        outline-width: 0;
+        -webkit-transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+    }
+
+    #消息显示夹 .bottomLine input[type="button"].btn.cakjsdl {
+        background-color: #FA7A00;
+    }
+
+    #消息显示夹 .bottomLine input[type="button"].btn.cakjsdl:hover {
+        background-color: #FA7A00;
+    }
+
+    #消息显示夹 .bottomLine input[type="button"]:hover {
+        border-width: 0;
+        /*background-color: #42b157;*/
+        background-color: #008000;
+        -webkit-transition: all 0.2s linear;
+        -moz-transition: all 0.2s linear;
+        -o-transition: all 0.2s linear;
+        transition: all 0.2s linear;
+    }
+
+    #消息显示夹 .centerDiv .contentDiv {
+        color: black;
+        background-color: white;
+        height: 288px;
+        font-size: 12px;
+        padding: 18px;
+        overflow: auto;
+    }
+
+    #dataContent {
+        margin-top: 0px;
+		font-family: main_custom_font;
+		font-size: 20px;
+		font-weight: bold;
+    }
+</style>
+<div class="centerBox" id="消息显示夹">
+    <div class="centerDiv">
+        <div class="topLine">
+            <p>Loading ...</p>
+        </div>
+        <div class="contentDiv" id="dataContent">
+                Loading ...
+        </div>
+        <div class="bottomLine" style="">
+            <input type="button" onclick="内部_按钮事件()" value="消息已知晓">
+        </div>
+    </div>
+</div>
+<!--    用户协议结束-->
+</body>
+
+<script type="text/javascript">
+
+    /* 设置提示显示窗口尺寸(必要),否则窗口不显示 */
+	/* Tips_SetShowHwnd | 宽度 | 高度 */
+    $(function () {
+        StarLauncher_CommandFunction('Tips_SetShowHwnd', '620', '418');
+    })
+	
+	/* 文本转Besa64(调试用) */
+	function Dev_b64Encode(str) {
+	  return btoa(encodeURIComponent(str));
+	}
+
+    /* 执行此事件后关闭窗口 */
+    function 内部_按钮事件() {
+        StarLauncher_CommandFunction('Tips_button_confirm');
+    }
+
+
+    /*启动器交互事件-修改显示内容(内容URL编码)*/
+    function Tips_setdatacontent(title,content) {
+		var 标题 = decodeURIComponent(((title == "" || title == undefined) ? "" : title));
+		var 内容 = decodeURIComponent(((content == "" || content == undefined) ? "" : content));
+        $('.topLine p').html(标题);
+		$('.contentDiv').html(内容);
+        return true;
+    }
+
+</script>
+
+
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE = edge,chrome=1">
+    <!-- 设置页面必须禁止缓存,否则某些设置可能有变化后无更新 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Game_SelectZone</title>
+    <!-- 页面通用CSS -->
+    <script src="JS/jquery-1.12.4.min.js"></script>
+    <script src="JS/jquery-1.7.2.min.js"></script>
+    <!-- 页面通用方法,应当在Jquery之后加载 -->
+    <link rel="stylesheet" href="CSS/public-webrender.css">
+    <script src="JS/public-function.js"></script>
+    <!-- <script src="./Slider.js"></script> -->
+    <style>
+        .gamemain {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background-color: rgb(47, 47, 47);
+        }
+
+        input[type=text]:focus {
+            outline: none;
+        }
+    </style>
+    <!-- 标题样式 -->
+    <style>
+        .header {
+            height: 10%;
+            background-color: rgb(59, 59, 59);
+            padding-left: 15px;
+            padding-right: 10px;
+            /* border-bottom: 2px solid rgba(37, 37, 37, 0.75); */
+        }
+
+        .header .title {
+            width: 60%;
+            color: rgb(146, 146, 146);
+            /* line-height: 45px; */
+            font-size: 14px;
+            float: left;
+            height: 100%;
+            line-height: 55px;
+            margin-left: 4px;
+        }
+
+        .Setsetup {
+            float: right;
+            width: 30%;
+            height: 100%;
+        }
+
+        #return {
+            float: right;
+            position: relative;
+            top: 20%;
+            height: 60%;
+            width: 45%;
+            background-color: rgb(59, 59, 59);
+            color: white;
+            border: 1px solid rgb(106, 106, 106);
+            cursor: pointer;
+        }
+
+        #return span {
+            float: right;
+            width: 44%;
+            line-height: 30px;
+            padding-right: 20px;
+        }
+
+        #return img {
+            float: left;
+            height: 76%;
+            width: 24%;
+            position: relative;
+            left: 10px;
+            top: 3.2px;
+        }
+    </style>
+    <style>
+        .content {
+            height: 85%;
+            background-image: url(./IMG/zone_background.jpg);
+            background-size: 100% 100%;
+            position: relative;
+            overflow-x: auto;
+            /* box-shadow:0px 0px 30px yellow; */
+            /* mask-image: linear-gradient(to right,
+                    black 20%,
+                    black 80%,
+                    transparent 100%);
+            -webkit-mask-image: linear-gradient(to right,
+                    black 20%,
+                    black 80%,
+                    transparent 100%); */
+            /* mask-image: linear-gradient(to right,
+                    transparent 100%,
+                     black 80%,
+                    black 20%,
+                    transparent); */
+        }
+
+        .黑色渐变 {
+            mask-image: linear-gradient(to right,
+                    black 20%,
+                    black 80%,
+                    transparent 100%);
+            -webkit-mask-image: linear-gradient(to right,
+                    black 20%,
+                    black 80%,
+                    transparent 100%);
+        }
+
+        .bottom {
+            height: 5%;
+            background-color: rgb(37, 37, 37);
+        }
+
+        .bg {
+            background-color: rgba(59, 59, 59, 0.66);
+            /* width: 1000%; */
+            height: 100%;
+            /* margin-right: 15px; */
+        }
+
+        /* 区服小于4时使用 */
+        .bg3 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .bg ul {
+            position: relative;
+            /* 区服大于四时开启 */
+            /* margin-left: 25px; */
+            top: -4px;
+
+        }
+
+        .bg li {
+            list-style: none;
+            display: inline-block;
+            width: 250px;
+            height: 350px;
+            margin-left: 10px;
+            /* 区服小于四个开启 */
+            /* margin-right: 10px; */
+        }
+
+        .con {
+            height: 90%;
+
+        }
+
+        .surface {
+            width: 250px;
+            height: 374px;
+            background-image: url(./IMG/Zone_png/Zone_normal.png);
+            background-size: 100% 100%;
+            position: relative;
+            box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.22);
+            /* box-shadow: 0px 0px 10px  rgba(0, 0, 0, 0.5); */
+            /* -moz-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            -webkit-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); */
+            position: relative;
+            top: 6px;
+            overflow: hidden;
+        }
+
+        .surface .name {
+            height: 10%;
+            background-color: rgba(32, 124, 30, 0.8);
+            font-size: 14px;
+            text-align: center;
+            line-height: 38.8px;
+            color: #ffffff;
+            position: absolute;
+            width: 100%;
+        }
+
+        .surface img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+        }
+
+        .join {
+            position: absolute;
+            width: 100%;
+            height: 80px;
+            bottom: 0;
+            text-align: center;
+        }
+
+        .joinbg {
+            width: 300px;
+            height: 110%;
+            left: 0;
+            bottom: 0;
+            position: absolute;
+            left: -7px;
+            bottom: -10px;
+            /* background-color: rgba(255, 255, 255, 0.8); */
+            /* background: rgba(255, 255, 255, 0.8); */
+            /* background: url(./IMG/Zone_png/1.png) no-repeat left bottom; */
+            /* background-size: 300px 420px; */
+            /* background-size: 262.50px 363.5px; */
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+            -moz-filter: blur(5px);
+            -o-filter: blur(5px);
+            -ms-filter: blur(5px);
+        }
+
+        .join button {
+            position: relative;
+            top: 14px;
+            width: 200px;
+            height: 40px;
+            background-color: rgb(250, 120, 0);
+            border: 1px solid white;
+            color: white;
+            cursor: pointer;
+        }
+
+        .noshow {
+            display: none !important;
+        }
+
+        .show {
+            display: show;
+        }
+
+        .lastGame {
+            position: absolute;
+            color: white;
+            width: 80px;
+            height: 22px;
+            border: 1px solid white;
+            font-size: 12px;
+            text-align: center;
+            line-height: 22px;
+            top: 60px;
+            left: 84.2px;
+            text-shadow: 0px 0px 8px black;
+        }
+    </style>
+    <!-- 滚动条设计 -->
+    <style>
+        .slider-box {
+            /* margin: 50px; */
+            width: 590px;
+            height: 4px;
+            background-color: #9e9e9e50;
+            border-radius: 0px;
+            position: absolute;
+            top: 494px;
+            left: 156px;
+        }
+
+        .slider {
+            position: absolute;
+            display: inline-block;
+            width: 100px;
+            height: 12px;
+            border-radius: 0px;
+            background-color: rgb(250, 122, 0);
+            top: -4px;
+            left: -6px;
+            border: 1px solid #ffffff;
+        }
+    </style>
+    <!-- 按钮设计 -->
+    <style>
+        .bottom {
+            font-size: 12px;
+            color: rgb(201, 201, 201);
+            text-align: center;
+            line-height: 27.2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="gamemain">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="title">星登录 - 游戏区服</div>
+            <div class="Setsetup">
+                <button id="return" onclick="内部_返回首页('return_main')" style="cursor: pointer;">
+                    <img src="./CSS/game_selectzone_icon/箭头_上一页.svg" alt=""><span>返回</span></button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="bg" id="bg">
+                <ul id="ul">
+
+                </ul>
+            </div>
+        </div>
+        <div id="sliderBox" class="slider-box">
+            <div class="slider" id="slider"></div>
+        </div>
+        <div class="bottom">
+            无可用游戏区服.请联系管理员在云控制台进行设置
+        </div>
+
+        <!-- 页面显示格式处理集合 -->
+        <script>
+            /*继承Json文本内容*/
+            var Start_WEB_L = {};
+
+            function Zone_JSONS(Start_WEB) {
+                Start_WEB_L = Start_WEB;
+                var title = []
+                //  获取mian中数据
+                if (Start_WEB) {
+                    var ul = $('#ul')
+                    var length = Start_WEB.Games.length
+                    $('.bottom').html(Start_WEB_L.Games[0].note)
+                    if (Start_WEB.hasOwnProperty('Games')) {
+                        for (let index = 0; index < Start_WEB.Games.length; index++) {
+                            // background: url('./IMG/Zone_png/1.png') no-repeat left bottom;
+                            length = Start_WEB.Games[index].data_display?length:(--length)
+                            // 存放图片地址.图片名字根据区服序号起名
+                            var imgurl = './IMG/Zone_png/' + Start_WEB.Games[index].id + '.png'
+
+                            // 判断是否上一次启动的区服
+                            if (Start_WEB.Games[index].data_oncestar) {
+                                content = Start_WEB.Games[index].data_display 
+                                ?'<li onmouseover="Select(' + Start_WEB.Games[index].id + ')"><div  class="surface" id="' + Start_WEB.Games[index].id + '" ><img src="' + imgurl + '" alt=""><div class="name" >' + Start_WEB.Games[index].name + '</div><div class="join"><div class="joinbg">1</div><button onclick ="内部_进入特定游戏区服(' + Start_WEB.Games[index].id + ')">加入游戏</button></div><div class="lastGame">上次游戏</div></div></li > '
+                                :'<li onmouseover="Select(' + Start_WEB.Games[index].id + ')" class ="noshow"><div  class="surface" id="' + Start_WEB.Games[index].id + '" ><img src="' + imgurl + '" alt=""><div class="name" >' + Start_WEB.Games[index].name + '</div><div class="join"><div class="joinbg">1</div><button onclick ="内部_进入特定游戏区服(' + Start_WEB.Games[index].id + ')">加入游戏</button></div><div class="lastGame">上次游戏</div></div></li > '
+                            }
+                            else {
+                                content = Start_WEB.Games[index].data_display
+                                ?'<li onmouseover="Select(' + Start_WEB.Games[index].id + ')" ><div  class="surface" id="' + Start_WEB.Games[index].id + '" ><img src="' + imgurl + '" alt=""><div class="name" >' + Start_WEB.Games[index].name + '</div><div class="join noshow"><div class="joinbg"></div><button onclick ="内部_进入特定游戏区服(' + Start_WEB.Games[index].id + ')">加入游戏</button></div></div> </li > '
+                                :'<li onmouseover="Select(' + Start_WEB.Games[index].id + ')"  class ="noshow"><div  class="surface" id="' + Start_WEB.Games[index].id + '" ><img src="' + imgurl + '" alt=""><div class="name" >' + Start_WEB.Games[index].name + '</div><div class="join noshow"><div class="joinbg"></div><button onclick ="内部_进入特定游戏区服(' + Start_WEB.Games[index].id + ')">加入游戏</button></div></div> </li > '
+                            }
+                            ul.append(content)
+                            // console.log($('#'+ (index+1) + ' .join' +' .joinbg'));
+                            $('#' + (index + 1) + ' .join' + ' .joinbg').css('background', "url(./IMG/Zone_png/" + Start_WEB.Games[index].id + ".png) no-repeat left bottom")
+                            $('#' + (index + 1) + ' .join' + ' .joinbg').css('background-size', "263px 363.5px")
+                        }
+                    }
+                    console.log(length);
+                    if (length < 4) {
+                        // 判断区服是否小于4个区,则不显示额外内容
+                        // $('ul').css('text-align', 'center');
+                        $('#sliderBox').addClass('noshow')
+                        $('.bg li').css('margin-right', '10px')
+                        $('.bg').addClass('bg3')
+                        $('ul').css('top', '-4px');
+                    }
+                    else {
+                        // 判断区服是否小于4个区,则不显示额外内容
+                        w = (140 + (length - 4) * 30) + '%'
+                        $('.bg').css('width', w);
+                        $('.content').addClass('黑色渐变')
+                        $('ul').css('margin-left', '25px');
+                        $('ul').css('top', '30px');
+                    }
+
+                    (function () {
+                        var scroll = document.getElementById('sliderBox')
+                        var bar = document.getElementById('slider')
+                        bar.onmousedown = function (event) {
+                            console.log(1);
+                            var x = event.clientX - this.offsetLeft;
+                            document.onmousemove = function (event) {
+                                if ($('.slider').position().left < 600) {
+                                    var event = event || window.event
+                                    var left = event.clientX - x;
+                                    if (left < 0)
+                                        left = 0;
+                                    else if (left > scroll.offsetWidth - bar.offsetWidth) {
+                                        left = scroll.offsetWidth - bar.offsetWidth
+                                    }
+                                    bar.style.left = left + "px";
+                                    var bfb = parseFloat(left / (scroll.offsetWidth - bar.offsetWidth))
+                                    // 已移动多少距离
+                                    var left1 = (bfb * (($('.bg').width()) - 915)) < $('#ul').width() - 900 ? (bfb * (($('.bg').width()) - 915)) : $('#ul').width() - 900
+                                    $('.content').scrollLeft(left1)
+                                    document.onmouseup = function () {
+                                        document.onmousemove = null
+                                    }
+                                }
+                            }
+                        }
+                    })()
+                }
+            }
+
+        </script>
+        <script>
+            // 区服图片的放大缩小图片特效处理
+            $(function () {
+                $('.surface').mouseenter(function () {
+                    $(this).children('img')
+                    var wValue = 1.05 * $(this).children('img').width();
+                    var hValue = 1.05 * $(this).children('img').height();
+                    $(this).children('img').animate({
+                        width: wValue,
+                        height: hValue,
+                        left: ("-" + (0.05 * $(this).children('img').width()) / 2),
+                        top: ("-" + (0.05 * $(this).children('img').height()) / 2)
+                    }, 100);
+                }).mouseleave(function () {
+                    // $(this).find('.joinbg').css('background-size', '260px 360px')
+                    $(this).children('img').animate({
+                        width: "100%",
+                        height: "100%",
+                        left: "0px",
+                        top: "0px"
+                    }, 100);
+                });
+            })
+
+            function Select(id) {
+                $('#' + id).css('top', '6px');
+                $('#' + id).css('box-shadow', ' 0px 0px 10px 4px rgba(250, 122, 0, 0.4)');
+                // $('#' + id+' img').css('transform','scale(1.5)');
+                let name
+                for (let index = 1; index <= $('ul li').length; index++) {
+                    if (index != id)
+                        $('#' + index).css('box-shadow', ' 0px 0px 10px 4px rgba(0, 0, 0, 0.22)');
+                    name = '#' + index + ' .join'
+                    // console.log(name);
+                    $(name).removeClass('noshow')
+                    $(name).addClass('noshow')
+                }
+                name = '#' + id + ' .join'
+                $(name).removeClass('noshow')
+                $('.bottom').html(Start_WEB_L.Games[id - 1].note)
+            }
+        </script>
+        <script>
+            // 滚轮移动显示处理
+            $(".bg").each(function (index, element) {
+                element.onwheel = function (event) {
+                    var table = $(element).parents(".content");
+                    var right = $(element).width() - table[0].offsetWidth;
+                    if (table.scrollLeft() < right && event.deltaY > 0) {
+                        //禁止事件默认行为（此处禁止鼠标滚轮行为关联到"屏幕滚动条上下移动"行为）  
+                        event.preventDefault();
+                        var left = (table.scrollLeft() + 60);
+                        //  总宽度 减去屏幕大小宽度
+                        // var scroll = $('.bg').width() - 940
+                        var scroll = $('#ul').width() - 934
+                        var bar
+                        if (left <= $('#ul').width() - 900) {
+                            table.scrollLeft(left)
+                            bar = (left / scroll) * 490
+                            console.log(left / scroll);
+                            console.log(left);
+                            console.log(scroll);
+                            if (bar > 490) {
+                                bar = 490
+                                $('.slider').css('left', bar)
+                            }
+                            else {
+                                $('.slider').css('left', bar)
+                            }
+                        }
+                        else {
+                            left = $('#ul').width() - 900
+                            table.scrollLeft(left)
+                        }
+                    }
+                    if (table.scrollLeft() > 0 && event.deltaY < 0) {
+                        //禁止事件默认行为（此处禁止鼠标滚轮行为关联到"屏幕滚动条上下移动"行为）  
+                        event.preventDefault();
+                        var left = (table.scrollLeft() - 60);
+                        // var scroll = $('.bg').width() - 900
+                        var scroll = $('#ul').width() - 934
+                        var bar
+                        bar = (left / scroll) * 490
+                        if (bar > 490) {
+                            bar = 490
+                            $('.slider').css('left', bar)
+                        }
+                        else {
+                            $('.slider').css('left', bar)
+                        }
+                        table.scrollLeft(left)
+                    }
+                }
+            })
+
+        </script>
+
+        <!-- 功能处理JS集合 -->
+        <script>
+
+            function 内部_返回首页(按钮标识) {
+                StarLauncher_CommandFunction('Game_selectzone_function', 'return_main')
+                // 按钮显示点击特效
+                targetid = document.getElementById('return')
+                targetid.style.border = '1px solid #ffffff'
+                setTimeout(() => {
+                    targetid.style.border = '1px solid rgb(106, 106, 106)'
+                }, 200)
+            }
+
+            function 内部_进入特定游戏区服(区服序号) {
+                StarLauncher_CommandFunction('Game_selectzone_function', 'start_gamezone', 区服序号)
+            }
+
+
+
+        </script>
+
+		<!-- 导入根目录Json文件.添加时间变量在尾部避免文件缓存 -->
+		<script type="text/javascript">
+			// 解决数据文件可能存在缓存文件,资源连接直接添加时间戳
+			var 局_时间戳 = new Date().getTime();
+			document.write('<script type="text/javascript" src="MineLauncher_Zone.json?timestamp=' + 局_时间戳 + '"><\/script>');
+		</script>
+
+</html>

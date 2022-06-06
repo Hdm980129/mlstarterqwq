@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE = edge,chrome=1">
+	<!-- 设置页面必须禁止缓存,否则某些设置可能有变化后无更新 -->
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    <title>Skin</title>
+    <!-- 页面通用CSS -->
+    <script src="JS/jquery-1.12.4.min.js"></script>
+    <script src="JS/jquery-1.7.2.min.js"></script>
+    <!-- 页面通用方法,应当在Jquery之后加载 -->
+    <link rel="stylesheet" href="CSS/public-webrender.css">
+    <script src="JS/public-function.js"></script>
+    <script src="./JS/three.min.js"></script>
+    <script src="./JS/three.msp.js"></script>
+    <style>
+        .skinmain {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background-color: rgb(47, 47, 47);
+        }
+
+        input[type=text]:focus {
+            outline: none;
+        }
+    </style>
+    <!-- 标题样式 -->
+    <style>
+        .header {
+            height: 10%;
+            background-color: rgb(59, 59, 59);
+            padding-left: 15px;
+            padding-right: 10px;
+            /* border-bottom: 2px solid rgba(37, 37, 37, 0.75); */
+        }
+
+        .header .title {
+            width: 60%;
+            color: rgb(146, 146, 146);
+            /* line-height: 45px; */
+            font-size: 14px;
+            float: left;
+            height: 100%;
+            line-height: 58px;
+            margin-left: 4px;
+        }
+
+        .Setsetup {
+            float: right;
+            width: 30%;
+            height: 100%;
+        }
+
+        #return {
+            float: right;
+            position: relative;
+            top: 20%;
+            height: 60%;
+            width: 45%;
+            background-color: rgb(59, 59, 59);
+            color: white;
+            border: 1px solid rgb(106, 106, 106);
+        }
+
+        #return span {
+            float: right;
+            width: 44%;
+            line-height: 30px;
+            padding-right: 20px;
+        }
+
+        #return img {
+            float: left;
+            height: 76%;
+            width: 24%;
+            position: relative;
+            left: 10px;
+            top: 3.2px;
+        }
+    </style>
+    <!-- 内容样式 content -->
+    <style>
+        .content {
+            display: flex;
+            height: 90%;
+            align-items: center;
+            margin-left: 3%;
+            margin-right: 3%;
+        }
+
+        .contentLeft {
+            background-color: rgb(37, 37, 37);
+            width: 39%;
+            height: 92%;
+            margin-right: 3%;
+        }
+
+        .contentRight {
+            width: 59%;
+            height: 92%;
+            position: relative;
+        }
+
+        .conTitle {
+            display: flex;
+            background-color: rgb(37, 37, 37);
+            padding: 1% 1%;
+            height: 25px;
+        }
+
+        .conTitle div {
+            width: 32.8%;
+            text-align: center;
+            background-color: rgb(59, 59, 59);
+            margin-right: 1.2%;
+            color: white;
+            font-size: 12px;
+            line-height: 24px;
+        }
+
+        .conImg {
+            width: 180px;
+            height: 260px;
+            background-color: rgb(37, 37, 37);
+            padding: 2%;
+            position: relative;
+            top: 60px;
+            margin: 0 auto;
+        }
+
+        .conImg div {
+            /* width: 99%; */
+            margin-bottom: 2.8%;
+            color: white;
+            font-size: 12px;
+        }
+
+        .conImg .img {
+            height: 70%;
+            text-align: center;
+            /* background-color: rgb(59, 59, 59); */
+        }
+
+        .conImg .img img {
+            width: 160px;
+            height: 80px;
+            position: relative;
+            top: 50px;
+        }
+
+        .conImg .updata {
+			top: -4px;
+            height: 12%;
+            background: rgb(16, 124, 16);
+            border: 1px solid rgb(143, 143, 143);
+            text-align: center;
+            line-height: 30px;
+            position: relative;
+			cursor: pointer;
+        }
+
+        .conImg .download {
+            height: 12%;
+            background: rgb(40, 40, 40);
+            border: 1px solid rgb(143, 143, 143);
+            text-align: center;
+            line-height: 32px;
+			cursor: pointer;
+        }
+
+        .bottomtitle {
+            position: absolute;
+            bottom: 0px;
+            font-size: 12px;
+            text-align: center;
+            color: rgb(250, 120, 0);
+            width: 100%;
+			cursor: help;
+        }
+
+        .ishow {
+            display: show;
+        }
+
+        .isnotshow {
+            display: none;
+        }
+
+        #title-skin {
+            background-color: rgb(16, 124, 16);
+        }
+		
+
+        .input {
+            opacity: 0;
+        }
+
+        .spantitle {
+            position: absolute;
+            top: 0;
+            left: 65px;
+        }
+
+        .char_3d_preview {
+            text-align: center;
+			text-align: center;
+			float: left;
+			height: 410px;
+			width: 90%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="skinmain">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="title">溟灵 - 角色资料</div>
+            <div class="Setsetup">
+                <button id="return" onclick="内部_返回首页('return_main')" style="cursor: pointer;">
+                    <img src="./CSS/user_info_icon/箭头_上一页.svg" alt=""><span>返回</span></button>
+            </div>
+        </div>
+        <div class="content">
+            <div class="contentLeft">
+                <div class="table-main">
+                    <div style="width:100%;float:left;">
+                        <div class="post-inner" style="padding: 0px;overflow:hidden;height:80%;">
+                            <div class="point_char">
+                                <!-- <div id="char_3d_preview" class="char_3d_preview"></div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contentRight">
+                <div class="conTitle">
+                    <div id="title-skin" onclick="内部_切换显示夹(1)" style="cursor: move;">角色皮肤</div>
+                    <div id="title-cape" onclick="内部_切换显示夹(2)" style="cursor: move;">背后披风</div>
+                    <div id="title-coleoptera" onclick="内部_切换显示夹(3)" style="cursor: move; margin-right: 0;">飞行鞘翅</div>
+                </div>
+                <div class="conImg" id="img1">
+                    <div class="img"><img src="./IMG/Stextures_Skin.png" alt="" id="显示_图片路径_皮肤" style="top:52px; width: 64px; height: 64px;"></div>
+                    <div class="updata" onclick="内部_选定文件更换材质('1')">
+                        <span class="spantitle" style="cursor: pointer;">更新皮肤</span>
+                        <input type="text" accept="" lay-verify="required" class="input" id="记录_图片BASE64编码数据_皮肤" onchange="" style="cursor: pointer;">
+                    </div>
+                    <div class="download" onclick="内部_保存材质文件操作('1')">保存到本地</div>
+                </div>
+                <div class="conImg isnotshow" id="img2">
+                    <div class="img"><img src="./IMG/Stextures_Cape.png" alt="" id="显示_图片路径_披风" style="top:70px; width: 64px;height: 32px;"></div>
+                    <div class="updata" onclick="内部_选定文件更换材质('2')">
+                        <span class="spantitle" style="cursor: pointer;">更新披风</span>
+                        <input type="text" accept="" lay-verify="required" class="input" id="记录_图片BASE64编码数据_披风" onchange="" style="cursor: pointer;">
+                    </div>
+                    <div class="download" onclick="内部_保存材质文件操作('2')">保存到本地</div>
+                </div>
+                <div class="conImg isnotshow" id="img3">
+                    <div class="img"><img src="./IMG/Stextures_Elytra.png" alt="" id="显示_图片路径_鞘翅" style="top:70px; width: 64px; height: 32px;"></div>
+                    <div class="updata" onclick="内部_选定文件更换材质('3')">
+                        <span class="spantitle" style="cursor: pointer;">更新鞘翅</span>
+                        <input type="text" accept="" lay-verify="required" class="input" id="记录_图片BASE64编码数据_鞘翅" onchange="" style="cursor: pointer;">
+                    </div>
+                    <div class="download" onclick="内部_保存材质文件操作('3')">保存到本地</div>
+                </div>
+                <div class="bottomtitle" onclick="javascript:window.open('https://namemc.com/minecraft-skins')">
+                    可以在此获取超多创意皮肤 Namemc.com 提供超棒的作品作为皮肤的灵感
+                </div>
+            </div>
+
+        </div>
+        <!-- 判断页面  -->
+        <script>
+		
+		/*页面载入后自动执行*/
+            $(function () {
+                var 内部_初始化模型显示 = function () {
+                    var preview = new MSP({
+                        container: '#char_3d_preview',
+                        // skinURL:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAA2FBMVEUAAAAA1P8gHCAnrv8tKC4uKC40LTQ6NDw7OD1BuP9DP0ZD9f9D//BIOkpIREtMPlFMQ1FQSFZQS1NSTlZZS11bUGJcwv9c5P9c/+9c//Fc//JdVGRfWmNjVW1mWW5qYHJqbJtsXXRtZnB2zP926P92//J2//N2//SG6/+O7P+P1v+P7P+P/9mP//WP//ao3/+o//eo//jB//ra//zhp/jpvvrv3v3x1fzz///5Y3j57P77x/v81eH81fj+7P3+7uz+7+z++vf/M///VGr/bYH/hpf/oK3/ucOPH9fnAAAAAXRSTlMAQObYZgAAA6NJREFUWMPNlg17kzoUx7MJzS66MNYs4eqc91ontZfQsqq7zrdpT+b3/0aevNEW2tqx597HfykhgfPjn5MEIMQLlDo5EZKBShhLJCNtMYYbNiemknROE4VhGCoVMwAmO/G+8KFdgjo9SZKTU8HYVxRj2wBkm9De0RHubDwSyH3FnAME3N7e9gJ4B59uv6G+fuoBOE0SNPD5iwF8+XxvgGJWcH1jADe6fR5ckXcCcfxNoAoAMHuBgyGFaQXiBgQCIPdzovljwHBoLkVJKcHX8dCUKgRqfZeh1OVlkzJbAIEhOz9nDmEBto4eXHsAEJJlF39n2cq89D2Dc/bypTPgANLUEWHbz338syw7y55fZGdaP2vnIACOjz++Pz7eAniB9ydnz8mF1i/aAGP13VvFHn/4+PjDXwBv37ku+S40HTA7k4vOKLBkOLy5ZizX73OdA47jcIiLSZr2hLkc3KxG2EqSNDkwy5ddX4fx18jC5ZzghiUOY7Jp1iTryzpCUUrjcPowsvJFFDVuARZKbeDtC8BD9SAAOtgB+P59Dwe0CwBqNIjNhfGAwqGRB4RjgOgQIlg2wX0AEEm1DoA1gJvEAaBUGyChLGcQVVsB1sEg8oAB2JLmOS4L2/bqTVle0bIGaq50l9FdXbBlbgDSHpe0LNEEOLnLoNOFDQBKHSCWr/65qqvYOkjjKG07aOfAAWgDKI2AxpACTXmKW5TSrTmIBitd8H6RVGHngUPK5xy3lP/aAc1BQshYWVIH4HMDmPN52nGg1HoObGIDwB3rq6W47ibR3Vl5BwM6GCwTa49hNpvVdT2z+pUDM6zt44Va0YL0lyIPk/rzgQT1eiuA0v+lC/+B3Gps+gHkt5W2D5QNPmG1B82HyO+Zgyu7/dvfQY0/1JzoXrMQKlJVdVUXRQ1kQxKpB9lT1QbAoiiqqiqKJ08KAos+66Ao8E/I06e22K3wKAt1fEcIIdavEfcBYLUNEI/EwxyIP8SOPFjAwcHSAQUhWgMsxK6740M0vDP9BwHISOLLeY/51hMQAgLAfPIa9XWA78i1dybyJZWUlj264F7x0hkqm4RTC1yd0eG50ABMgAWkUZx6B3GPHET2o0DDOEVAuoyY7puDlE85n97pMZcp5T502gFsd8CnBvDjbszHPJ2GW/9wxXT7LGySOLFCB5PxhE8IGU0moxHWyQR/oxAfkoggAzgwSTywikdWGlyJU3g0EsLWsRB7OBBWsHClXwSiKchPPqaqJRcgOmMAAAAASUVORK5CYII='
+                        canvasWidth: 330,
+                        canvasHeight: 490,
+                        distance: 100
+                    });
+                }
+               /* 内部_初始化模型显示(); */
+          });
+		
+        /*页面载入后自动执行*/
+            $(function () {
+				// 设置默认材质显示
+				// User_Skin_SetTextureDatas('1','./IMG/Stextures_Skin.png','data:image/png;base64,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')
+				// User_Skin_SetTextureDatas('2','./IMG/Stextures_Cape.png','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAACACAYAAADktbcKAAAFlklEQVR4nO3dTaiUVRgH8LklRETQB0JgC6NF2i4IImgjhQuJQHAVbYKgjS6jDFoFfdDWTSC4sVaCm3ARgRshgiDbpIGii8Q2dQUREYqJM3H0zDnv+87MvTPXW8/vBxfvPe+ZuXOV53/OeebOuDYej8ejwleXfx79l51buzP46G9cuNKMlXauX2/GSjfXbzdjpRNHjjZjsF094F8G4hIAEJgAgMDWTl46P17mj//NxYvN2JDX9+wZuNqe6V8ZP9TMGaInAP3sACAwAQCBCQAIbMesH/27M2emvn7twIFmTqk+09c9gVln/tqiZ35gfnYAEJgAgMAEAATW9ADqM/+s64v2BGb54fuzUzNeennfjFsAG2UHAIEJAAhMAEBgTQ+gPtMveub/+8/fp75+8Imnmjml+sw/67qeACyPHQAEJgAgMAEAgTU9gNqiZ/5Z1+ueQH2md+aHrWMHAIEJAAhMAEBgM3sAs9Rn+kV/D6DmzA9bxw4AAhMAEJgAgMA23QOoLXrmB+4fOwAITABAYAIAAhMAENjSmoBdLwrKDcHy2qwmYZ6rmQirNzMA5i3seS16m0XCA1hMEwAbKeo+6b4ULWxfegAQWLMDmMesXcKptw/d/fzQiVPNdWB72NAOIBV4WeT1tdM/XZ581GHQNXfovpZ5HAFac+8AyiLNxX3whWfvrvD5er6WP09z6gJPt8lBkaV5o2LHoPhh9dZOXjo/Lr9LV+F1FXeWC7fvet/8rrnlffUdHRZtKp5bu9OMlW5cuNKMlXauX2/GSjfXbzdjpRNHjjZjsF1oAkJgcx8B0op97Yvjk88Pf/3p3RV81kpez8nHgnr+sTePdl4DVmfpLwdOBVyHQjnWdR24P7b8CKD4YftYaAew6713Jn8e61jJr129dySoG4OT48PVe3N37f73ep6Xtv/5voGtowkIgTU7gB9/vTB68bm9U2PpKblyxU+r9emBFXvebX5Xr6Dv6T9g+ZoA6JNDoK+A07Z+qMF3+OD+5jb1/Sl+2FoLHQGe3vH85GPUsXpvRPkrw8DW69wBdB0Dkt/++mWw+Mun+urxvtuMqsZh+t5Z12MAlkcTEALr3AGklTevxOUqnM/oQ2f9UbUTGJqXDTX/7AhgdZodQF1kZQHml+5utMvfJ83LLzhK37+v0MvHAmxeEwBD0ird9WzAZnXtAHII9IUBsHmdR4B6pe1qCi7jd/rLIOl6zwBgtTQBIbBmB9B3zi7Hd3/w8ejqZx9NVvBHPj9+d/zk/n3N7WpvfXt2MnLr/Xu/SZju47G9z0w+v/bGq81tgNVoAmBRuXBHRXEPyfNvVXPSO/OkUEjhUodOPn70hROwMRsKgLT6lyt/VobBkFTsXat+WfzA6nUGQPk+d48+/vBU4ZfFngq5fE+9OgDStXnGyvvPIZBX+1nvuQdsnCYgBNbsAOoVN339x5efTI2lp//yeb9vNe+7Vo7l3UM6DuSmYN5lpJ1AfizO/rAaTQBkXUVfyh3/svHXVfBdcuFPPWuwf/qFRDkInnz3wyaUgOXoDIBZxd8VBHUYDBl6urB+RWF6LCkEgOVrAmCR4h8Kg80qXyKcH5MggOXSBITAegOg60080oq8qv+4o+t+vVsQrNbaeDwe+zuGmHp3AMD/nwCAwAQABCYAIDABAIEJAAhMAEBgAgACEwAQmACAwAQABCYAIDABAIEJAAhMAEBgAgACEwAQmACAwAQABCYAIDABAIEJAAhMAEBgAgACEwAQmACAwAQABCYAIDABAIEJAAhMAEBgAgACEwAQmACAwAQABCYAIDABAIEJAAhMAEBgAgACEwAQmACAwAQABCYAIDABAIEJAAhMAEBgAgACEwAQmACAwAQABCYAIDABAIEJAAhMAEBgAgACEwAQmACAwAQARDUajf4BVD37DazMZ6oAAAAASUVORK5CYII=')
+				// User_Skin_SetTextureDatas('3','./IMG/Stextures_Elytra.png','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAgCAYAAACinX6EAAABRElEQVRo3u2YS2vCQBSF56+10C5K09qNRIy4SFGqSPFFfSyU2ELrprTYjV2U/tKUM3DgGsRFZlFmcg8cJmYh+b65Ro0x/5iLWpKzi+330ZrQQwGm6qGIs+s4l5NRGUFSAHp51zpoZSScEhC8BACeRw0VAGCu7E3zIb9NetURQAlX9dSCs+3HdbgSAMt7AGTgddTo2AI+7kzDFyCBZXEu6S9tgxVAULnK0Ue7s60fAkabr1IXCnCMOordJrgUMH/b58EK4JgTWB4DfrD69ENA2T8yRQGUkI6f/RLgMgEAlcCyOPf06oGA1ftPqYsEuIQtCkDLvrcXAhAJjmOW4++FAJcxlcCyw2xnxz/ojwDvH9hprtx12aAF8Fsk+/i1j8W4614JcP3FRgGA5QoJ3jwrvJ+8OF8kYSGgWKPRaDQajUaj0TjlDyi11qDobRHMAAAAAElFTkSuQmCC')
+				StarLauncher_CommandFunction('User_skin_function', 'get_texturedatas')
+		   })
+		
+		
+		    function 内部_返回首页(功能标识) {
+                StarLauncher_CommandFunction('User_skin_function', 'return_main')
+                // 按钮显示点击特效
+                targetid = document.getElementById('return')
+                targetid.style.border = '1px solid #ffffff'
+                setTimeout(() => {
+                    targetid.style.border = '1px solid rgb(106, 106, 106)'
+                }, 200)
+            }
+		
+            function 内部_切换显示夹(id) {
+                if (id == 1) {
+                    $('#title-skin').css('background', 'rgb(16,124,16)')
+                    $('#title-cape').css('background', 'rgb(59,59,59)')
+                    $('#title-coleoptera').css('background', 'rgb(59,59,59)')
+
+                    $('#img1').addClass('isshow')
+                    $('#img1').removeClass('isnotshow')
+
+                    $('#img2').addClass('isnotshow')
+                    $('#img3').addClass('isnotshow')
+                    $('#img2').removeClass('ishow')
+                    $('#img3').removeClass('ishow')
+                }
+                if (id == 2) {
+                    $('#title-cape').css('background', 'rgb(16,124,16)')
+                    $('#title-skin').css('background', 'rgb(59,59,59)')
+                    $('#title-coleoptera').css('background', 'rgb(59,59,59)')
+                    $('#img2').addClass('isshow')
+                    $('#img2').removeClass('isnotshow')
+
+                    $('#img1').addClass('isnotshow')
+                    $('#img3').addClass('isnotshow')
+                    $('#img1').removeClass('ishow')
+                    $('#img3').removeClass('ishow')
+                }
+                if (id == 3) {
+                    $('#title-coleoptera').css('background', 'rgb(16,124,16)')
+                    $('#title-skin').css('background', 'rgb(59,59,59)')
+                    $('#title-cape').css('background', 'rgb(59,59,59)')
+                    $('#img3').addClass('isshow')
+                    $('#img3').removeClass('isnotshow')
+
+                    $('#img2').addClass('isnotshow')
+                    $('#img1').addClass('isnotshow')
+                    $('#img2').removeClass('ishow')
+                    $('#img1').removeClass('ishow')
+                }
+            }
+			
+		    function 内部_选定文件更换材质(材质类型) {
+				// 1=皮肤 2=披风 3=鞘翅
+				if (材质类型 == 1) {
+					StarLauncher_CommandFunction('User_skin_function', 'replace_skin')
+				}
+				if (材质类型 == 2) {
+					StarLauncher_CommandFunction('User_skin_function', 'replace_cape')
+				}
+				if (材质类型 == 3) {
+					StarLauncher_CommandFunction('User_skin_function', 'replace_elytra')
+				}
+            }
+			
+		    function 内部_保存材质文件操作(材质类型) {
+				// 1=皮肤 2=披风 3=鞘翅
+				if (材质类型 == 1) {
+					StarLauncher_CommandFunction('User_skin_function', 'save_skin')
+				}
+				if (材质类型 == 2) {
+					StarLauncher_CommandFunction('User_skin_function', 'save_cape')
+				}
+				if (材质类型 == 3) {
+					StarLauncher_CommandFunction('User_skin_function', 'save_elytra')
+				}
+            }
+			
+        </script>
+        <!-- base64 -->
+        <script>
+            var 内部_刷新模型显示 = function () {
+               /* $('canvas').remove()
+                var preview1 = new MSP({
+                    container: '#char_3d_preview',
+                    skinURL: $('#记录_图片BASE64编码数据_皮肤').val(),
+                    capeURL: $('#记录_图片BASE64编码数据_披风').val(),
+                    canvasWidth: 330,
+                    canvasHeight: 450,
+                    distance: 42
+                }); */
+            }
+			
+			/* 启动器交互-切换已经选定的材质文件 */
+		    function User_Skin_SetTextureDatas(材质类型, 文件路径, 材质BASE64数据) {
+				// 材质类型：1=皮肤 2=披风 3=鞘翅
+				// 文件路径可以不用,只是方便拓展操作时候获取
+					if (材质类型 == 1) {
+						$('#记录_图片BASE64编码数据_皮肤').val(材质BASE64数据)
+						$('#显示_图片路径_皮肤').attr('src', 材质BASE64数据)
+						
+						内部_刷新模型显示();
+					}
+					if (材质类型 == 2) {
+						$('#记录_图片BASE64编码数据_披风').val(材质BASE64数据)
+						$('#显示_图片路径_披风').attr('src', 材质BASE64数据)
+						
+						内部_刷新模型显示();
+					}
+					if (材质类型 == 3) {
+						$('#记录_图片BASE64编码数据_鞘翅').val(材质BASE64数据)
+						$('#显示_图片路径_鞘翅').attr('src', 材质BASE64数据)
+					}
+            }
+			
+
+			
+        </script>
+</body>
+
+</html>

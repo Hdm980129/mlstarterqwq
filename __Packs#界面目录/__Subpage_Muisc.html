@@ -1,0 +1,772 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!-- 设置页面必须禁止缓存,否则某些设置可能有变化后无更新 -->
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<title>子页面_内置音乐播放器</title>
+	<!-- <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/> -->
+	<!-- 页面通用CSS -->
+	<script src="JS/jquery-1.7.2.min.js"></script>
+	<script src="JS/subpage-muisc.js"></script>
+    <!-- 页面通用方法，应当在Jquery之后加载 -->
+    <script src="JS/public-function.js"></script>
+</head>
+<style>
+	* {
+	  margin: 0;
+	  padding: 0;
+	  font-family: Microsoft YaHei, serif;
+	}
+
+	.topLine {
+		height: 40px;
+	}
+    .topLine p {
+        color: white;
+        font-size: 0.4rem;
+        padding-left: 18px;
+		font-size: 12.4px;
+        /*font-weight: 600;*/
+        line-height: 40px;
+        background-color: #008000;
+        border-style: solid;
+        border-width: 0 0 0px 0;
+        border-color: #FA7A00;
+    }
+
+	body {
+	  font: 14px "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+	  background: #333;
+	  color: #fff;
+	}
+	html,body{
+	  font-size: 14px;
+	}
+	a {
+	  outline: none;
+	  text-decoration: none;
+	}
+	strong{
+	  font-size: 1rem;
+	}
+	.left {
+	  float: left;
+	}
+
+	.right {
+	  float: right;
+	}
+
+	.clear {
+	  clear: both;
+	}
+
+	#background {
+
+	  background-size: cover;
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  -moz-user-select: none;
+	  -khtml-user-select: none;
+	  -webkit-user-select: none;
+	  -o-user-select: none;
+	  user-select: none;
+	}
+
+	#player {
+	  width: calc(100% - 4rem);
+	  padding: 2rem 2rem 2rem 2rem;
+	  position: relative;
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
+	  margin: auto;
+	}
+	#player .cover {
+	  background: rgba(0, 0, 0, 0.5);
+	  border: 1px solid #333;
+	  position: relative;
+	  display: inline-block;
+	  overflow: hidden;
+	  -moz-border-radius: 10px;
+	  -webkit-border-radius: 10px;
+	  -o-border-radius: 10px;
+	  -ms-border-radius: 10px;
+	  -khtml-border-radius: 10px;
+	  border-radius: 10px;
+	  width: 9rem;
+	  height: 9rem;
+	  -moz-box-shadow: 0 2px 10px black;
+	  -webkit-box-shadow: 0 2px 10px black;
+	  -o-box-shadow: 0 2px 10px black;
+	  box-shadow: 0 2px 10px black;
+	}
+	#player .cover img {
+	  -moz-border-radius: 10px;
+	  -webkit-border-radius: 10px;
+	  -o-border-radius: 10px;
+	  -ms-border-radius: 10px;
+	  -khtml-border-radius: 10px;
+	  border-radius: 10px;
+	  width: 100%;
+	  height: 100%;
+	}
+	#player .ctrl {
+	  margin-top: .8rem;
+	  /* margin-left: 155px; */
+	  width: calc(100% - 11.2rem);
+	  height: 94px;
+	  text-shadow: 0 1px 2px #000;
+	  line-height: 16px;
+	}
+	#player .ctrl .tag strong, #player .ctrl .tag span {
+	  display: block;
+	  text-overflow: ellipsis;
+	}
+	#player .ctrl .tag span {
+	  font-size: .8rem;
+	  margin-top: .5rem;
+	  color: #ccc;
+	  line-height: 1rem;
+	}
+	#player .ctrl .icon {
+	  background-repeat: no-repeat;
+	  background-position: center;
+	  display: inline-block;
+	  opacity: 0.6;
+	  cursor: pointer;
+	  width: 1.8rem;
+	  height: 1.8rem;
+	  -moz-transition: 0.3s;
+	  -webkit-transition: 0.3s;
+	  -o-transition: 0.3s;
+	  transition: 0.3s;
+	  -moz-user-select: none;
+	  -khtml-user-select: none;
+	  -webkit-user-select: none;
+	  -o-user-select: none;
+	  user-select: none;
+	  background-size: 50% auto;
+	}
+	.progress .right .icon{
+	  background-size: 70% auto;
+	}
+	#player .ctrl .icon:hover, #player .ctrl .icon.enable {
+	  opacity: 1;
+	}
+	#player .ctrl .icon:active {
+	  opacity: 0.3;
+	}
+	#player .ctrl .control {
+	  margin-top: .8rem;
+	  height: 1.6rem;
+	}
+	#player .ctrl .control .rewind {
+	  background-image: url(./CSS/music_Icon/rewind.png);
+	}
+	#player .ctrl .control .playback {
+	  background-image: url(./CSS/music_Icon/play.png);
+	}
+	#player .ctrl .control .playback.playing {
+	  background-image: url(./CSS/music_Icon/pause.png);
+	}
+	#player .ctrl .control .fastforward {
+	  background-image: url(./CSS/music_Icon/fastforward.png);
+	}
+	#player .ctrl .control .volume .mute {
+	  background-image: url(./CSS/music_Icon/volume.png);
+	}
+	#player .ctrl .control .volume .mute.enable {
+	  background-image: url(./CSS/music_Icon/mute.png);
+	}
+	#player .ctrl .control .volume .slider {
+	  margin-top: .74rem;
+	  margin-left: .8rem;
+	  width: 10rem;
+	}
+	#player .ctrl .progress {
+	  margin-top: 10px;
+	}
+	#player .ctrl .progress .timer {
+	  font-size: .6rem;
+	  color: #ccc;
+	  margin-top: .5rem;
+	}
+	#player .ctrl .progress .repeat, #player .ctrl .progress .shuffle {
+	  background-position: center;
+	}
+	#player .ctrl .progress .repeat {
+	  background-image: url(./CSS/music_Icon/repeat.png);
+	}
+	#player .ctrl .progress .repeat.once, #player .ctrl .progress .repeat.all {
+	  opacity: 1;
+	}
+	#player .ctrl .progress .repeat.once {
+	  position: relative;
+	}
+	#player .ctrl .progress .repeat.once:before {
+	  content: "1";
+	  position: absolute;
+	  top: .2rem;
+	  right: -.1rem;
+	  font-size: .5rem;
+	}
+	#player .ctrl .progress .shuffle {
+	  background-image: url(./CSS/music_Icon/shuffle.png);
+	}
+
+	.slider {
+	  background: rgba(0, 0, 0, 0.3);
+	  height: .4rem;
+	  position: relative;
+	  cursor: pointer;
+	  -moz-border-radius: .4rem;
+	  -webkit-border-radius: .4rem;
+	  -o-border-radius: .4rem;
+	  -ms-border-radius: .4rem;
+	  -khtml-border-radius: .4rem;
+	  border-radius: .4rem;
+	  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) inset;
+	  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) inset;
+	  -o-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) inset;
+	  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) inset;
+	}
+	.slider:hover a, .slider.enable a {
+	  opacity: 1;
+	}
+	.slider a {
+	  background: #fff;
+	  margin-left: -.2rem;
+	  position: absolute;
+	  opacity: 0;
+	  width: .4rem;
+	  height: .4rem;
+	  -moz-border-radius: 50%;
+	  -webkit-border-radius: 50%;
+	  -o-border-radius: 50%;
+	  -ms-border-radius: 50%;
+	  -khtml-border-radius: 50%;
+	  border-radius: 50%;
+	  -moz-transition: opacity 0.3s;
+	  -webkit-transition: opacity 0.3s;
+	  -o-transition: opacity 0.3s;
+	  transition: opacity 0.3s;
+	}
+	.slider .loaded, .slider .pace {
+	  position: absolute;
+	  height: 100%;
+	  opacity: 0.7;
+	  -moz-border-radius: .4rem;
+	  -webkit-border-radius: .4rem;
+	  -o-border-radius: .4rem;
+	  -ms-border-radius: .4rem;
+	  -khtml-border-radius: .4rem;
+	  border-radius: .4rem;
+	}
+	.slider .loaded {
+	  background: rgba(255, 255, 255, 0.1);
+	}
+	.slider .pace {
+	  background: #258fb8;
+	}
+
+	#playlist {
+	  background: rgba(0, 0, 0, 0.5);
+	  width: calc(100% - 6rem);
+	  margin: 0 auto;
+	  padding: .8rem 1rem;
+	  list-style: none;
+	  position: relative;
+	  -moz-border-radius: 5px;
+	  -webkit-border-radius: 5px;
+	  -o-border-radius: 5px;
+	  -ms-border-radius: 5px;
+	  -khtml-border-radius: 5px;
+	  border-radius: 5px;
+	  -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+	  -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+	  -o-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+	  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+	  overflow-y: scroll;
+	  overflow-x: hidden;
+	}
+	#playlist li {
+	  color: #aaa;
+	  font-size: .7rem;
+	  line-height: 2;
+	  padding-left: 2.2rem;
+	  cursor: pointer;
+	  text-overflow: ellipsis;
+	  -moz-transition: 0.3s;
+	  -webkit-transition: 0.3s;
+	  -o-transition: 0.3s;
+	  transition: 0.3s;
+	}
+	#playlist li:hover {
+	  color: #fff;
+	}
+	#playlist li.playing {
+	  background: url(./CSS/music_Icon/playing.png) no-repeat 0 center;
+	  color: #fff;
+	  font-weight: bold;
+	  text-decoration: underline;
+	}
+
+	footer {
+	  position: relative;
+	  font-size: 12px;
+	  color: white;
+	  margin-top:160px;
+	  text-shadow: 0 1px 2px #000;
+	  text-align: center;
+	}
+	footer a {
+	  color: #fff;
+	  font-weight: bold;
+	}
+	footer a:hover {
+	  text-decoration: none;
+	}
+
+	/* 设置滚动条的样式 */
+	#playlist::-webkit-scrollbar {
+	  width:.4rem;
+	}
+	/* 滚动槽 */
+	#playlist::-webkit-scrollbar-track {
+	-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3);
+	  border-radius:.4rem;
+	}
+	/* 滚动条滑块 */
+	#playlist::-webkit-scrollbar-thumb {
+	  border-radius:.8rem;
+	  background:#256f8b;
+	  -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.5);
+	}
+	#playlist::-webkit-scrollbar-thumb:window-inactive {
+	  background:#258fb8;
+	}
+</style>
+<body onload="window.Mp3Player = new Mplayer.init();" onresize="MPlayerUI()">
+	<div id="background"></div>
+	<div class="topLine">
+		<p>星登陆 - 音乐播放器</p>
+	</div>
+	<div id="player">
+		<div class="cover"></div>
+		<div class="ctrl">
+			<div class="tag">
+				<strong>Music_Title</strong>
+				<span class="artist">Music_Artist</span>
+				<span class="album">Music_Album</span>
+			</div>
+
+			<div class="control">
+				<div class="left">
+					<div class="rewind icon"></div>
+					<div class="playback icon"></div>
+					<div class="fastforward icon"></div>
+				</div>
+				<div class="volume right">
+					<div class="mute icon left"></div>
+					<div class="slider left">
+						<div class="pace"></div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="progress">
+				<div class="slider">
+					<div class="loaded"></div>
+					<div class="pace"></div>
+				</div>
+				<div class="timer left">00:00/00:00</div>
+				<div class="right">
+					<div class="repeat icon"></div>
+					<div class="shuffle icon"></div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+	<ul id="playlist"></ul>
+</body>
+<!-- 测试方法 -->
+<script type="text/javascript">
+(function(global, name){
+    let MPlayerUI = function() {
+        $("html").css("font-size", (document.body.clientWidth / 40) + "px");
+        $("#playlist").css("height", "calc(100vh - " + $("#player").prop("scrollHeight") + "px - 7rem)")
+    };
+    let config = {};
+    let obj = {
+        init: function(){
+			this.inited = false;
+			this.playTime = 0;
+			this.pauseTime = 0;
+            this.repeat = localStorage.repeat || 0;
+            this.shuffle = localStorage.shuffle || 'false';
+            this.continous = true;
+            this.autoplay = false;
+            this.playlist = config.Muisccontrol;
+            this.loadList();
+            this.time = new Date();
+			this.currentTrack = this.shuffle === 'true' ? this.time.getTime() % this.playlist.length : 0;
+			this.trigger = false;
+			this.audio = null;
+            this.timeout = null;
+            this.isPlaying = false;
+            this.playCounts = 0;
+			this.volume = localStorage.volume || 0.5;
+            this.renderSlider();
+			this.currentDuration = null;
+			// 是否使用内核播放器
+			this.accept = true;
+            this.loadMusic(this.currentTrack);
+            this.renderClick();
+            MPlayerUI();
+        },
+        loadList: function(){
+			for (let i = 0; i < this.playlist.length; i++) {
+				let item = this.playlist[i];
+				$('#playlist').append('<li>' + item.artist + ' - ' + item.title + '</li>');
+			}
+        },
+		// 播放音乐(页面调用.需要记录状态)
+        play: function () {
+            this.audio.play();
+			this.playTime = this.playTime != 0 ? Date.now() : (this.playTime + Date.now() - this.pauseTime);
+			this.pauseTime = 0;
+            $('.playback').addClass('playing');
+            if (!this.timeout)
+                this.timeout = setInterval(this.updateProgress.bind(this), 500);
+            this.isPlaying = true;
+			/* 启动器记录播放设置 */
+			StarLauncher_CommandFunction('Muisc_ChangeConfig', 'play', '1');
+        },
+		// 暂停音乐(页面调用.需要记录状态)
+        pause: function () {
+            this.audio.pause();
+			this.pauseTime = Date.now();
+            $('.playback').removeClass('playing');
+            clearInterval(this.timeout);
+            this.timeout = null;
+            this.isPlaying = false;
+			/* 启动器记录播放设置 */
+			StarLauncher_CommandFunction('Muisc_ChangeConfig', 'play', '0');
+        },
+		// 播放音乐(启动器调用.无需记录状态)
+        play_launcher: function () {
+            this.audio.play();
+            $('.playback').addClass('playing');
+            if (!this.timeout)
+                this.timeout = setInterval(this.updateProgress.bind(this), 500);
+            this.isPlaying = true;
+        },
+		// 暂停音乐(启动器调用.无需记录状态)
+        pause_launcher: function () {
+            this.audio.pause();
+            $('.playback').removeClass('playing');
+            clearInterval(this.timeout);
+            this.timeout = null;
+            this.isPlaying = false;
+        },
+		// 下一曲
+        next: function(){
+            this.switchTrack(++this.currentTrack);
+        },
+		// 上一曲
+        prev: function(){
+            this.switchTrack(--this.currentTrack);
+        },
+		// 设置音量
+        setVolume: function(value){
+            this.audio.volume = localStorage.volume = value / 100;
+            $('.volume .pace').css('width', value + '%');
+            $('.volume .slider a').css('left', value + '%');
+        },
+		// 设置播放进度 参数:秒(小数点)
+		setCurrentTime: function(sec) {
+			StarLauncher_CommandFunction('Muisc_ChangeConfig', 'currentTime', sec);
+		},
+        getTime: function(sec, deep = 0){
+            let min = parseInt(sec / 60);
+            let s = sec % 60;
+            return sec >= 60 ? (this.getTime(min, deep + 1) + ":" + (s < 10 ? '0' + s : s)) : ((deep == 0 ? '00:' : '') + (s < 10 ? '0' + s : s));
+        },
+        setProgress: function (value) {
+            let ratio = value / (this.currentDuration || this.audio.duration) * 100;
+            $('.timer').html(this.getTime(Math.ceil(value)) + " / " + this.getTime(Math.ceil(this.currentDuration || this.audio.duration)));
+            $('.progress .pace').css('width', ratio + '%');
+            $('.progress .slider a').css('left', ratio + '%');
+        },
+        updateProgress: function () {
+            this.setProgress((this.accept ? this.audio.currentTime : (() => {
+				let t = (Date.now() - this.playTime) / 1000;
+				return t >= this.currentDuration ? this.currentDuration : t;
+			})()) || 0);
+        },
+        renderSlider: function(){
+			// Progress slider
+            let _this = this;
+			$('.progress .slider').slider({
+				step: 0.1, slide: function (event, ui) {
+					$(this).addClass('enable');
+					_this.setProgress((_this.currentDuration || this.audio.duration) * ui.value / 100);
+					clearInterval(_this.timeout);
+                    _this.timeout = null;
+				}, stop: function (event, ui) {
+					let currentTime = (_this.currentDuration || _this.audio.duration) * ui.value / 100;
+					_this.playTime = Date.now() - parseInt(currentTime * 1000);
+					if (_this.accept)
+						_this.audio.currentTime = currentTime;
+					else
+						_this.setCurrentTime(currentTime);
+					$(this).removeClass('enable');
+                    if (!_this.timeout)
+					    _this.timeout = setInterval(_this.updateProgress.bind(_this), 500);
+				}
+			});
+
+			// Volume slider
+			let setVolume = function (value) {
+				_this.audio.volume = localStorage.volume = value;
+				$('.volume .pace').css('width', value * 100 + '%');
+				$('.volume .slider a').css('left', value * 100 + '%');
+				/* 启动器记录播放设置 */
+				StarLauncher_CommandFunction('Muisc_ChangeConfig', 'volume', value * 100);
+			}
+
+			$('.volume .slider').slider({
+				max: 1, min: 0, step: 0.01, value: _this.volume, slide: function (event, ui) {
+					setVolume(ui.value);
+					$(this).addClass('enable');
+					$('.mute').removeClass('enable');
+				}, stop: function () {
+					$(this).removeClass('enable');
+				}
+			}).children('.pace').css('width', _this.volume * 100 + '%');
+            
+			$('.mute').click(function () {
+				if ($(this).hasClass('enable')) {
+					setVolume($(this).data('volume'));
+					$(this).removeClass('enable');
+				} else {
+					$(this).data('volume', _this.audio.volume).addClass('enable');
+					setVolume(0);
+				}
+			});
+
+        },
+        switchTrack: function (i) {
+            if (i < 0) {
+                track = this.currentTrack = this.playlist.length - 1;
+            } else if (i >= this.playlist.length) {
+                track = this.currentTrack = 0;
+            } else {
+                track = i;
+            }
+
+            $('audio').remove();
+            this.loadMusic(track);
+            if (this.isPlaying == true) this.play();
+        },
+        shufflePlay: function () {
+            let time = new Date(),
+                lastTrack = this.currentTrack;
+            this.currentTrack = time.getTime() % this.playlist.length;
+            if (lastTrack == this.currentTrack) ++this.currentTrack;
+            this.switchTrack(this.currentTrack);
+        },
+        ended: function () {
+            this.pause();
+			this.playTime = 0;
+            this.audio.currentTime = 0;
+            this.playCounts++;
+            if (this.continous == true) this.isPlaying = true;
+            if (this.repeat == 1) {
+                this.play();
+            } else {
+                if (this.shuffle === 'true') {
+                    this.shufflePlay();
+                } else {
+                    if (this.repeat == 2) {
+                        this.switchTrack(++currentTrack);
+                    } else {
+                        if (this.currentTrack < this.playlist.length) this.switchTrack(++this.currentTrack);
+                    }
+                }
+            }
+        },
+        beforeLoad: function () {
+            let endVal = this.seekable && this.seekable.length ? this.seekable.end(0) : 0;
+            $('.progress .loaded').css('width', (100 / (this.duration || 1) * endVal) + '%');
+            // console.log(endVal)
+        },
+        afterLoad: function () {
+            if (this.autoplay == true) this.play();
+        },
+        loadMusic: function (i) {
+			this.playTime = Date.now();
+			this.pauseTime = 0;
+			this.currentTrack = i;
+            let item = this.playlist[i];
+			let newaudio = $('<audio>').html('<source src="' + (item.music_link || "") + '">').appendTo('#player');
+			this.audio = newaudio[0];
+				
+			/* 启动器播放歌曲(让启动器进行播放) */
+			StarLauncher_CommandFunction('Muisc_Resourceslink', (item.music_link || ""));
+				
+            $('.cover').html('<img src="' + item.cover_png + '" alt="' + item.album + '">');
+            $('.tag').html('<strong>' + item.title + '</strong><span class="artist">' + item.artist + '</span><span class="album">' + item.album + '</span>');
+            $('#playlist li').removeClass('playing').eq(i).addClass('playing');
+			
+			/*读取Json内时长做定时器到后自动下一首*/
+			this.compatible();
+			this.currentDuration = parseFloat(item.music_length);
+ 
+        },
+		compatible: function() {
+			this.updateProgress(0);
+			!this.inited && (function loopCheck(){
+				if (this.isPlaying) {
+					let t = (Date.now() - this.playTime) / 1000;
+					if (t >= this.currentDuration)
+						this.ended();
+				}
+				setTimeout(loopCheck.bind(this), 100);
+			}).call(this);
+			this.inited = true;
+		},
+        renderClick: function(){
+            let _this = this;
+			$('.playback').on('click', function () {
+				if ($(this).hasClass('playing')) {
+					_this.pause();
+				} else {
+					_this.play();
+				}
+			});
+			$('.rewind').on('click', function () {
+				if (_this.shuffle === 'true') {
+					_this.shufflePlay();
+				} else {
+					_this.switchTrack(--_this.currentTrack);
+				}
+			});
+			$('.fastforward').on('click', function () {
+				if (_this.shuffle === 'true') {
+					_this.shufflePlay();
+				} else {
+					_this.switchTrack(++_this.currentTrack);
+				}
+			});
+			$('#playlist li').each(function (i) {
+				var _i = i;
+				$(this).on('click', function () {
+					_this.switchTrack(_i);
+                    _this.play();
+				});
+			});
+
+			if (_this.shuffle === 'true') $('.shuffle').addClass('enable');
+			if (_this.repeat == 1) {
+				$('.repeat').addClass('once');
+			} else if (_this.repeat == 2) {
+				$('.repeat').addClass('all');
+			}
+
+			$('.repeat').on('click', function () {
+				if ($(this).hasClass('once')) {
+					_this.repeat = localStorage.repeat = 2;
+					$(this).removeClass('once').addClass('all');
+				} else if ($(this).hasClass('all')) {
+					_this.repeat = localStorage.repeat = 0;
+					$(this).removeClass('all');
+				} else {
+					_this.repeat = localStorage.repeat = 1;
+					$(this).addClass('once');
+				}
+			});
+
+			$('.shuffle').on('click', function () {
+				if ($(this).hasClass('enable')) {
+					_this.shuffle = localStorage.shuffle = 'false';
+					$(this).removeClass('enable');
+				} else {
+					_this.shuffle = localStorage.shuffle = 'true';
+					$(this).addClass('enable');
+				}
+			});
+        }
+    }
+    obj.init.prototype = obj;
+    global["Launcher_JSONS"] = function(Start_Json){
+        config = Start_Json;
+    }
+    global["MPlayerUI"] = MPlayerUI;
+    global[name] = obj;
+})
+(window, "Mplayer")
+
+/*
+播放：Mp3Player.play();
+暂停：Mp3Player.pause();
+下一曲：Mp3Player.next();
+上一曲：Mp3Player.prev();
+控制音量(0-100)：Mp3Player.setVolume(60);
+*/
+
+</script>
+<script type="text/javascript">
+
+    /* 设置音乐控制窗口尺寸(必要),延迟两秒执行,避免冲突 */
+	/* Music_SetShowHwnd | 宽度 | 高度 | 标题区高度 */
+	/*setTimeout(function(){StarLauncher_CommandFunction('Music_SetShowHwnd', '402', '490', '40');},2000)*/
+	setTimeout(function(){StarLauncher_CommandFunction('Music_SetShowHwnd', '500', '490', '40');},2000)
+	
+    /* 启动器交互-播放音乐 */
+    function Music_control_play() {
+       Mp3Player.play_launcher();
+	   return true;
+    }
+
+    /* 启动器交互-停止音乐 */
+    function Music_control_stop() {
+       Mp3Player.pause_launcher();
+	   return true;
+    }
+
+    /* 启动器交互-上一首音乐 */
+    function Music_control_last() {
+       Mp3Player.prev();
+	   return true;
+    }
+
+    /* 启动器交互-下一首音乐 */
+    function Music_control_next() {
+       Mp3Player.next();
+	   return true;
+    }
+
+    /* 启动器交互-设置音量 */
+    function Music_control_volume(音量) {
+       Mp3Player.setVolume(音量);
+	   return true;
+    }
+
+
+
+</script>
+
+<!-- 导入根目录Json文件.添加时间变量在尾部避免文件缓存 -->
+<script type="text/javascript">
+	// 解决数据文件可能存在缓存文件,资源连接直接添加时间戳
+	var 局_时间戳 = new Date().getTime();
+	document.write('<script type="text/javascript" src="MineLauncher_Set.json?timestamp=' + 局_时间戳 + '"><\/script>');
+</script>
+
+</html>

@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE = edge,chrome=1">
+    <!-- 设置页面必须禁止缓存,否则某些设置可能有变化后无更新 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Game_contarols</title>
+    <!-- 页面通用CSS -->
+    <script src="JS/jquery-1.12.4.min.js"></script>
+    <script src="JS/jquery-1.7.2.min.js"></script>
+    <!-- 页面通用方法,应当在Jquery之后加载 -->
+    <link rel="stylesheet" href="CSS/public-webrender.css">
+    <script src="JS/public-function.js"></script>
+    <!-- <script src="./Slider.js"></script> -->
+    <!-- 公共样式 -->
+    <style>
+        .controlsMain {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            /* background: rgb(47, 47, 47); */
+            background: url(./IMG/zone_background.jpg);
+            background-size: 100% 100%;
+        }
+
+        .main {
+            background-color: rgba(59, 59, 59, 0.8);
+            width: 100%;
+            height: 100%;
+        }
+
+        .header {
+            height: 5.2%;
+            width: 100%;
+            background-color: rgb(59, 59, 59);
+            color: white;
+            font-size: 12px;
+            line-height: 28.4px;
+            text-align: center;
+            position: relative;
+        }
+
+        .content {
+            width: 100%;
+            height: 95%;
+            /* background-image: url(./IMG/zone_background.jpg);
+            background-size: 100% 100%; */
+            position: relative;
+        }
+
+        .content2 {
+            width: 100%;
+            height: 100%;
+            /* background-image: url(./IMG/zone_background.jpg);
+            background-size: 100% 100%; */
+        }
+
+        .con,
+        .con2,
+        .con3,
+        .con4 {
+            height: 100%;
+            width: 100%;
+            /* background-color: rgba(59, 59, 59, 0.8); */
+            position: relative;
+        }
+
+        .noshow {
+            display: none;
+        }
+    </style>
+    <!-- 加载页面样式 -->
+    <style>
+        .progressBar {
+            width: 90%;
+            height: 6px;
+            position: absolute;
+            left: 5%;
+            top: 78%;
+        }
+
+        .bar {
+            width: 100%;
+            position: relative;
+            top: -30px;
+            /* height: 7px;
+            background-color: rgb(37, 37, 37); */
+        }
+
+        .scroll {
+            /* width: 100%; */
+            height: 100%;
+            background-color: rgb(16, 124, 16);
+        }
+
+        .barTitle {
+            height: 21.2px;
+            display: flex;
+            line-height: 20px;
+            font-size: 12px;
+            margin-bottom: 14px;
+            color: white;
+        }
+
+        .parameter {
+            font-size: 12px;
+            height: 100%;
+            /* width: 80px; */
+            text-align: center;
+            background-color: rgb(250, 122, 0);
+            margin-right: 14px;
+			padding: 0 8px;
+			border: 1px solid white;
+        }
+		
+        .introduce {
+            font-size: 12px;
+            height: 100%;
+            width: 84%; 
+            text-align: left;
+		    border: 1px solid #ffffff00;
+        }
+    </style>
+    <!-- 加载完成页面 -->
+    <style>
+        .bottom {
+            position: absolute;
+            bottom: 0;
+            background-color: rgb(45, 166, 45);
+            height: 6.6%;
+			top: 98.8%;
+            width: 98%;
+            padding: 0 1%;
+            line-height: 32px;
+            text-align: center;
+        }
+
+        .bottom img {
+            left: 12px;
+            position: absolute;
+            top: 8px;
+            height: 50%;
+        }
+
+        .bottom span {
+            display: inline-block;
+            width: 80%;
+            margin: 0 auto;
+            color: white;
+            font-size: 12px;
+        }
+
+        .img {
+            position: relative;
+            height: 94%;
+        }
+
+        .img img {
+            position: absolute;
+            top: 100px;
+            left: 200px;
+        }
+    </style>
+    <!-- 退出界面 -->
+    <style>
+        .con3Title,
+        .button {
+            width: 60%;
+            position: relative;
+            color: white;
+            font-size: 12px;
+            height: 26px;
+            line-height: 24px;
+            left: 20%;
+
+        }
+
+        .con3Title {
+            padding-bottom: 8px;
+            border-bottom: 1px solid white;
+			margin-bottom: 10px;
+        }
+
+        .t {
+            float: left;
+            font-weight: 600;
+			font-size: 18px;
+        }
+
+        .state {
+            padding: 0 10px;
+            font-size: 12px;
+            float: right;
+            /* width: 80px; */
+            text-align: center;
+            height: 24px;
+            /* line-height: 20px; */
+            background-color: rgb(16, 124, 16);
+        }
+
+        .button {
+            /* margin-top: 15px; */
+            /* border-top: 1px solid white; */
+            padding-top: 8px;
+        }
+
+        .button .ret {
+            float: left;
+            height: 108%;
+            width: 114px;
+            border: 1px solid white;
+            text-align: center;
+			cursor: pointer;
+        }
+
+        .button .export {
+            float: right;
+            height: 108%;
+            width: 150px;
+            border: 1px solid white;
+            text-align: center;
+			cursor: pointer;
+        }
+
+        .button .problem {
+            float: right;
+            height: 108%;
+            width: 102px;
+            border: 1px solid white;
+            text-align: center;
+            margin-right: 10px;
+			cursor: pointer;
+        }
+
+        .button .export img,
+        .button .ret img,
+        .button .problem img {
+            position: relative;
+            height: 80%;
+            top: 2.8px;
+            margin-right: 4px;
+        }
+
+        .button .export span,
+        .button .ret span,
+        .button .problem span {
+            position: relative;
+            top: -3.2px;
+        }
+
+        .report {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            position: relative;
+            left: 20%;
+            height: 350px;
+            width: 60%;
+            overflow-y: auto;
+            /* border-bottom: 1px solid white; */
+            font-size: 12.2px;
+            color: white;
+            word-break: break-all;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            /* padding-bottom: 10px; */
+        }
+
+        .word {
+            position: absolute;
+            top: -5px;
+            margin-right: 5px;
+            padding-bottom: 15px;
+        }
+
+        .Con {
+            position: relative;
+            top: 48px; 
+        }
+    </style>
+    <style>
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 15px;
+            background: rgb(60, 57, 59, 0.22);
+        }
+
+        ::-webkit-scrollbar-track {
+            border-radius: 0;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 0;
+            background: rgb(250, 122, 0);
+            transition: all 0.2s;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(95, 95, 95, 0.7);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 加载页面 -->
+    <div class="controlsMain" id="loading">
+        <div class="main">
+            <div class="header">
+                Start Loading
+            </div>
+            <div class="content">
+                <div class="con">
+                    <div class="progressBar">
+                        <div class="barTitle">
+                            <div class="parameter">Load</div>
+                            <div class="introduce">启动游戏初始化中</div>
+                        </div>
+                        <div class="bar" id="bar">
+                        </div>
+                    </div>
+                </div>
+                <div class="con2 noshow">
+                    <div class="img"><img src="./IMG/game_controls_success.png" alt=""></div>
+                    <div class="bottom">
+                        <img src="./CSS/game_controls_icon/图标_勾.svg" alt="">
+                        <span>启动已完成，游戏窗口已出现，少年开始你的游戏旅途叭 ！</span>
+                    </div>
+                </div>
+            </div>
+            <div class="content2 noshow">
+                <div class="con3">
+                    <div class="Con">
+                        <div class="con3Title">
+                            <div class="t">Minecraft 客户端已退出</div>
+                            <div class="state">-</div>
+                        </div>
+                        <div class="report">
+                            <div class="word">
+                            </div>
+                        </div>
+                        <div class="button">
+                            <div class="ret" onclick="内部_按钮事件响应('return_selectzone')">
+                                <img src="./CSS/game_controls_icon/图标_返回选区.svg" alt="">
+                                <span>返回选区处</span>
+                            </div>
+                            <div class="export" onclick="内部_按钮事件响应('export_gamerunlog')">
+                                <img src="./CSS/game_controls_icon/图标_导出运行日志.svg" alt="">
+                                <span>导出游戏日志分析</span>
+                            </div>
+                            <div class="problem noshow" onclick="javascript:window.open('https://gitee.com/starnet_cloud/StarLauncher-v5/wikis')">
+                                <img src="./CSS/game_controls_icon/图标_常见问题.svg" alt="">
+                                <span>常见问题</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        var  变量_进度 = 0
+
+		/* 启动器交互-切换加载显示页 */
+        function Game_Controls_SwitchPage(序号) {
+			// 序号 1=加载页 2=启动完成 3=结束页
+            if( 序号 == 1 ){
+                $('.con').removeClass('noshow')
+                $('.con2').addClass('noshow')
+                $('.content2').addClass('noshow')
+            }else if(序号 == 2 ){
+				$('.header').addClass('noshow')
+                $('.con2').removeClass('noshow')
+                $('.con').addClass('noshow')
+                $('.content2').addClass('noshow')
+            }else if(序号 == 3 ){
+				$('.header').addClass('noshow')
+				$('.content').addClass('noshow')
+				$('.content2').removeClass('noshow')
+            }else{
+                Game_Controls_SwitchPage(1);
+            }
+        }
+
+		/* 启动器交互-设置显示加载信息 */
+        function Game_Controls_SetLoadInfo(信息项目, 信息文本) {
+            $('.parameter').html(信息项目);
+			$('.introduce').html(信息文本);
+        }
+		
+		/* 启动器交互-设置显示加载进度 */
+        function Game_Controls_SetLoadSpeed(进度) {
+            this.变量_进度 = 进度 / 100
+        }
+		
+		/* 启动器交互-设置加载中顶栏区服名字 */
+        function Game_Controls_SetHeaderText(标题) {
+            $('.header').html(标题)
+        }
+
+		/* 启动器交互-设置游戏关闭页显示类型 */
+        function Game_Controls_SetCloseSataus(类型) {
+            // 类型 1=正常关闭 2=崩溃(游戏中) 3=崩溃(启动时) 
+            $('.header').addClass('noshow')
+            $('.content').addClass('noshow')
+            $('.content2').removeClass('noshow')
+			
+            if (类型 == 1) {
+                $('.report').addClass('noshow')
+                $('.state').html('正常退出游戏')
+                $('.state').css('background', 'rgb(16,124,16)')
+                $('.Con').css('top', '234px')
+				$('.button').css('border-top', '0px solid white')
+				$('.button').css('padding-top', '0px')
+            }
+            if (类型 == 2) {
+                $('.state').css('background', 'rgb(250,120,0)')
+                $('.state').html('游戏中崩溃')
+                $('.problem').removeClass('noshow')
+                $('.Con').css('top', '48px')
+				$('.button').css('border-top', '1px solid white')
+            }
+            if (类型 == 3) {
+                $('.state').css('background', 'rgb(167,90,62)')
+                $('.state').html('启动时崩溃')
+                $('.problem').removeClass('noshow')
+                $('.Con').css('top', '48px')
+				$('.button').css('border-top', '1px solid white')
+            }
+			
+        }
+
+		/* 启动器交互-设置游戏关闭页显示游戏日志文本(内容URL编码) */
+        function Game_Controls_SetGameRunLogs(日志文本) {
+            // Game_Controls_SetCloseSataus(2)
+			var 文本 = decodeURIComponent(((日志文本 == "" || 日志文本 == undefined) ? "" : 日志文本));
+			$('.report').html(文本);
+        }
+
+        function 内部_按钮事件响应(事件标识) {
+            StarLauncher_CommandFunction('Game_controls_function', 事件标识)
+        }
+
+        // 获取进度
+        function 内部_获取进度条进度() {
+            // console.log((变量_进度*($('.content').width()*0.9))/($('.content').width()*0.9)*100);
+            return  (变量_进度*($('.content').width()*0.9))/($('.content').width()*0.9)*100
+        }
+		
+        /* 测试进度条使用
+        var s = setInterval(()=>{
+		    var i = 0
+            i+=0.005
+            setload(i)
+            if(i >1){
+                clearInterval(s)
+            }
+			console.log(i);
+        },10) */
+		
+    </script>
+    <!-- 进度条特效 -->
+    <script>
+        /*========================================================*/
+        /* Light Loader
+        /*========================================================*/
+        var lightLoader = function (c, cw, ch) {
+            var _this = this;
+            this.c = c;
+            this.ctx = c.getContext('2d');
+            this.cw = cw;
+            this.ch = ch;
+            this.loaded = 0;
+            this.loaderSpeed = .1;
+            this.loaderHeight = 2;
+            this.loaderWidth = $('.content').width() * 0.9;
+            this.loader = {
+                x: (this.cw / 2) - (this.loaderWidth / 2),
+                y: (this.ch / 2) - (this.loaderHeight / 2)
+            };
+            this.particles = [];
+            this.particleLift = 140;
+            this.hueStart = 0
+            this.hueEnd = 120;
+            this.hue = 0;
+            this.gravity = .15;
+            this.particleRate = 4;
+
+            /*========================================================*/
+            /* Initialize
+            /*========================================================*/
+            this.init = function () {
+                this.loop();
+            };
+            /*========================================================*/
+            /* Utility Functions
+            /*========================================================*/
+            this.rand = function (rMi, rMa) { return ~~((Math.random() * (rMa - rMi + 1)) + rMi); };
+            this.hitTest = function (x1, y1, w1, h1, x2, y2, w2, h2) { return !(x1 + w1 < x2 || x2 + w2 < x1 || y1 + h1 < y2 || y2 + h2 < y1); };
+
+            /*========================================================*/
+            /* Update Loader
+            /*========================================================*/
+            this.updateLoader = function () {
+                if (this.loaded < 100) {
+                    this.loaded = 内部_获取进度条进度();
+                } else {
+                    // 进度条 到头
+                    this.loaded = 100;
+                    // console.log(100);
+                }
+            };
+            /*========================================================*/
+            /* Render Loader
+            /*========================================================*/
+            // 22222222222222222
+            this.renderLoader = function () {
+                this.ctx.fillStyle = '#000';
+                this.ctx.fillRect(this.loader.x, this.loader.y, this.loaderWidth, this.loaderHeight);
+                this.hue = this.hueStart + (this.loaded / 100) * (this.hueEnd - this.hueStart);
+                var newWidth = (this.loaded / 100) * this.loaderWidth;
+                // this.ctx.fillStyle = 'hsla(' + this.hue + ', 100%, 40%, 1)';
+                this.ctx.fillStyle = 'rgb(16,124,16)';
+                this.ctx.fillRect(this.loader.x, this.loader.y-1, newWidth, this.loaderHeight+2);
+                // this.ctx.fillStyle = '#000';
+                // this.ctx.fillRect(this.loader.x, this.loader.y, newWidth, this.loaderHeight / 2);
+            };
+            /*========================================================*/
+            /* Particles
+            /*========================================================*/
+            this.Particle = function () {
+                this.x = _this.loader.x + ((_this.loaded / 100) * _this.loaderWidth) - _this.rand(0, 1);
+                // console.log(this.x); 354
+                this.y = _this.ch / 2 + _this.rand(0, _this.loaderHeight) - _this.loaderHeight / 2;
+                // console.log(this.y); 50
+                this.vx = (_this.rand(0, 4) - 2) / 100;
+                // console.log(this.vx); 0.2- -0.2
+                this.vy = (_this.rand(0, _this.particleLift) - _this.particleLift * 2) / 100;
+                // console.log(this.vy);
+                this.width = _this.rand(2, 4) / 3;
+                // console.log(this.width); 0-2
+                this.height = _this.rand(4, 6) / 2;
+                // console.log(this.height); 0-2
+                this.hue = _this.hue;
+                // console.log(this.hue);
+            };
+            this.Particle.prototype.update = function (i) {
+                this.vx += (_this.rand(0, 6) - 3) / 100;
+                this.vy += _this.gravity;
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.y > _this.ch) {
+                    _this.particles.splice(i, 1);
+                }
+            };
+            // 111111111
+            this.Particle.prototype.render = function () {
+                _this.ctx.fillStyle = 'hsla(' + this.hue + ', 100%, ' + _this.rand(50, 70) + '%, ' + _this.rand(20, 100) / 100 + ')';
+                // _this.ctx.fillStyle = '#107C10';
+                _this.ctx.fillRect(this.x, this.y, this.width, this.height);
+            };
+            this.createParticles = function () {
+                var i = this.particleRate;
+                while (i--) {
+                    this.particles.push(new this.Particle());
+                };
+            };
+
+            this.updateParticles = function () {
+                var i = this.particles.length;
+
+                while (i--) {
+                    var p = this.particles[i];
+                    p.update(i);
+                };
+            };
+
+            this.renderParticles = function () {
+                var i = this.particles.length;
+                while (i--) {
+                    var p = this.particles[i];
+                    p.render();
+                };
+            };
+            /*========================================================*/
+            /* Clear Canvas
+            /*========================================================*/
+            this.clearCanvas = function () {
+                this.ctx.globalCompositeOperation = 'source-over';
+                this.ctx.clearRect(0, 0, this.cw, this.ch);
+                this.ctx.globalCompositeOperation = 'lighter';
+            };
+
+            /*========================================================*/
+            /* Animation Loop
+            /*========================================================*/
+            this.loop = function () {
+                var loopIt = function () {
+                    if (_this.loaded < 100) {
+                        requestAnimationFrame(loopIt, _this.c);
+                        _this.clearCanvas();
+                        _this.createParticles();
+
+                        _this.updateLoader();
+                        _this.updateParticles()
+
+                        _this.renderLoader();
+                        _this.renderParticles();
+                    }
+                    // else {
+                    //     $('.con').addClass('noshow')
+                    //     $('.con2').removeClass('noshow')
+                    //     var a = 1
+                    //     var se = setInterval(() => {
+                    //         if (a >= $('.header').height()) {
+                    //             $('.content').css('height', '100%')
+                    //             $('.header').addClass('noshow')
+                    //             clearInterval(se)
+                    //         }
+                    //         else {
+                    //             $('.header').css('top', -a)
+                    //             a += 2
+                    //         }
+                    //     }, 10);
+                    // }
+                };
+
+                loopIt();
+            };
+
+        };
+
+        /*========================================================*/
+        /* Check Canvas Support
+        /*========================================================*/
+        var isCanvasSupported = function () {
+            var elem = document.createElement('canvas');
+            return !!(elem.getContext && elem.getContext('2d'));
+        };
+
+        /*========================================================*/
+        /* Setup requestAnimationFrame
+        /*========================================================*/
+        var setupRAF = function () {
+            var lastTime = 0;
+            var vendors = ['ms', 'moz', 'webkit', 'o'];
+            for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+                window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+                window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+            };
+
+            if (!window.requestAnimationFrame) {
+                window.requestAnimationFrame = function (callback, element) {
+                    var currTime = new Date().getTime();
+                    var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                    var id = window.setTimeout(function () { callback(currTime + timeToCall); }, timeToCall);
+                    lastTime = currTime + timeToCall;
+                    return id;
+                };
+            };
+
+            if (!window.cancelAnimationFrame) {
+                window.cancelAnimationFrame = function (id) {
+                    clearTimeout(id);
+                };
+            };
+        };
+
+        /*========================================================*/
+        /* Define Canvas and Initialize
+        /*========================================================*/
+        if (isCanvasSupported) {
+            var c = document.createElement('canvas');
+            c.width = 810;
+            c.height = 120;
+            var cw = c.width;
+            var ch = c.height;
+            document.getElementById('bar').appendChild(c);
+            var cl = new lightLoader(c, cw, ch);
+            setupRAF();
+            cl.init();
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>

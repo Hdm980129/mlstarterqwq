@@ -1,0 +1,149 @@
+/* 通用页面样式 */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Microsoft YaHei, serif;
+}
+
+body {
+    overflow: hidden;
+    font-family: Tahoma, sans-serif;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+}
+
+/* 通用弹窗样式 */
+.floating-window .background-div {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background-color: black;
+	top: 0;
+}
+.floating-window .bottom-text {
+    position: fixed;
+    width: 100%;
+    height: 10vh;
+    bottom: 0;
+    text-align: center;
+    line-height: 10vh;
+    background-color: #0067b8;
+    font-size: 12px;
+    color: white;
+}
+.floating-window .center-msg-div {
+    top: 48vh;
+    left: 50vw;
+    width: 74vw;
+    /*自适应高度.取消高度锁定 height: 28vh;*/
+    position: absolute;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -o-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+    background-color: #0067b8;
+}
+.floating-window .center-msg-div h2 {
+    margin-left: 3.2%;
+    margin-top: 3%;
+    color: white;
+}
+.floating-window .center-msg-div p {
+    margin-left: 3.2%;
+    margin-right: 3%;
+    margin-top: 1.4%;
+    margin-bottom: 10%;
+    color: white;
+}
+.floating-window .center-msg-div input {
+    position: absolute;
+    padding: 4px 50px;
+    right: 2.8%;
+    /*自适应高度.取消百分比例 bottom: 11%;*/
+    bottom: 2vw;
+    color: white;
+    background-color: #0c76ca;
+    border-width: 2px;
+    border-color: #7db8e8;
+    border-style: solid;
+    cursor: pointer;
+    outline-width: 0;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+}
+.floating-window .center-msg-div input:hover {
+    border-width: 2px;
+    border-color: #0c76ca;
+    border-style: solid;
+    background-color: #7db8e8;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+}
+
+@keyframes loader {
+    1% {
+        left: -10%;
+        opacity: 1;
+    }
+
+    60% {
+        left: 110%;
+        opacity: 1;
+    }
+
+    61% {
+        opacity: 0;
+    }
+}
+
+/* 条形循环加载条 */
+#preload {
+    z-index: 1000;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transition: opacity .3s;
+}
+#preload span {
+    bottom: 0;
+    height: 5px;
+    width: 5px;
+    position: fixed;
+    background: #ffffff;
+    z-index: 1001;
+    display: inline-block;
+    margin: 0 2px;
+    border-radius: 100%;
+    animation: loader 4s infinite cubic-bezier(0.030, 0.615, 0.995, 0.415);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
+#preload span:nth-child(1) {
+    animation-delay: 0.5s;
+}
+#preload span:nth-child(2) {
+    animation-delay: 0.4s;
+}
+#preload span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+#preload span:nth-child(4) {
+    animation-delay: 0.2s;
+}
+#preload span:nth-child(5) {
+    animation-delay: 0.1s;
+}
+#preload span:nth-child(6) {
+    animation-delay: 0;
+}

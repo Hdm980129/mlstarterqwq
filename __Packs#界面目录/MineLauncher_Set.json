@@ -1,0 +1,144 @@
+Launcher_JSONS({
+    "StarLauncher": {
+		"title": "溟灵服务器 | 欢迎加入服务器 | Q群：230393963",
+		"wide": "902",
+		"high": "592"
+    },
+    "Set": {
+		"title": [
+			"招惹到末影人后，如果一直从正面盯着末影人两眼的正中间，那么它就会瞬移消失",
+			"下矿一定要注意观察四周，你永远不知道什么时候有一个老六僵尸在拐角等着你",
+			"你可以边钓鱼边睡觉噢，这样子起床就可以拿到鱼，节省一大堆时间"
+		],
+		"background": [
+			"IMG/background.jpg",
+			"IMG/background-2.jpg",
+			"IMG/background-3.jpg",
+			"IMG/background-4.jpg",
+			"IMG/background-5.jpg",
+			"IMG/background-6.jpg",
+			"IMG/background-7.jpg",
+			"IMG/background-8.jpg",
+			"IMG/background-9.jpg"
+		],
+		"title_switchtime": "5",
+		"background_switchtime": "10"
+    },
+    "Main": {
+		"title": [
+			"建议定期修改角色密码，完成绑定，这样子安全系数最高",
+			"进入服务器，如果有什么疑问可以随时联系服主",
+			"登录已完成，可以开始选区后进入游戏，也可以提前更换角色皮肤再游戏",
+			"建议设置内存不超过系统可用的，否则可能游戏过程内存溢出崩溃",
+			"不同区服数据是相互隔离的，包括模组这些数据文件夹也是隔离在对应版本文件夹内"
+		],
+		"background": [
+			"IMG/background-13.jpg",
+			"IMG/background-5.jpg",
+			"IMG/background-6.jpg",
+			"IMG/background-7.jpg",
+			"IMG/background-10.jpg",
+			"IMG/background-10.jpg",
+			"IMG/background-14.jpg"
+		]
+	},
+	"Muisccontrol":[{
+			"title":"Croatian Rhapsody",
+			"artist":"Maksim Mrvica",
+			"album":"Croatian Rhapsody",
+			"cover_png":"IMG/Music_png/1.jpg",
+			"music_link":"{srun_file}/.Minecraft/Music_files/1.mp3",
+			"music_length":"174"
+		},{
+			"title":"Oops J'Aime Pas L'Anglais",
+			"artist":"Gullia",
+			"album":"Oops J'Aime Pas L'Anglais",
+			"cover_png":"IMG/Music_png/2.jpg",
+			"music_link":"http://music.163.com/song/media/outer/url?id=862389187.mp3",
+			"music_length":"129"
+		},{
+			"title":"Something Just Like This",
+			"artist":"The Chainsmokers,Coldplay",
+			"album":"Something Just Like This",
+			"cover_png":"IMG/Music_png/3.jpg",
+			"music_link":"http://music.163.com/song/media/outer/url?id=3950909.mp3",
+			"music_length":"216"
+		},{
+			"title":"Forever Young",
+			"artist":"Various Artists",
+			"album":"Forever Young",
+			"cover_png":"IMG/Music_png/4.jpg",
+			"music_link":"http://music.163.com/song/media/outer/url?id=1066222.mp3",
+			"music_length":"193"
+		},{
+			"title":"Play Date Tik Tok",
+			"artist":"Viral DJs",
+			"album":"Play Date Tik Tok",
+			"cover_png":"IMG/Music_png/5.jpg",
+			"music_link":"{srun_file}/.Minecraft/Music_files/5.mp3",
+			"music_length":"178"
+		},{
+			"title":"Bang Bang Bang (Well Bootleg)",
+			"artist":"Well威尔",
+			"album":"Bang Bang Bang (Well Bootleg)",
+			"cover_png":"IMG/Music_png/6.jpg",
+			"music_link":"{srun_file}/.Minecraft/Music_files/6.mp3",
+			"music_length":"185"
+		},{
+			"title":"Tojana",
+			"artist":"Willyam Wiay",
+			"album":"Tojana",
+			"cover_png":"IMG/Music_png/7.jpg",
+			"music_link":"{srun_file}/.Minecraft/Music_files/7.mp3",
+			"music_length":"236"
+		},{
+			"title":"China - 广安",
+			"artist":"亦辰",
+			"album":"China - 广安",
+			"cover_png":"IMG/Music_png/8.jpg",
+			"music_link":"{srun_file}/.Minecraft/Music_files/8.mp3",
+			"music_length":"178"
+		},{
+			"title":"Just To Be In Love",
+			"artist":"ZEVENX",
+			"album":"Just To Be In Love",
+			"cover_png":"IMG/Music_png/9.jpg",
+			"music_link":"{srun_file}/.Minecraft/Music_files/9.mp3",
+			"music_length":"185"
+		},{
+			"title":"De Yang Gatal Gatal",
+			"artist":"昼漾",
+			"album":"De Yang Gatal Gatal",
+			"cover_png":"IMG/Music_png/10.jpg",
+			"music_link":"{srun_file}/.Minecraft/Music_files/10.mp3",
+			"music_length":"185"
+		},{
+			"title":"Better Than One",
+			"artist":"The Score",
+			"album":"Better Than One",
+			"cover_png":"IMG/Music_png/11.jpg",
+			"music_link":"http://music.163.com/song/media/outer/url?id=31446780.mp3",
+			"music_length":"239"
+		},{
+			"title":"Nothing on you",
+			"artist":"邓福如",
+			"album":"Nothing on you",
+			"cover_png":"IMG/Music_png/12.jpg",
+			"music_link":"http://music.163.com/song/media/outer/url?id=227724.mp3",
+			"music_length":"244"
+		},{
+			"title":"Normal No More",
+			"artist":"TTSM",
+			"album":"Normal No More",
+			"cover_png":"IMG/Music_png/13.jpg",
+			"music_link":"http://music.163.com/song/media/outer/url?id=1440570723.mp3",
+			"music_length":"199"
+		},{
+			"title":"Drive You Home",
+			"artist":"王嘉尔",
+			"album":"Drive You Home",
+			"cover_png":"IMG/Music_png/14.jpg",
+			"music_link":"http://music.163.com/song/media/outer/url?id=1864588584.mp3",
+			"music_length":"216"
+		}]
+})

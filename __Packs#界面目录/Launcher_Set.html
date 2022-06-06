@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- 设置页面必须禁止缓存,否则某些设置可能有变化后无更新 -->
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    <title>Launcher_Set</title>
+    <!-- 页面通用CSS -->
+    <script src="JS/jquery-1.7.2.min.js"></script>
+    <!-- 页面通用方法，应当在Jquery之后加载 -->
+    <script src="JS/public-function.js"></script>
+    <link rel="stylesheet" href="CSS/public-webrender.css">
+    <style>
+        /* 通用顶部提示栏样式 */
+        .loadBarTop {
+            background-color: black;
+            opacity: 0.6;
+            left: 50vw;
+            top: 0;
+            width: 100vw;
+            height: 6vh;
+            text-align: center;
+            position: absolute;
+            transform: translate(-50%, 0%);
+            -webkit-transform: translate(-50%, 0%);
+            -moz-transform: translate(-50%, 0%);
+        }
+
+        .loadBarTop p {
+            font-size: 14px;
+            position: absolute;
+            color: white;
+            top: 3vh;
+            left: 50vw;
+            width: 100vw;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+        }
+
+        /* 页面背景图样式 */
+        .backgroundImg {
+            width: 102%;
+            height: 102vh;
+            background: url(IMG/background.jpg) center no-repeat;
+            background-size: 100% 100%;
+            position: absolute;
+            left: -1%;
+            top: -1%;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+        }
+
+        /* 右边轮播图标志 */
+        #imgIndexBox {
+            right: 2vh;
+            top: 50vh;
+            width: 2vw;
+            text-align: center;
+            position: absolute;
+            transform: translate(0, -50%);
+            -webkit-transform: translate(0, -50%);
+            -moz-transform: translate(0, -50%);
+            overflow: hidden;
+        }
+
+        #imgIndexBox span {
+            display: list-item;
+            background-color: #ffffff;
+            margin: 12px 0;
+            border-radius: 50%;
+            opacity: 0.8;
+            width: 14px;
+            height: 14px;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+        }
+
+        #imgIndexBox span.active {
+            background-color: #00d300;
+        }
+    </style>
+    <style>
+        .Setmain {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background-color: rgb(47, 47, 47);
+        }
+
+        input[type='number'] {
+            -moz-appearance: textfield;
+        }
+
+        input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            display: inline-block;
+            text-align: center;
+            vertical-align: top;
+            line-height: 12px;
+            position: relative;
+            -webkit-appearance: none;
+            margin-bottom: 15px;
+            border: 1px solid #b3b3b3;
+        }
+
+        input[type="checkbox"]::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* background-color: rgb(47, 47, 47); */
+
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: url(./CSS/launcher_set_icon/图标_勾.png);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            /* border: 0px solid rgb(154, 153, 153); */
+            background: rgb(16, 124, 16);
+        }
+    </style>
+    <!-- 标题样式 -->
+    <style>
+        .header {
+            height: 10%;
+            background-color: rgb(59, 59, 59);
+            padding-left: 15px;
+            padding-right: 10px;
+            border-bottom: 3px solid rgba(37, 37, 37, 0.75);
+        }
+        .title {
+            width: 60%;
+            color: rgb(146, 146, 146);
+            /* line-height: 45px; */
+            font-size: 14px;
+            float: left;
+            height: 100%;
+            line-height: 58px;
+			margin-left: 4px;
+        }
+
+        .Setsetup {
+            float: right;
+            width: 30%;
+            height: 100%;
+        }
+        #return {
+            float: left;
+            position: relative;
+            top: 20%;
+            height: 60%;
+            width: 45%;
+            background-color: rgb(59, 59, 59);
+            margin-right: 8%;
+            color: white;
+            border: 1px solid #8f8f8f;
+        }
+        #return span{
+            float: right;
+            width: 44%;
+            line-height: 30px;
+            padding-right: 20px;
+        }
+        #return img {
+            float: left;
+            height: 76%;
+            width: 24%;
+            position: relative;
+            left: 10px;
+			top: 3.2px;
+        }
+
+        .btn {
+            position: relative;
+            top: 20%;
+            float: right;
+            height: 60%;
+            width: 55%;
+            color: white;
+            right: 10px;
+        }
+
+        /* 
+        .setup {
+            display: flex;
+            flex: 1;
+            line-height: 44px;
+        }
+
+        .setup button {
+            display: flex;
+            color: white;
+            width: 46%;
+            position: relative;
+            top: 20%;
+            height: 60%;
+            border: 1px solid rgb(106, 106, 106);
+            background-color: rgb(59, 59, 59);
+            text-align: center;
+            align-items: center;
+            padding-left: 7.8%;
+            margin-right: 4%;
+        }
+
+        .setup button img {
+            position: relative;
+            height: 80%;
+            margin-right: 15%;
+        } */
+    </style>
+    <!-- 多样式设计 -->
+    <style>
+        .content {
+            width: 100%;
+            height: 84%;
+            /* height  480 - 50 = 430 */
+            /* 430 - 220 = 1 */
+            background-color: rgb(47, 47, 47);
+            overflow-y: auto;
+            /* scrollbar-color: rgb(250, 120, 0); */
+        }
+
+        .content::-webkit-scrollbar {
+            width: 10px;
+            height: 100%;
+            background-color: rgba(37, 37, 37, 0);
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background-color: rgb(250, 120, 0);
+            border-radius: 15px;
+        }
+
+        .con {
+            height: 100%;
+            padding: 26px 30px 0px 30px;
+        }
+
+        .environmentSetup,
+        .memorySetup,
+        .extend {
+            margin-bottom: 4%;
+            height: 22.8%;
+        }
+
+        .name {
+            display: flex;
+            padding-left: 10px;
+            font-size: 12px;
+            height: 26%;
+            align-items: center;
+            /* line-height: 25px; */
+            background-color: rgb(16, 124, 16);
+            color: white;
+        }
+
+        .javaSetup,
+        .mSetup,
+        .extendsetup {
+            height: 76%;
+            background-color: rgb(37, 37, 37);
+            padding: 1% 16px;
+        }
+
+        .javatext {
+            position: absolute;
+            top: 7%;
+            /* height: 20px; */
+            /* line-height: 25px; */
+            height: 25%;
+            /* margin-bottom: 2%; */
+        }
+
+        .text1 {
+            color: white;
+            font-size: 12px;
+            font-weight: 500px;
+            margin-right: 10px;
+        }
+
+        .text2 {
+            color: rgb(117, 117, 117);
+            font-size: 12px;
+        }
+
+        .java,
+        .memory {
+            position: relative;
+            /* top: 55%; */
+            display: flex;
+            height: 100%;
+            /* margin: 25% 0 ; */
+            /* padding: 30% 0; */
+            /* line-height: 22px; */
+        }
+
+        .java .javacon {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            height: 100%;
+        }
+
+        .java input {
+            font-size: 12px;
+            color: white;
+            background-color: rgb(29, 29, 29);
+            border: 1px solid rgb(106, 106, 106);
+            position: absolute;
+            bottom: 14%;
+            width: 66%;
+            margin-right: 10px;
+            height: 34%;
+            padding-left: 10px;
+            /* height: 22px; */
+
+        }
+
+        .java .button1 {
+            width: 25%;
+        }
+
+        .java .button1 button {
+
+            height: 36%;
+            width: 14%;
+            font-size: 12px;
+            color: white;
+            border: 1px solid rgb(106, 106, 106);
+            /* border-radius: 1px 1px solid rgb(106, 106, 106); */
+        }
+    </style>
+    <!-- 内存设置 -->
+    <style>
+        .memorytext1 {
+            top: 8%;
+            position: absolute;
+        }
+
+        .memorytext2 {
+            position: absolute;
+            left: 28%;
+            top: 8%;
+        }
+
+        .memory input {
+            background-color: rgb(29, 29, 29);
+            border: 1px solid rgb(106, 106, 106);
+            text-align: center;
+            bottom: 14%;
+            position: absolute;
+            width: 25%;
+            color: white;
+            height: 33%;
+            border: 1px solid rgb(106, 106, 106);
+        }
+
+        .memory .input2 {
+            left: 28%;
+        }
+
+        .memory button {
+            text-align: center;
+            height: 36%;
+            bottom: 14%;
+            width: 24%;
+            position: absolute;
+            left: 56%;
+            color: white;
+            background-color: rgb(16, 124, 16);
+            border: 1px solid rgb(106, 106, 106);
+            font-size: 12px;
+        }
+    </style>
+    <!-- 拓展设置 -->
+    <style>
+        .bottom {
+            display: flex;
+            height: 5.6%;
+            background-color: rgb(37, 37, 37);
+            /* padding-left: 15px; */
+        }
+
+        .bottom .bcon {
+            display: flex;
+            height: 100%;
+            /* line-height: 40px; */
+            align-items: center;
+            text-align: center;
+        }
+
+        .bottom .bcon .wb {
+            color: rgb(168, 168, 168);
+            font-size: 12px;
+            height: 100%;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 35px;
+        }
+
+        .bottom .img {
+            height: 100%;
+            width: 20%;
+            background-color: rgb(47, 47, 47);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bottom .img1 {
+            height: 100%;
+            width: 13%;
+            background-color: rgb(47, 47, 47);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bottom .img2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 8%;
+            background-color: rgb(47, 47, 47);
+
+        }
+
+        .bottom img {
+            height: 15px;
+        }
+    </style>
+    <!-- 底栏显示样式 -->
+    <style>
+        /* .extend {
+            margin-bottom: 2%;
+            height: 30%;
+        } */
+        .extend .name1 {
+            padding-left: 10px;
+            font-size: 12px;
+            height: 16.5%;
+            line-height: 22px;
+            background-color: rgb(16, 124, 16);
+            color: white;
+        }
+
+        .check {
+            vertical-align: top;
+            height: 30%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="Setmain">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="title">星登录 - 启动设置</div>
+            <div class="Setsetup">
+                <button id="return" onclick="内部_按钮响应事件(id,'return_main')" style="cursor: pointer;">
+                    <img src="./CSS/launcher_set_icon/箭头_上一页.svg" alt=""><span>返回</span></button>
+                <button class="btn" id="save_info" onclick="内部_启动设置页_保存设置();" style="
+					width:50%;padding-left: 0%;
+					background-color: rgb(250, 120, 0);
+					position: relative;
+					border: 0;
+					border: 1px solid #ffffff;
+					margin-right: -8px;
+					">
+                    <span style="text-align: center;display: inline-block;width: 100%;cursor: pointer;">保存设置</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 内容部分 -->
+        <div class="content">
+
+            <div class="con" style="height: 94%;">
+                <!-- 环境设置 -->
+                <div class="environmentSetup">
+                    <div class="name">游戏环境设置 (JAVA)</div>
+                    <div class="javaSetup">
+                        <div class="java">
+                            <div class="javatext"><span class="text1">环境版本</span> <span class="text2"
+                                    id="内部_显示_环境文件版本">未选定文件</span></div>
+                            <input type="text" readonly="readonly" id="内部_输入框_环境路径">
+                            <div class="button1">
+                                <button id="automatic" onclick="内部_按钮响应事件(id,'java_autoselect')"
+                                    style="background-color:green ;position: absolute;position: absolute;right: 16.2%;bottom: 14%;cursor: pointer;">
+                                    自动选择
+                                </button>
+                                <button id="Manual" onclick="内部_按钮响应事件(id,'java_manualselect')"
+                                    style="background-color:rgb(59, 59, 59);position: absolute;right: 0;bottom: 14%;cursor: pointer;">
+                                    手动选择
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 内存设置 -->
+                <div class="memorySetup">
+                    <div class="name">游戏内存设置 (MB)</div>
+                    <div class="mSetup">
+                        <div class="memory">
+                            <div class="memorytext1"><span class="text1">最小内存 (MIN)</span></div>
+                            <div class="memorytext2"><span class="text1">最大内存 (MAX)</span> </div>
+                            <!-- 设置输入框可输入正则内容 -->
+                            <input type="number" id="内部_输入框_最小内存"
+                                onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+                            <!-- 设置输入框可输入正则内容 -->
+                            <input type="number" class="input2" id="内部_输入框_最大内存"
+                                onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+                            <button id="automaticMemory" onclick="内部_按钮响应事件(id,'money_autoselect')"
+                                style="cursor: pointer;">自动根据系统内存推荐</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 拓展功能设置 -->
+                <div class="extend">
+                    <div class="name">拓展功能开关 (FUN)</div>
+                    <div class="extendsetup" style="padding:2.4% 16px;">
+                        <form>
+                            <input class="check" type="checkbox" value="1" style="cursor: pointer;" id="选择_兼容模式">
+                            <span
+                                style="color: white;font-size:12px;font-weight:100;vertical-align:top;padding-left:4px;">使用兼容模式启动游戏 (如果游戏启动出现错误建议开启本选项)</span>
+                            <br>
+                            </input>
+                            <input class="check" type="checkbox" value="2" style="cursor: pointer;" id="选择_低性能占用">
+                            <span
+                                style="color: white;font-size:12px;font-weight:100;vertical-align:top;padding-left:4px;">游戏低占用模式 (如果处理器核心数比较少建议勾选)</span>
+                            <br>
+                            </input>
+                            <input class="check" type="checkbox" value="3" style="cursor: pointer;" id="选择_自动清理垃圾">
+                            <span
+                                style="color: white;font-size:12px;font-weight:100;vertical-align:top;padding-left:4px;">游戏正常关闭后自动清理垃圾文件 (如果需要分析报告不建议开启此选项)</span>
+                            <br>
+                            </input>
+                        </form>
+                    </div>
+                </div>
+                <!-- 后续扩展功能代码模板 -->
+                <!-- <div class="environmentSetup">
+                    <div class="name">游戏环境设置 (JAVA)</div>
+                    <div class="javaSetup">
+                        <div class="java">
+                            <div class="javatext"><span class="text1">环境版本</span> <span class="text2">未选定文件</span></div>
+                            <input type="text">
+                            <div class="button1">
+                                <button id="automatic" onclick="内部_按钮响应事件(id)"
+                                    style="background-color:green ;position: absolute;position: absolute;right: 15.5%;bottom: 20%;">
+                                    自动选择
+                                </button>
+                                <button id="Manual" onclick="内部_按钮响应事件(id);open_disk('c')"
+                                    style="background-color:rgb(59, 59, 59);position: absolute;right: 0;bottom: 20%;">
+                                    手动选择
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+        </div>
+
+        <!-- 系统信息显示底栏 -->
+
+        <div class="bottom">
+            <div class="bcon" style="width:20%;">
+                <div class="img"><img src="./CSS/launcher_set_icon/图标_使用率.svg" alt=""></div>
+                <div class="wb"><span id="cpuuse">Load</span></div>
+            </div>
+            <div class="bcon" style="width:30%;">
+                <div class="img1"><img src="./CSS/launcher_set_icon/图标_内存.svg" alt=""></div>
+                <div class="wb">
+                    <span id="freemoney">Load</span><span>&nbsp;(可用|最大)&nbsp;</span><span id="maxmoney">Load</span>
+                </div>
+            </div>
+            <div class="bcon" style="width:50%;">
+                <div class="img2"><img src="./CSS/launcher_set_icon/图标_系统.svg" alt=""></div>
+                <div class="wb" id="systemver">Load</div>
+            </div>
+        </div>
+    </div>
+</body>
+<!-- <script src="./MineLauncher_Set.json"></script> -->
+<script type="text/javascript">
+
+    /* 获取保存的设置显示&页面设置定时器定时获取系统数据 */
+    $(function () {
+        StarLauncher_CommandFunction('Launcher_Set_function', 'get_projectdatas', 'null')
+        setTimeout(function () { StarLauncher_CommandFunction('Launcher_Set_function', 'get_systeminfo', 'null'); }, 4000);
+    })
+
+    function 内部_按钮响应事件(按钮标识, 功能标识) {
+        StarLauncher_CommandFunction('Launcher_Set_function', 功能标识, 'null')
+        // 按钮显示点击特效
+        targetid = document.getElementById(按钮标识)
+        targetid.style.border = '1px solid #ffffff'
+        setTimeout(() => {
+            targetid.style.border = '1px solid rgb(106, 106, 106)'
+        }, 200)
+    }
+
+    function 内部_启动设置页_保存设置() {
+	
+		Prevent_OpenWaitFloatingWindow_Load('正在保存数据，请等待处理完成')
+		// 多个项目设置保存操作间隔,不然可能出现错误
+        setTimeout(function () { 
+				StarLauncher_CommandFunction('Launcher_Set_Saveproject', '环境路径', getTextformat($("#内部_输入框_环境路径").val())); 
+		setTimeout(function () { 
+				StarLauncher_CommandFunction('Launcher_Set_Saveproject', '最小内存', getTextformat($("#内部_输入框_最小内存").val()));
+		setTimeout(function () { 
+				StarLauncher_CommandFunction('Launcher_Set_Saveproject', '最大内存', getTextformat($("#内部_输入框_最大内存").val()));
+		setTimeout(function () { 
+				StarLauncher_CommandFunction('Launcher_Set_Saveproject', '兼容模式', $("#选择_兼容模式").is(":checked") == true ? "1" : "0");
+		setTimeout(function () { 
+				StarLauncher_CommandFunction('Launcher_Set_Saveproject', '低性能占用', $("#选择_低性能占用").is(":checked") == true ? "1" : "0");
+		setTimeout(function () { 
+				StarLauncher_CommandFunction('Launcher_Set_Saveproject', '自动清理垃圾', $("#选择_自动清理垃圾").is(":checked") == true ? "1" : "0");
+				Prevent_OpenTipsFloatingWindow('温馨提示', '全部配置项目数据已经保存完成');
+		}, 1400);
+		}, 1400);
+		}, 1400);
+		}, 1400);
+		}, 1400);
+		}, 1400);
+    }
+
+    /* 启动器交互-设置显示的系统信息文本 */
+    function Launcher_Set_Dispsysteminfo(使用率, 可用内存, 最大内存, 系统名称) {
+        document.getElementById('freemoney').innerHTML = 可用内存;
+        document.getElementById('maxmoney').innerHTML = 最大内存;
+        document.getElementById('cpuuse').innerHTML = 使用率 + ' %';
+        document.getElementById('systemver').innerHTML = 系统名称;
+        // 继续下次定时获取
+        setTimeout(function () { StarLauncher_CommandFunction('Launcher_Set_function', 'get_systeminfo', 'null'); }, 4000);
+    }
+
+    /* 启动器交互-设置当前已设置数据项目 */
+    function Launcher_Set_Editprojectdatas(文本_环境路径, 显示_环境文件版本, 文本_最小内存, 文本_最大内存, 选择_兼容模式, 选择_低性能占用, 选择_自动清理垃圾) {
+        $("#内部_输入框_环境路径").val(文本_环境路径);
+        $("#内部_显示_环境文件版本").html(显示_环境文件版本);
+        $("#内部_输入框_最小内存").val(文本_最小内存);
+        $("#内部_输入框_最大内存").val(文本_最大内存);
+        document.getElementById("选择_兼容模式").checked = (选择_兼容模式 == "1" ? true : false)
+        document.getElementById("选择_低性能占用").checked = (选择_低性能占用 == "1" ? true : false)
+        document.getElementById("选择_自动清理垃圾").checked = (选择_自动清理垃圾 == "1" ? true : false)
+    }
+	
+    /* 启动器交互-设置环境文件数据 */
+    function Launcher_Set_Editjavapathdata(文本_环境路径, 显示_环境文件版本) {
+        $("#内部_输入框_环境路径").val(文本_环境路径);
+        $("#内部_显示_环境文件版本").html(显示_环境文件版本);
+    }	
+	
+    /* 启动器交互-设置内存设置数据 */
+    function Launcher_Set_Editmoneydata(文本_最小内存, 文本_最大内存) {
+        $("#内部_输入框_最小内存").val(文本_最小内存);
+        $("#内部_输入框_最大内存").val(文本_最大内存);
+    }	
+	
+</script>
+
+</html>

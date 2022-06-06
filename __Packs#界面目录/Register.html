@@ -1,0 +1,1365 @@
+﻿<!DOCTYPE html>
+<html lang="zhcn">
+<head>
+    <meta charset="utf-8"/>
+	<!-- 设置页面必须禁止缓存,否则某些设置可能有变化后无更新 -->
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    <title>Register</title>
+    <!-- 页面通用CSS -->
+    <link rel="stylesheet" href="CSS/public-webrender.css">
+    <script src="JS/jquery-1.12.4.min.js"></script>
+    <!-- 页面通用方法，应当在Jquery之后加载 -->
+    <script src="JS/public-function.js"></script>
+    <style>
+        /* 通用顶部提示栏样式 */
+        .loadBarTop {
+            background-color: black;
+            opacity: 0.6;
+            left: 50vw;
+            top: 0;
+            width: 100vw;
+            height: 6vh;
+            text-align: center;
+            position: absolute;
+            transform: translate(-50%, 0%);
+            -webkit-transform: translate(-50%, 0%);
+            -moz-transform: translate(-50%, 0%);
+        }
+
+        .loadBarTop p {
+            font-size: 14px;
+            position: absolute;
+            color: white;
+            top: 3vh;
+            left: 50vw;
+            width: 100vw;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+        }
+
+        /* 页面背景图样式 */
+        .backgroundImg {
+            width: 102%;
+            height: 102vh;
+            background: url(IMG/background.jpg) center no-repeat;
+            background-size: 100% 100%;
+            position: absolute;
+            left: -1%;
+            top: -1%;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+        }
+
+        /* 右边轮播图标志 */
+        #imgIndexBox {
+            right: 2vh;
+            top: 50vh;
+            width: 2vw;
+            text-align: center;
+            position: absolute;
+            transform: translate(0, -50%);
+            -webkit-transform: translate(0, -50%);
+            -moz-transform: translate(0, -50%);
+            overflow: hidden;
+        }
+
+        #imgIndexBox span {
+            display: list-item;
+            background-color: #ffffff;
+            margin: 12px 0;
+            border-radius: 50%;
+            opacity: 0.8;
+            width: 14px;
+            height: 14px;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+        }
+
+        #imgIndexBox span.active {
+            background-color: #00d300;
+        }
+    </style>
+</head>
+<body>
+<div class="backgroundImg"></div>
+<div class="loadBarTop">
+    <p>页面动态标题</p>
+</div>
+<!--    通用样式-->
+<style>
+    .topLine {
+        height: 42px;
+    }
+
+    .topLine p {
+        color: white;
+        font-size: 0.4rem;
+        padding-left: 18px;
+		font-size: 12px;
+        /*font-weight: 600;*/
+        line-height: 42px;
+        background-color: #008000;
+        border-style: solid;
+        border-width: 0 0 1px 0;
+        /*border-color: #ffc000;*/
+    }
+
+    .contentDiv p {
+        border-color: rgba(170, 170, 170, .8);
+        border-top-width: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        border-bottom-width: 0;
+        padding-left: 0;
+        outline-width: 0;
+        font-size: 18px;
+    }
+    input.topBotton {
+        transform: translate(0%, 0%);
+        background-size: 42%;
+        background-repeat: no-repeat;
+        background-position: 13px;
+        position: absolute;
+        width: 42px;
+        height: 42px;
+        right: 1px;
+        top: 1px;
+    }
+    .userSpan {
+        font-size: 12px;
+        line-height: 32px;
+    }
+</style>
+<!--    通用结束-->
+<!--    用户协议样式-->
+<style>
+    #用户协议显示夹 {
+        top: 52vh;
+        left: 50vw;
+        width: 530px;
+        height: 360px;
+        position: absolute;
+        background-color: white;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-box-shadow: 0 0 20px 1px #646464bd;
+        -moz-box-shadow: 0 0 20px 1px #646464bd;
+        box-shadow: 0 0 20px 1px #646464bd;
+        -webkit-transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+    }
+
+    #用户协议显示夹 .centerDiv {
+        width: 100%;
+        height: 100%;
+        background-color: #f3f3f3;
+		border: 1px solid #FA7A00;
+    }
+
+    #用户协议显示夹 .bottomLine input[type="button"] {
+        margin: 14px 14px 0px 0px;
+        padding: 4px 40px;
+        font-size: 12px;
+        float: right;
+        color: white;
+        border-radius: 2px;
+        background-color: #008000;
+        border-width: 0;
+        cursor: pointer;
+        outline-width: 0;
+        -webkit-transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+    }
+
+    #用户协议显示夹 .bottomLine input[type="button"].btn.cakjsdl {
+        background-color: #FA7A00;
+    }
+
+    #用户协议显示夹 .bottomLine input[type="button"].btn.cakjsdl:hover {
+        background-color: #FA7A00;
+    }
+
+    #用户协议显示夹 .bottomLine input[type="button"]:hover {
+        border-width: 0;
+        /*background-color: #42b157;*/
+        background-color: #008000;
+        -webkit-transition: all 0.2s linear;
+        -moz-transition: all 0.2s linear;
+        -o-transition: all 0.2s linear;
+        transition: all 0.2s linear;
+    }
+
+    #用户协议显示夹 .centerDiv .contentDiv {
+        color: black;
+        background-color: white;
+        height: 244px;
+        font-size: 12px;
+        padding: 10px;
+        overflow: auto;
+    }
+
+    #yhxyContent {
+        margin-top: 0px;
+    }
+</style>
+<div class="centerBox" id="用户协议显示夹" style="display: none">
+    <div class="centerDiv">
+        <div class="topLine">
+            <p>溟灵团队 (软件使用协议&隐私协议)</p>
+        </div>
+        <div class="contentDiv" id="yhxyContent">
+                ★在此特别提醒您（用户）在注册成为用户之前，请认真阅读本《用户协议》（以下简称“协议”），确保您充分理解本协议中各条款。<br><br>
+                ★请您审慎阅读并选择接受或不接受本协议。您的注册、登录、使用等行为将视为对本协议的接受，并同意接受本协议各项条款的约束。<br><br>
+                ★本协议约定溟灵服务器（以下简称“溟灵”）与用户之间关于“溟灵启动器”软件服务的权利义务。<br><br>
+                ★“用户”是指注册、登录、使用本程序的个人。本协议可由溟灵在线随时更新，更新后的协议条款一旦公布即代替原来的协议条款，恕不再另行通知。<br><br>
+                ★在修改协议条款后，如果用户不接受修改后的条款，请立即停止使用本软件所提供的功能服务，用户继续使用服务将被视为接受修改后的协议。<br><br>
+                ★本系统分前端("启动器")，后端("控制台")所组成，溟灵不参与控制台的运营以及运行产生的用户数据等等。<br><br>
+                <br>
+                —————————————————————————————<br>
+                <br>
+                一、我们所收集的信息以及如何使用：<br>
+                <br>
+                (1) 软件所用数据：<br>
+                <br>
+                我们可能通过您的IP地址，地理位置信息，电脑唯一识别码，收集一些非个人隐私的统计资料，使我们能够进一步改善程序的服务。<br>
+                软件数据缓存从网络服务器发送到启动器，并储存到电脑硬盘上的少量数据，通常包括一些特殊标识符，设置信息，是用来记录您的使用者等等。<br>
+                多数用于登录时候的信息，以便快速登录和替换个人习惯设置。<br>
+                <br>
+                (2) 注册时填写的信息：<br>
+                <br>
+                注册时所需要的安全密保，QQ号码，邮箱账号，正版MC角色等均用于绑定溟灵启动器内角色，不作用于其他用途。<br>
+                <br>
+                二、信息公开与共享<br>
+                <br>
+                (1) 已获得用户的明确授权；<br>
+                <br>
+                (2) 根据有关法律法规的要求或按照法院或相关政府部门的要求；<br>
+                <br>
+                (3) 为维护系统的合法权益；<br>
+                <br>
+                (4) 为维护系统的用户和社会公众的合法权益；<br>
+                <br>
+                (5) 控制台运营者认为有必要的其他情况。<br>
+                <br>
+                三、信息的更新和删除<br>
+                <br>
+                在您的个人资料有变动的情况下，您可以更新和修改您的个人资料已使其有效。您在任何时候都能非常容易地使用您的注册名与密码登录本系统以修改或删除您的个人资料及档案。<br>
+                <br>
+                四、保护您的隐私<br>
+                <br>
+                信息由运营所在的控制台服务器保存，溟灵官方不参与任何获取途径。<br>
+                <br>
+                五、更新隐私条款<br>
+                <br>
+                我们可能会对系统的隐私权政策进行修改，如果在使用用户个人信息政策方面有大幅度修改时，会通过公告信息通知到您。<br>
+                <br>
+                六、程序的最终说明<br>
+                <br>
+                (1) "Minecraft"以及"我的世界"为美国微软公司的商标以及程序，本系统以及公司与微软公司没有从属关系，溟灵启动器仅为此程序提供附加拓展功能系统。<br>
+                <br>
+                (2) 本系统开放SDK接口可供插件作者拓展功能，第三方插件功能提供均由插件作者所负责以及开发维护，第三方插件提供的广告以及功能。除法律法规明确规定外，用户应自行对依该插件进行的判断主观可用性，对用户因依该第三方插件提供内容进行的交易或或遭受的损失或损害，星域互联以及本系统不承担任何责任。<br>
+                <br>
+                (3) 本协议的任何条款无论因何种原因无效或不具可执行性，其余条款仍有效，对双方具有约束力。本协议的效力、解释及纠纷的解决，适用于中华人民共和国法律。若用户和本系统功能之间发生任何纠纷或争议，首先应友好协商解决，协商不成的，用户可以考虑注销账户不再使用。<br>
+                <br>
+        </div>
+        <div class="bottomLine" style="">
+            <input type="button" onclick="内部_同意协议()" value="同意协议">
+            <input type="button" class="btn cakjsdl" onclick="内部_拒绝协议()" value="拒绝协议">
+        </div>
+    </div>
+</div>
+<!--    用户协议结束-->
+<!--    用户名卡样式-->
+<style>
+    #角色名设置显示夹 {
+        top: 52vh;
+        left: 50vw;
+        width: 300px;
+        height: 190px;
+        position: absolute;
+        background-color: white;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-box-shadow: 0 0 20px 1px #646464bd;
+        -moz-box-shadow: 0 0 20px 1px #646464bd;
+        box-shadow: 0 0 20px 1px #646464bd;
+        -webkit-transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+    }
+
+    #角色名设置显示夹 .centerDiv {
+        /*width: 100%;*/
+        height: 100%;
+        background-color: white;
+	    border: 1px solid #FA7A00;
+    }
+
+    #角色名设置显示夹 .bottomLine input[type="button"] {
+        padding: 3px 6px;
+        font-size: 10px;
+        color: white;
+        background-color: #008000;
+        border-width: 0;
+        cursor: pointer;
+        outline-width: 0;
+        -webkit-transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+        border-radius: 2px;
+    }
+
+    #角色名设置显示夹 .bottomLine input[type="button"].btn.btn1 {
+        position: absolute;
+        left: 22px;
+        bottom: 20px;
+        width: 256px;
+        line-height: 24px;
+    }
+
+    #角色名设置显示夹 .bottomLine input[type="button"].btn.btn1:hover {
+
+    }
+
+    #角色名设置显示夹 .bottomLine input[type="button"].btn.btn2 {
+        background-image: url(IMG/主页.svg);
+        border-radius: 0px;
+    }
+
+    #角色名设置显示夹 .bottomLine input[type="button"].btn.btn2:hover, .btn.btn2:active {
+        background-color: #429f42;
+    }
+
+    #角色名设置显示夹 .bottomLine input[type="button"]:hover {
+        border-width: 0;
+        /*background-color: #42b157;*/
+        background-color: #008000;
+        -webkit-transition: all 0.2s linear;
+        -moz-transition: all 0.2s linear;
+        -o-transition: all 0.2s linear;
+        transition: all 0.2s linear;
+    }
+
+    #角色名设置显示夹 .centerDiv .contentDiv {
+        color: black;
+        background-color: white;
+        font-size: 12px;
+        padding: 13px 21px 0px 21px;
+        overflow: hidden;
+    }
+
+    #角色名设置显示夹 .contentDiv input[type="text"] {
+        width: 100%;
+        margin-top: 8px;
+        border-color: rgba(170, 170, 170, .8);
+        border-top-width: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        border-bottom-width: 0;
+        padding-left: 0;
+        outline-width: 0;
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .inputBottomLine:active, .inputBottomLine:hover {
+            border-color: #59d35e;
+    }
+
+    #yhmkContent {
+        margin-top: 4px;
+        margin-right: 1px;
+    }
+</style>
+<div class="centerBox" id="角色名设置显示夹" style="display: none">
+    <div class="centerDiv">
+        <div class="topLine">
+            <p>玩家注册 - 选定角色名</p>
+        </div>
+        <div class="contentDiv" id="yhmkContent">
+            <p>角色名称</p>
+            <div class="inputBottomLine">
+                <input type="text" class="输入框_角色名称" id="输入框_角色名称" placeholder="设置游戏内的角色名称">
+            </div>
+        </div>
+        <div class="bottomLine" style="">
+            <input type="button" class="btn btn1" onclick="内部_已设置用户名_下一步()" value="下一步">
+            <input type="button" class="btn btn2 topBotton" onclick="内部_打开登录页面()" value="">
+        </div>
+    </div>
+</div>
+<!--    用户名卡结束-->
+<!--    安全信息样式-->
+<style>
+    #安全信息显示夹 {
+        top: 52vh;
+        left: 50vw;
+        width: 300px;
+        height: 388px;
+        position: absolute;
+        background-color: white;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-box-shadow: 0 0 20px 1px #646464bd;
+        -moz-box-shadow: 0 0 20px 1px #646464bd;
+        box-shadow: 0 0 20px 1px #646464bd;
+        -webkit-transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+    }
+
+    #安全信息显示夹 .centerDiv {
+        /*width: 100%;*/
+        height: 100%;
+        background-color: white;
+		border: 1px solid #FA7A00;
+    }
+
+    #安全信息显示夹 .content0Div {
+        width: 100%;
+        background-color: #e6e8ea;
+        text-align: center;
+    }
+
+    #安全信息显示夹 .content0Div input[type="button"].btn.btn3 {
+        font-size: 12px;
+        transform: scale(0.8) translate(-50%, -50%);
+        float: right;
+        margin-top: 18px;
+        margin-right: -11.5px;
+        color: white;
+        background-color: #008000;
+        border-width: 0;
+        cursor: pointer;
+        outline-width: 0;
+        -webkit-transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+        border-radius: 2px;
+        padding: 4px 14px 4.5px 15px;
+    }
+
+    #安全信息显示夹 .content0Div input[type="button"].btn.btn3:hover {
+        background-color: #008000;
+        -webkit-transition: all 0.2s linear;
+        -moz-transition: all 0.2s linear;
+        -o-transition: all 0.2s linear;
+        transition: all 0.2s linear;
+    }
+
+    #安全信息显示夹 .bottomLine input[type="button"] {
+        padding: 3px 6px 4px 7px;
+        font-size: 10px;
+        color: white;
+        background-color: #008000;
+        border-width: 0;
+        cursor: pointer;
+        outline-width: 0;
+        -webkit-transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+        border-radius: 2px;
+    }
+
+    #安全信息显示夹 .bottomLine input[type="button"].btn.btn1 {
+        position: absolute;
+        left: 22px;
+        bottom: 20px;
+        width: 256px;
+        line-height: 24px;
+    }
+
+    #安全信息显示夹 .bottomLine input[type="button"].btn.btn1:hover {
+
+    }
+
+    #安全信息显示夹 .bottomLine input[type="button"].btn.btn2 {
+        background-image: url("IMG/编辑.svg");
+        border-radius: 0px;
+    }
+
+    #安全信息显示夹 .bottomLine input[type="button"].btn.btn2:hover, .btn.btn2:active {
+        background-color: #429f42;
+    }
+
+    #安全信息显示夹 .bottomLine input[type="button"]:hover {
+        border-width: 0;
+        /*background-color: #42b157;*/
+        background-color: #008000;
+        -webkit-transition: all 0.2s linear;
+        -moz-transition: all 0.2s linear;
+        -o-transition: all 0.2s linear;
+        transition: all 0.2s linear;
+    }
+
+    #安全信息显示夹 .centerDiv .contentDiv {
+        color: black;
+        background-color: white;
+        font-size: 12px;
+        padding: 4px 21px 0 21px;
+        overflow: hidden;
+        margin-top: 10px;
+    }
+
+    #安全信息显示夹 .contentDiv p {
+    }
+
+    #安全信息显示夹 .contentDiv input[type="text"], #安全信息显示夹 .contentDiv input[type="password"] {
+        width: 100%;
+        margin-top: 8px;
+        border-color: rgba(170, 170, 170, .8);
+        border-top-width: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        border-bottom-width: 0;
+        padding-left: 0;
+        outline-width: 0;
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .inputBottomLine:active, .inputBottomLine:hover {
+            border-color: #59d35e;
+    }
+
+    #yhmkContent {
+        margin-top: 4px;
+        margin-right: 1px;
+    }
+</style>
+<div class="centerBox" id="安全信息显示夹" style="display: none">
+    <div class="centerDiv">
+        <div class="topLine">
+            <p>玩家注册 - 安全信息</p>
+        </div>
+        <div class="content0Div">
+            <span class="userSpan"></span>
+<!--            <input type="button" class="btn btn3" onclick="内部_重新选定角色名()" value="更改">-->
+        </div>
+        <div class="contentDiv" id="aqxxContent">
+            <p>登录密码</p>
+            <div class="inputBottomLine">
+                <input type="text" class="输入框_登录密码" id="输入框_登录密码" placeholder="设置游戏登录密码.不建议太过简单">
+            </div>
+            <p style="margin-top: 25px;">确认密码</p>
+            <div class="inputBottomLine">
+                <input type="text" class="输入框_登录密码" id="输入框_登录密码_二次确认" placeholder="再次输入游戏登录密码.确认无误">
+            </div>
+            <p style="margin-top: 25px;">安全密保</p>
+            <div class="inputBottomLine">
+                <input type="text" class="输入框_安全密保" id="输入框_安全密保" placeholder="用于验证/找回密码等情况下使用">
+            </div>
+        </div>
+        <div class="bottomLine" style="">
+            <input type="button" class="btn btn1" onclick="内部_已设置安全信息_下一步()" value="下一步">
+            <input type="button" class="btn btn2 topBotton" onclick="内部_重新选定角色名()" value="">
+<!--            <input type="button" class="btn btn2" onclick="内部_打开登录页面()" value="返回登录页面">-->
+        </div>
+    </div>
+</div>
+<!--    安全信息结束-->
+<!--    绑定信息样式-->
+<style>
+    #绑定信息显示夹 {
+        top: 52vh;
+        left: 50vw;
+        width: 350px;
+        height: 406px;
+        position: absolute;
+        background-color: white;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-box-shadow: 0 0 20px 1px #646464bd;
+        -moz-box-shadow: 0 0 20px 1px #646464bd;
+        box-shadow: 0 0 20px 1px #646464bd;
+        -webkit-transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+    }
+
+    #绑定信息显示夹 .centerDiv {
+        /*width: 100%;*/
+        height: 100%;
+        background-color: white;
+		border: 1px solid #FA7A00;
+    }
+
+    #绑定信息显示夹 .content0Div {
+        width: 100%;
+        background-color: #e6e8ea;
+        text-align: center;
+    }
+
+    #绑定信息显示夹 .content0Div input[type="button"].btn.btn3 {
+        font-size: 12px;
+        transform: scale(0.8) translate(-50%, -50%);
+        float: right;
+        margin-top: 18px;
+        margin-right: -11.5px;
+        color: white;
+        background-color: #008000;
+        border-width: 0;
+        cursor: pointer;
+        outline-width: 0;
+        -webkit-transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+        border-radius: 2px;
+        padding: 4px 14px 4.5px 15px;
+    }
+
+    #绑定信息显示夹 .content0Div input[type="button"].btn.btn3:hover {
+        background-color: #008000;
+        -webkit-transition: all 0.2s linear;
+        -moz-transition: all 0.2s linear;
+        -o-transition: all 0.2s linear;
+        transition: all 0.2s linear;
+    }
+
+    #绑定信息显示夹 .bottomLine input[type="button"] {
+        padding: 3px 6px 4px 7px;
+        font-size: 10px;
+        color: white;
+        background-color: #008000;
+        border-width: 0;
+        cursor: pointer;
+        outline-width: 0;
+        -webkit-transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+        border-radius: 2px;
+    }
+
+    #绑定信息显示夹 .bottomLine input[type="button"].btn.btn1 {
+        position: absolute;
+        left: 22px;
+        bottom: 20px;
+        width: 308px;
+        line-height: 24px;
+    }
+
+    #绑定信息显示夹 .bottomLine input[type="button"].btn.btn1:hover {
+
+    }
+
+    #绑定信息显示夹 .bottomLine input[type="button"].btn.btn2 {
+        background-image: url("IMG/编辑.svg");
+        border-radius: 0px;
+    }
+
+    #绑定信息显示夹 .bottomLine input[type="button"].btn.btn2:hover, .btn.btn2:active {
+        background-color: #429f42;
+    }
+
+    #绑定信息显示夹 .bottomLine input[type="button"]:hover {
+        border-width: 0;
+        /*background-color: #42b157;*/
+        background-color: #008000;
+        -webkit-transition: all 0.2s linear;
+        -moz-transition: all 0.2s linear;
+        -o-transition: all 0.2s linear;
+        transition: all 0.2s linear;
+    }
+
+    #绑定信息显示夹 .centerDiv .contentDiv {
+        color: black;
+        background-color: white;
+        font-size: 12px;
+        padding: 6px 20px 0px 20px;
+        overflow: hidden;
+        margin-top: 10px;
+    }
+
+    #绑定信息显示夹 .contentDiv p {
+        border-bottom-width: 1px;
+        display: inline-block;
+    }
+
+    #绑定信息显示夹 .contentDiv input[type="text"], #绑定信息显示夹 .contentDiv input[type="password"] {
+        width: 70%;
+        border-color: rgba(170, 170, 170, .8);
+        border-top-width: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        border-bottom-width: 0;
+        padding-left: 0;
+        outline-width: 0;
+        font-size: 12px;
+        margin-bottom: 6px;
+        margin-top: 8px;
+    }
+    #绑定信息显示夹 .inputBottomLine {
+        margin-bottom: 15px;
+    }
+
+    .inputBottomLine:active, .inputBottomLine:hover {
+            border-color: #59d35e;
+    }
+
+    #bdxxContent {
+        margin-top: 4px;
+        margin-right: 1px;
+    }
+
+    .qzxyz, .kxxyz {
+        transform: translateY(15%);
+        display: inline-block;
+        position: relative;
+        width: 17px;
+        height: 17px
+    }
+    .qzxyz div, .kxxyz div {
+        margin: 2px;
+        width: 13px;
+        height: 13px;
+    }
+    .kxxyz {
+        border: 1px solid #FA7A00;
+    }
+    .kxxyz div {
+        background-color: #FA7A00;
+    }
+    .qzxyz {
+        border: 1px solid #008000;
+    }
+    .qzxyz div {
+        background-color: #008000;
+    }
+
+    blueBtn {
+        background-color: #008000;
+        float: right;
+        display: inline-block;
+        position: relative;
+        top: 4px;
+        right: 0px;
+        color: white;
+        cursor: pointer;
+        width: 86px;
+        height: 18px;
+		border-bottom: 2px solid #fa7a00;
+    }
+    blueBtn img {
+        width: 14px;
+        height: 14px;
+        margin: 2px 4px;
+    }
+    blueBtn span {
+        float: right;
+        font-size: 12px;
+        transform: scale(0.76);
+    }
+
+    .inputBottomLine {
+        border-color: #ffffff61;
+        border-top-width: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        border-bottom-width: 1px;
+        border-style: groove;
+    }
+
+    #绑定信息显示夹 .contentDiv #输入框_邮箱号码 {
+        width: 100%;
+    }
+</style>
+<div class="centerBox" id="绑定信息显示夹" style="display: none">
+    <div class="centerDiv">
+        <div class="topLine">
+            <p>玩家注册 - 绑定信息</p>
+        </div>
+        <div class="content0Div">
+            <span class="userSpan"></span>
+            <!--    <input type="button" class="btn btn3" onclick="内部_重新选定角色名()" value="更改">-->
+        </div>
+        <div class="contentDiv" id="bdxxContent">
+            <div class="" id="qqyzbq" title="验证图标">
+                <div></div>
+            </div>
+            <p>&nbsp;扣扣绑定</p>
+            <blueBtn onclick="内部_打开扣扣验证窗口()">
+                <img src="IMG/发送.svg">
+                <span>进入验证页</span>
+            </blueBtn>
+            <div class="inputBottomLine">
+                <input type="text" id="输入框_扣扣号码" readonly placeholder="请进入验证页完成绑定 ---> ">
+            </div>
+            <div class="" id="yxyzbq" title="验证图标">
+                <div></div>
+            </div>
+            <p>&nbsp;邮箱绑定</p>
+            <blueBtn onclick="内部_发送邮箱验证码功能()">
+                <img src="IMG/发送.svg">
+                <span>发送验证码</span>
+            </blueBtn>
+            <div class="inputBottomLine" style="width: 61%;display: inline-block;">
+                <input type="text" id="输入框_邮箱号码" placeholder="接收验证码的邮箱号码">
+            </div>
+            <div class="inputBottomLine" style="margin-top: 10px;margin-left: 11px;width: 34%;display: inline-block;">
+                <input type="text" id="输入框_邮箱验证码" placeholder="验证码">
+            </div>
+            <div class="" id="wryzbq" title="验证图标">
+                <div></div>
+            </div>
+            <p>&nbsp;正版MC绑定</p>
+            <blueBtn onclick="内部_打开微软验证窗口()">
+                <img src="IMG/发送.svg">
+                <span>进入验证页</span>
+            </blueBtn>
+            <div class="inputBottomLine">
+                <input type="text" id="输入框_微软MC正版" readonly placeholder="请进入验证页完成绑定 ---> ">
+            </div>
+        </div>
+		<p style="font-size: 14px; text-align: center; margin-top: 4px"><font style="color: rgb(16, 124, 16);">#绿色</font>&nbsp;为强制性验证&nbsp;&nbsp;&nbsp;<font style="color: rgb(250, 122, 0);">#橙色</font>&nbsp;为可选性验证</p>
+        <div class="bottomLine" style="">
+            <input type="button" class="btn btn1" onclick="内部_全部填写完成_开始注册()" value="注册成为新玩家">
+            <input type="button" class="btn btn2 topBotton" onclick="内部_重新选定角色名()" value="">
+            <!--    <input type="button" class="btn btn2" onclick="内部_打开登录页面()" value="返回登录页面">-->
+        </div>
+    </div>
+</div>
+<!--    绑定信息结束-->
+<!--    注册完成样式-->
+<style>
+    #注册完成显示夹 {
+        top: 52vh;
+        left: 50vw;
+        width: 298px;
+        height: 380px;
+        background: rgb(255, 255, 255);
+        border-width: 1px;
+        border-color: rgb(250, 122, 0);
+        border-style: solid;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-box-shadow: 0 0 20px 1px #646464bd;
+        -moz-box-shadow: 0 0 20px 1px #646464bd;
+        box-shadow: 0 0 20px 1px #646464bd;
+        -webkit-transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+    }
+
+    #注册完成显示夹 .centerDiv {
+        width: 100%;
+        height: 100%;
+        background-color: white;
+    }
+
+    #注册完成显示夹 .bottomLine input[type="button"] {
+        line-height: 24px;
+        font-size: 10px;
+        color: white;
+        background-color: #008000;
+        border-width: 0;
+        cursor: pointer;
+        outline-width: 0;
+        -webkit-transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+        border-radius: 2px;
+        filter: drop-shadow(rgba(0, 0, 0, 0.15) 0px 3px 6px);
+    }
+
+    #注册完成显示夹 .bottomLine input[type="button"].btn.btn1 {
+        position: absolute;
+        left: 22px;
+        bottom: 20px;
+        width: 254px;
+        line-height: 30px;
+    }
+
+    #注册完成显示夹 .bottomLine input[type="button"].btn.btn1:hover {
+
+    }
+
+    #注册完成显示夹 .bottomLine input[type="button"].btn.btn2 {
+        position: absolute;
+        left: 22px;
+        bottom: 64px;
+        width: 254px;
+        line-height: 30px;
+		background-color: #FA7A00; 
+    }
+
+    #注册完成显示夹 .bottomLine input[type="button"].btn.btn2:hover {
+
+    }
+
+    #注册完成显示夹 .bottomLine input[type="button"]:hover {
+        border-width: 0;
+        /*background-color: #42b157;*/
+        background-color: #008000;
+        -webkit-transition: all 0.2s linear;
+        -moz-transition: all 0.2s linear;
+        -o-transition: all 0.2s linear;
+        transition: all 0.2s linear;
+    }
+
+    #注册完成显示夹 .centerDiv .contentDiv {
+        color: black;
+        background-color: white;
+        font-size: 12px;
+        padding: 14px 21px 0px 21px;
+        overflow: hidden;
+    }
+
+    #注册完成显示夹 .contentDiv p {
+
+    }
+
+    #注册完成显示夹 .contentDiv input[type="text"] {
+        width: 100%;
+        border-color: rgba(170, 170, 170, .8);
+        border-top-width: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        border-bottom-width: 0;
+        padding-left: 0;
+        outline-width: 0;
+        font-size: 12px;
+        margin-top: 4px;
+        margin-bottom: 4px;
+        text-align: center;
+        background-color: #fafafa;
+        color: rgb(51, 51, 51);
+        white-space: pre-wrap;
+        letter-spacing: 0px;
+    }
+
+    #zcwcContent {
+        margin-top: 4px;
+        margin-right: 1px;
+    }
+
+    #注册完成显示夹 .inputBottomLine {
+        background-color: #fafafa;
+        border-width: 1px;
+        border-color: #c7c7c7;
+        border-style: solid;
+        border-radius: 2px;
+        margin: 8px 0 14px 0;
+    }
+</style>
+<div class="centerBox" id="注册完成显示夹" style="display: none">
+    <div class="centerDiv">
+        <div class="topLine">
+            <p>注册完成.请保存并记住登录信息</p>
+        </div>
+        <div class="contentDiv" id="zcwcContent">
+            <p>玩家角色名</p>
+            <div class="inputBottomLine">
+                <input type="text" readonly class="输入框_角色名称">
+            </div>
+            <p>登录密码</p>
+            <div class="inputBottomLine">
+                <input type="text" readonly class="输入框_登录密码">
+            </div>
+            <p>安全密保</p>
+            <div class="inputBottomLine">
+                <input type="text" readonly class="输入框_安全密保">
+            </div>
+        </div>
+        <div class="bottomLine" style="">
+            <input type="button" class="btn btn2" onclick="StarLauncher_ScreenshotSave('角色信息_' + $('#输入框_角色名称').val())" value="截图保存至桌面">
+            <input type="button" class="btn btn1" onclick="内部_打开登录页面()" value="转到登录页面">
+        </div>
+    </div>
+</div>
+<!--    注册完成结束-->
+<div id="imgIndexBox">
+    <span></span>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    /*页面内部事件-修改页面标题*/
+    function setTitleBarHeight(height) {
+        $('.loadBarTop').stop(true, true).animate({height: height + 'vh'}, 500);
+        $('.loadBarTop p').stop(true, true).animate({top: (height / 2) + 'vh'}, 500);
+        return true;
+    }
+
+    /*页面内部事件-修改标题字号*/
+    function setTitleFontSize(size) {
+        $('.loadBarTop p').stop(true, true).animate({'font-size': size + 'px'}, 500);
+        return true;
+    }
+
+    /*页面内部事件-修改标题栏背景颜色*/
+    function setTitleBarColor(color) {
+        $('.loadBarTop').stop(true, true).animate({'background-color': color}, 500);
+        return true;
+    }
+
+    /*页面内部事件-修改标题内容*/
+    function setTitle(title) {
+        $('.loadBarTop p').html(title);
+        return true;
+    }
+
+    /*继承Json文本内容*/
+    var Start_WEB_L = {};
+
+    /*页面内部事件-加载页面背景轮播图和动态标题*/
+    function Launcher_JSONS(Start_WEB) {
+        if (Start_WEB) {
+            Start_WEB_L = Start_WEB;
+            if (Start_WEB.hasOwnProperty('Set') &&
+                Start_WEB.Set.hasOwnProperty('background') &&
+                Start_WEB.Set.hasOwnProperty('title')
+            ) {
+                var backgroundPaths = Start_WEB.Set.background;
+                var backgroundTitles = Start_WEB.Set.title;
+                var titleIndex = 0;
+                setTitle(backgroundTitles[titleIndex]);
+                titleIndex = (titleIndex + 1) % backgroundTitles.length;
+                setInterval(function () {
+                    setTitle(backgroundTitles[titleIndex]);
+                    titleIndex = (titleIndex + 1) % backgroundTitles.length;
+                }, 1000 * +Start_WEB.Set.title_switchtime);
+                $('#imgIndexBox').empty();
+                for (var n = 0; n < backgroundPaths.length; n++) {
+                    $('#imgIndexBox').append('<span></span>');
+                }
+                $('#imgIndexBox span:nth-child(1)').addClass('active');
+                var imageIndex = 0;
+                $('.backgroundImg').css('background-image', 'url(' + backgroundPaths[imageIndex] + ')');
+                $('#imgIndexBox span:nth-child(' + (imageIndex + 1) + ')').addClass('active').siblings().removeClass('active');
+                imageIndex = (imageIndex + 1) % backgroundPaths.length;
+                setInterval(function () {
+                    $('.backgroundImg').css('background-image', 'url(' + backgroundPaths[imageIndex] + ')');
+                    $('#imgIndexBox span:nth-child(' + (imageIndex + 1) + ')').addClass('active').siblings().removeClass('active');
+                    imageIndex = (imageIndex + 1) % backgroundPaths.length;
+                }, 1000 * +Start_WEB.Set.background_switchtime);
+            } else {
+                /*读取失败则使用默认值*/
+            }
+        } else {
+            /*读取失败则使用默认值*/
+        }
+    }
+
+    $(function () {
+        // 显示子夹
+        var page = +getQueryVariable('page');
+        // 参数-用户名
+        var playerName = getQueryVariable('name');
+        if (playerName != null) {
+            $('.输入框_角色名称').val(playerName);
+			$('.userSpan').html(decodeURI(playerName));
+        }
+        // 参数-密码
+        var password = getQueryVariable('password');
+        if (password != null) {
+            $('.输入框_登录密码').val(password);
+            $('.输入框_登录密码_二次确认').val(password);
+        }
+        // 参数-密保
+        var protection = getQueryVariable('protection');
+        if (page == 5) {
+		    // 判断显示页是不是注册完成页,如果是的话显示解码后文本
+			$('.输入框_安全密保').val(getTextformat(protection));
+        } else {
+            $('.输入框_安全密保').val(protection);
+        }
+
+        // 从目录Json读取设置
+        if (Start_WEB_L.hasOwnProperty('Register') &&
+            Start_WEB_L.Register.hasOwnProperty('enable')
+        ) {
+            if (Start_WEB_L.Register.enable.hasOwnProperty('qq')) {
+                var qq = Start_WEB_L.Register.enable.qq;
+                if (qq == 1) {
+                    $('#qqyzbq').removeClass('kxxyz').addClass('qzxyz');
+                } else {
+                    $('#qqyzbq').removeClass('qzxyz').addClass('kxxyz');
+                }
+            }
+            if (Start_WEB_L.Register.enable.hasOwnProperty('mail')) {
+                var mail = Start_WEB_L.Register.enable.mail;
+                if (mail == 1) {
+                    $('#yxyzbq').removeClass('kxxyz').addClass('qzxyz');
+                } else {
+                    $('#yxyzbq').removeClass('qzxyz').addClass('kxxyz');
+                }
+            }
+            if (Start_WEB_L.Register.enable.hasOwnProperty('wmine')) {
+                var wmine = Start_WEB_L.Register.enable.wmine;
+                if (wmine == 1) {
+                    $('#wryzbq').removeClass('kxxyz').addClass('qzxyz');
+                } else {
+                    $('#wryzbq').removeClass('qzxyz').addClass('kxxyz');
+                }
+            }
+        }
+
+        if (page <= 1) {
+		    /*刷新下页面.避免缓存的Json数据出现异常*/
+		    StarLauncher_WebReloadPage(3);
+			内部_显示隐私协议页();
+        } else if (page == 2) {
+            内部_显示角色名设置页();
+        } else if (page == 3) {
+            内部_显示安全信息设置页();
+        } else if (page == 4) {
+            内部_显示绑定信息页();
+        } else if (page == 5) {
+            内部_显示注册完成();
+        }
+    });
+
+    /*同意用户协议按钮*/
+    function 内部_同意协议() {
+        window.location = 内部_显示页切换(2);
+    }
+
+    /*重选角色名按钮*/
+    function 内部_重新选定角色名() {
+        window.location = '?page=2';
+    }
+
+    /*输入完用户名按钮*/
+    function 内部_已设置用户名_下一步() {
+        if (Start_WEB_L.hasOwnProperty('Set') &&
+            Start_WEB_L.Set.hasOwnProperty('account_rule')
+        ) {
+            var account_rule = Start_WEB_L.Set.account_rule;
+            var playerName = $('#输入框_角色名称').val();
+            if (playerName.search(account_rule) >= 0) {
+			    /*过滤一遍输入框内容.避免连同不符合正则的内容一并提交*/
+			    $('#输入框_角色名称').val(playerName.match(account_rule));
+				内部_验证角色名可用性();
+                /*window.location = 内部_显示页切换(3);*/
+            } else {
+                Prevent_OpenTipsFloatingWindow('需修正错误', '角色起名不符合条件.请重新输入');
+            }
+        }
+    }
+
+    /*设置完成安全信息按钮*/
+    function 内部_已设置安全信息_下一步() {
+        if (Start_WEB_L.hasOwnProperty('Set') &&
+            Start_WEB_L.Set.hasOwnProperty('password_rule') &&
+            Start_WEB_L.Set.hasOwnProperty('sprotect_rule')
+        ) {
+            var password_rule = Start_WEB_L.Set.password_rule;
+            var sprotect_rule = Start_WEB_L.Set.sprotect_rule;
+            var passwordRepeatInput = $('#输入框_登录密码_二次确认').val();
+            var passwordInput = $('#输入框_登录密码').val();
+            var secretProtectionInput = $('#输入框_安全密保').val();
+            if (passwordInput.search(password_rule) >= 0) {
+                if (passwordRepeatInput == passwordInput) {
+                    if (secretProtectionInput.search(sprotect_rule) >= 0) {
+					    /*过滤一遍输入框内容.避免连同不符合正则的内容一并提交*/
+						$('#输入框_登录密码').val(passwordInput.match(password_rule));
+			            $('#输入框_安全密保').val(secretProtectionInput.match(sprotect_rule));
+                        window.location = 内部_显示页切换(4);
+                    } else {
+                        Prevent_OpenTipsFloatingWindow('需修正错误', '设置的安全密保不符合条件.请重新输入');
+                    }
+                } else {
+                    Prevent_OpenTipsFloatingWindow('需修正错误', '两次输入的密码并不匹配.请重新输入')
+                }
+            } else {
+                Prevent_OpenTipsFloatingWindow('需修正错误', '设置的登录密码不符合条件.请重新输入');
+            }
+        }
+    }
+
+
+    /*拒绝协议按钮*/
+    function 内部_拒绝协议() {
+        Prevent_OpenTipsFloatingWindow('温馨提示', '拒绝协议将本系统无法让您使用.请点击右上角关闭按钮退出软件方可');
+    }
+
+    /*返回登录页按钮*/
+    function 内部_打开登录页面() {
+        window.location = './login.html';
+    }
+
+    /*跳转到指定序号的页面*/
+    function 内部_显示页切换(page) {
+        return '?page=' + page
+		    /* 判断解码是否内容等于未解密.如果是为空等于已经是加密的不需要再次加密*/
+            + '&name=' + (decodeURI($('#输入框_角色名称').val()) == $('#输入框_角色名称').val() ? encodeURI($('#输入框_角色名称').val()) : $('#输入框_角色名称').val())
+            + '&password=' + (decodeURI($('#输入框_登录密码').val()) == $('#输入框_登录密码').val() ? encodeURI($('#输入框_登录密码').val()) : $('#输入框_登录密码').val())
+            + '&protection=' + (decodeURI($('#输入框_安全密保').val()) == $('#输入框_安全密保').val() ? encodeURI($('#输入框_安全密保').val()) : $('#输入框_安全密保').val())
+            + '&qq=' + $('#输入框_扣扣号码').val()
+            + '&mail=' + $('#输入框_邮箱号码').val()
+            + '&mail_code=' + $('#输入框_邮箱验证码').val()
+            + '&wmine=' + $('#输入框_微软MC正版').val()
+            ;
+    }
+
+    /* 显示隐私协议 */
+    function 内部_显示隐私协议页() {
+        $('#用户协议显示夹').show();
+    }
+
+    /* 隐藏隐私协议 */
+    function 内部_隐藏隐私协议页() {
+        $('#用户协议显示夹').hide();
+    }
+
+    /* 显示用户名卡 */
+    function 内部_显示角色名设置页() {
+        $('#角色名设置显示夹').show();
+    }
+
+    /* 隐藏用户名卡 */
+    function 内部_隐藏角色名设置页() {
+        $('#角色名设置显示夹').hide();
+    }
+
+    /* 显示安全信息页面 */
+    function 内部_显示安全信息设置页() {
+        $('#安全信息显示夹').show();
+        var playerName = getQueryVariable('name');
+        var rawPlayerName = $('#输入框_角色名称').val();
+        if (rawPlayerName == null || rawPlayerName.trim() == '') {
+            if (playerName != null) {
+                $('#输入框_角色名称').val(playerName);
+            } else {
+                $('#输入框_角色名称').val('');
+            }
+        }
+    }
+
+    /* 隐藏安全信息页面 */
+    function 内部_隐藏安全信息设置页() {
+        $('#安全信息显示夹').hide();
+    }
+
+    /* 显示绑定信息页面 */
+    function 内部_显示绑定信息页() {
+        $('#绑定信息显示夹').show();
+    }
+
+    /* 隐藏绑定信息卡页面 */
+    function 内部_隐藏绑定信息页() {
+        $('#绑定信息显示夹').hide();
+    }
+
+    /* 显示注册完成页面 */
+    function 内部_显示注册完成() {
+        $('#注册完成显示夹').show();
+    }
+
+    /* 隐藏注册完成页面 */
+    function 内部_隐藏注册完成() {
+        $('#注册完成显示夹').hide();
+    }
+
+    /* 启动器交互-跳转内部显示页面 */
+    function 注册页_内部_跳转显示功能页(page) {
+	    window.location = 内部_显示页切换(page);
+		return false;
+    }
+
+    /* 启动器交互-验证角色名是否可用 */
+    function 内部_验证角色名可用性() {
+	    Prevent_OpenWaitFloatingWindow_Load('正在验证此角色名称可用性,请耐心等待')
+		StarLauncher_CommandFunction('Register_verification_Gamename', $('#输入框_角色名称').val());
+		return false;
+    }
+
+    /* 启动器交互-打开QQ验证页按钮 */
+    function 内部_打开扣扣验证窗口() {
+        /*Prevent_OpenWaitFloatingWindow_Load('正在等待您在新窗口中完成绑定验证')*/
+        StarLauncher_CommandFunction('Register_qqbind_verification');
+        return false;
+    }
+
+    /* 启动器交互-发送邮箱验证码按钮 */
+    function 内部_发送邮箱验证码功能() {
+        if ($('#输入框_邮箱号码').val() == '') {
+            Prevent_OpenTipsFloatingWindow('温馨提示', '还未填写完整，收件邮箱都没写怎么验证！')
+        } else {
+            /*Prevent_OpenWaitFloatingWindow_Load('正在发送验证邮件,请耐心等待')*/
+            StarLauncher_CommandFunction('Register_mailbind_sendcode', $('#输入框_邮箱号码').val());
+        }
+        return false;
+    }
+
+    /*启动器交互-打开微软验证页按钮 */
+    function 内部_打开微软验证窗口() {
+        /*Prevent_OpenWaitFloatingWindow_Load('正在等待您在新窗口中完成绑定验证')*/
+        StarLauncher_CommandFunction('Register_wminebind_verification',getTextformat(getQueryVariable('name')));
+        return false;
+    }
+
+    /* 启动器交互-发送启动器注册新玩家按钮 */
+    function 内部_全部填写完成_开始注册() {
+        if (Start_WEB_L.Register.enable.qq == 1 && getTextformat($('#输入框_扣扣号码').val()) == 'null') {
+            Prevent_OpenTipsFloatingWindow('温馨提示', '注册时必须验证扣扣号码,你还未验证.请先验证后再进行注册')
+        } else if (Start_WEB_L.Register.enable.mail == 1 && getTextformat($('#输入框_邮箱号码').val()) == 'null' && getTextformat($('#输入框_邮箱验证码').val()) == 'null') {
+            Prevent_OpenTipsFloatingWindow('温馨提示', '注册时必须验证邮箱信息,你还未填写信息.请先验证后再进行注册')
+        } else if (Start_WEB_L.Register.enable.wmine == 1 && getTextformat($('#输入框_微软MC正版').val()) == 'null') {
+            Prevent_OpenTipsFloatingWindow('温馨提示', '注册时必须验证微软MC正版.你还未验证.请先验证后再进行注册')
+        } else {
+            /*Prevent_OpenWaitFloatingWindow_Load('开始注册,请等待注册完成')*/
+            StarLauncher_CommandFunction('Register_roleregister',
+                getTextformat(getQueryVariable('name')),
+                getTextformat(getQueryVariable('password')),
+                getTextformat(getQueryVariable('protection')),
+                getTextformat($('#输入框_扣扣号码').val()),
+                getTextformat($('#输入框_邮箱号码').val()),
+                getTextformat($('#输入框_邮箱验证码').val()),
+                getTextformat($('#输入框_微软MC正版').val())
+            );
+			/*window.location = 内部_显示页切换(5);*/
+        }
+        return false;
+    }
+
+    /* 启动器交互-设置QQ绑定数据 */
+    function Register_SetQQBindData(qq) {
+        $('#输入框_扣扣号码').val(qq);
+		return false;
+    }
+
+    /* 启动器交互-设置微软绑定数据 */
+    function Register_SetWMineBindData(wr) {
+        $('#输入框_微软MC正版').val(wr);
+		return false;
+    }
+
+</script>
+
+<!-- 导入根目录Json文件.添加时间变量在尾部避免文件缓存 -->
+<script type="text/javascript">
+	// 解决数据文件可能存在缓存文件,资源连接直接添加时间戳
+	var 局_时间戳 = new Date().getTime();
+	document.write('<script type="text/javascript" src="MineLauncher_Set.json?timestamp=' + 局_时间戳 + '"><\/script>');
+</script>
+
+</html

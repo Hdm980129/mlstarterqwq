@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Main</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- 设置页面必须禁止缓存,否则某些设置可能有变化后无更新 -->
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    <!-- 页面通用CSS -->
+    <link rel="stylesheet" href="CSS/public-webrender.css">
+    <script src="JS/jquery-1.7.2.min.js"></script>
+    <!-- 页面通用方法，应当在Jquery之后加载 -->
+    <script src="JS/public-function.js"></script>
+    <style>
+        /* 通用顶部提示栏样式 */
+        .loadBarTop {
+            background-color: black;
+            opacity: 0.6;
+            left: 50vw;
+            top: 0;
+            width: 100vw;
+            height: 6vh;
+            text-align: center;
+            position: absolute;
+            transform: translate(-50%, 0%);
+            -webkit-transform: translate(-50%, 0%);
+            -moz-transform: translate(-50%, 0%);
+        }
+
+        .loadBarTop p {
+            font-size: 14px;
+            position: absolute;
+            color: white;
+            top: 3vh;
+            left: 50vw;
+            width: 100vw;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+        }
+
+        /* 页面背景图样式 */
+        .backgroundImg {
+            width: 102%;
+            height: 102vh;
+            background: url(IMG/background.jpg) center no-repeat;
+            background-size: 100% 100%;
+            position: absolute;
+            left: -1%;
+            top: -1%;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+        }
+
+        /* 右边轮播图标志 */
+        #imgIndexBox {
+            right: 2vh;
+            top: 50vh;
+            width: 2vw;
+            text-align: center;
+            position: absolute;
+            transform: translate(0, -50%);
+            -webkit-transform: translate(0, -50%);
+            -moz-transform: translate(0, -50%);
+            overflow: hidden;
+        }
+
+        #imgIndexBox span {
+            display: list-item;
+            background-color: #ffffff;
+            margin: 12px 0;
+            border-radius: 50%;
+            opacity: 0.8;
+            width: 14px;
+            height: 14px;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+        }
+
+        #imgIndexBox span.active {
+            background-color: #00d300;
+        }
+    </style>
+    <style>
+        .main {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="backgroundImg"></div>
+    <div class="main">
+        <!-- 公告部分 -->
+        <div class="Notice">
+            <!-- 用户图表 -->
+            <div class="roleName">
+                <div class="con">
+                    <div style="width: 30px;background-color: rgb(47, 47, 47);height: 30px;"><img
+                            src="./CSS/mine_icon/用户图标.svg" alt=""></div>
+                    <div><span id="roleName">Main_角色名称</span></div>
+                </div>
+            </div>
+            <!-- <div class="roll">
+                <div class="rollCon" id="rollCon">
+                </div>
+            </div> -->
+            <div class="noticeCon" id="noticeCon">
+                <div class="content">
+                    <div class="noticeTitle"><span id="noticeTitle">Main_公告标题</span></div>
+                    <div class="noticeContent" id="noticeContent"></div>
+                </div>
+            </div>
+        </div>
+        <!-- 用户图表样式  roleName-->
+        <style>
+            .Notice {
+                height: 60%;
+                background-color: rgba(195, 195, 195, 0);
+                position: relative;
+            }
+
+            .Notice .roleName {
+                height: 30px;
+                position: absolute;
+                right: 0px;
+                top: 0px;
+            }
+
+            .Notice .roleName .con {
+                height: 30px;
+                /* background-color: rgb(81, 81, 81); */
+                display: flex;
+            }
+
+            .Notice .roleName img {
+                height: 20px;
+                padding: 5px;
+            }
+
+            .Notice .roleName .con span {
+                /* width: 80px; */
+                padding: 0px 10px;
+                text-align: center;
+                display: inline-block;
+                background-color: rgb(81, 81, 81);
+                line-height: 30px;
+                font-size: 12px;
+                color: white;
+            }
+        </style>
+        <!-- 标题内容样式 noticeCon -->
+        <style>
+            @font-face {
+                font-family: main_custom_font;
+                src: url('CSS/fonts/字心坊轩雅体细体.ttf');
+            }
+
+            .roll {
+                position: absolute;
+                top: 40px;
+                height: 80%;
+                width: 10px;
+                left: 15px;
+                background-color: rgba(53, 53, 53, 1);
+            }
+
+            .roll .rollCon {
+                width: 100%;
+                height: 40%;
+                background-color: rgba(16, 124, 16, 1);
+            }
+
+            .noticeCon {
+                position: absolute;
+                top: 40px;
+                left: 3.4%;
+                width: 100%;
+                /* background-color: #00d300; */
+                -webkit-font-smoothing: antialiased;
+            }
+
+            .noticeCon .content {
+                width: 87.8%;
+                height: 100%;
+                margin: 4px 24px;
+                overflow-y: auto;
+            }
+
+            .noticeCon .content .noticeTitle span {
+                font-family: main_custom_font;
+                font-size: 20px;
+                font-weight: bold;
+                color: white;
+                /*text-decoration:underline;*/
+                text-shadow: rgb(0, 0, 0) .08em .08em 0;
+            }
+
+            .noticeCon .content .noticeContent {
+                font-family: main_custom_font;
+                margin-top: 16px;
+                height: 210px;
+                color: white;
+                /* text-shadow: rgb(0, 0, 0) .05em .05em 0, rgb(0, 0, 0) .08em .08em 0; */
+                text-shadow: rgb(0, 0, 0) .08em .08em 0;
+            }
+        </style>
+        <!-- 区服详情 -->
+        <div class="Startup" id="Startup">
+            <!-- 内容选择部分 -->
+            <div class="StartupCon">
+                <!-- con onclick 跳转
+                    img  onclick  边框变绿
+                -->
+                <div class="con con1" onclick="" id="con1">
+                    <div class="img" onclick="内部_按钮_主页功能(0,'game_areas')">
+                        <img src="./CSS/mine_icon/游戏区服.svg" alt="">
+                    </div>
+                    <div class="title"><span>游戏区服</span></div>
+                </div>
+                <div class="con con1" onclick="">
+                    <div class="img" onclick="内部_按钮_主页功能(1,'launcher_setup')">
+                        <img src="./CSS/mine_icon/启动设置.svg" alt="">
+                    </div>
+                    <div class="title"><span>启动设置</span></div>
+                </div>
+                <div class="con con1" onclick="">
+                    <div class="img" onclick="内部_按钮_主页功能(2,'user_info')">
+                        <img src="./CSS/mine_icon/角色资料.svg" alt="">
+                    </div>
+                    <div class="title"><span>角色资料</span></div>
+                </div>
+                <div class="con con1" onclick="">
+                    <div class="img" onclick="内部_按钮_主页功能(3,'music_control')">
+                        <img src="./CSS/mine_icon/音乐播放器.svg" alt="">
+                    </div>
+                    <div class="title"><span>音乐播放器</span></div>
+                </div>
+                <div class="con con1" onclick="">
+                    <div class="img" onclick="window.open(pfz.fdps.top)">
+                        <img src="./CSS/mine_icon/游戏皮肤.svg" alt="">
+                    </div>
+                    <div class="title"><span>游戏皮肤</span></div>
+                </div>
+            </div>
+            <!-- 区服选择详情 -->
+            <div class="details">
+                <div class="start-up" onclick="内部_按钮_快速启动()" style="cursor: pointer" id="up">快速启动</div>
+                <div class="server" onclick="" id="server"></div>
+                <div class="kong" onclick=""></div>
+                <div id="triangle-down" onclick=""></div>
+                <input type="hidden" class="记录_历史游戏区服序号" id="记录_历史游戏区服序号" value="">
+            </div>
+        </div>
+        <!-- 判断区服是否为空 -->
+        <script>
+            function 内部_按钮_快速启动() {
+                StarLauncher_CommandFunction('Main_function', 'game_quickstart', $('#记录_历史游戏区服序号').val());
+            }
+
+            function 内部_按钮_主页功能(序号, 功能识别码) {
+                var imgs = document.getElementsByClassName('con1')
+                var i = 序号
+                imgs[i].style.boxSizing = 'border-box'
+                imgs[i].style.border = '2px solid green'
+                setInterval(() => {
+                    imgs[i].style.border = ''
+                }, 1000)
+				
+                // 发送功能数据到启动器软件本体处理
+                StarLauncher_CommandFunction('Main_function', 功能识别码, 'Null');
+            }
+        </script>
+        <!-- 内容选择部分 StartupCon  -->
+        <style>
+            .Startup {
+                position: relative;
+                height: 35%;
+                background-color: rgba(47, 47, 47, 1);
+            }
+
+            .Startup .StartupCon {
+                position: absolute;
+                top: 17.5%;
+                display: flex;
+                width: 100%;
+                height: 65%;
+                margin: 0 auto;
+                justify-content: center;
+            }
+
+            .Startup .StartupCon .con {
+                margin: 0px 1%;
+                width: 16%;
+                background-color: rgba(81, 81, 81, 0.4);
+                /* -moz-box-sizing:border-box; */
+                /* box-sizing:border-box;
+                border:3px solid red; */
+            }
+
+            .Startup .StartupCon .con .img {
+                cursor: pointer;
+                position: relative;
+                height: 75%;
+                background-color: rgb(64, 64, 64);
+                /* background-color: aquamarine; */
+            }
+
+            .Startup .StartupCon .con img {
+                margin: auto;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                position: absolute;
+                height: 50%;
+                width: 100%;
+                /* box-shadow:1px 1px 1px grey; */
+            }
+
+            .Startup .StartupCon .con .title {
+                height: 25%;
+                background-color: rgba(81, 81, 81, 1);
+                /* background-color: #00d300; */
+                text-align: center;
+                position: relative;
+                width: 100%;
+            }
+
+            .Startup .StartupCon .con .title span {
+                color: white;
+                position: absolute;
+                width: 100%;
+                /* line-height: 45px; */
+                /* line-height: 25px; */
+                font-size: 12px;
+                display: block;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                /* vertical-align: middle; */
+            }
+        </style>
+        <!-- 启动设置 Startup -->
+        <style>
+            @media(max-width: 1200px) {
+
+                .details .start-up,
+                .server {
+                    font-size: 10px;
+
+                }
+
+                #triangle-down {
+                    z-index: 999;
+                    width: 1px;
+                    height: 0;
+                    border-left: 6px solid transparent;
+                    border-right: 6px solid transparent;
+                    border-top: 8px solid rgba(250, 122, 0, 1);
+                }
+            }
+
+            @media(min-width: 1200px) {
+                #triangle-down {
+                    z-index: 999;
+                    width: 0;
+                    height: 0;
+                    border-left: 10px solid transparent;
+                    border-right: 10px solid transparent;
+                    border-top: 12px solid rgba(250, 122, 0, 1);
+                }
+            }
+
+            #server {
+                display: inline-block;
+                height: 100%;
+                width: 20%;
+            }
+
+            .details {
+                position: absolute;
+                display: flex;
+                width: 20%;
+                top: 8%;
+                left: 2%;
+                height: 24px;
+                flex-wrap: wrap;
+            }
+
+            .details .start-up,
+            .server {
+                /* font-size: 12px; */
+                line-height: 24px;
+                color: white;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                /* font-weight: 550; */
+            }
+
+            .details .start-up {
+                text-align: center;
+                background-color: rgba(16, 124, 16, 1);
+                width: 36%;
+            }
+
+            .details .server {
+                text-align: center;
+                padding-left: 10px;
+                padding-right: 10px;
+                background-color: rgba(250, 122, 0, 1);
+                flex: 1;
+                /* width: 60%; */
+            }
+
+            .kong {
+                width: 87%;
+            }
+        </style>
+        <!-- 标题区域 -->
+        <div class="mainTitle">
+            <div class="titleCon" id="titleCon">
+                <p style="font-size: 12px;">Main_滚动标题</p>
+            </div>
+        </div>
+        <style>
+            .mainTitle {
+                width: 100%;
+                background-color: rgba(29, 29, 29, 1);
+                height: 5%;
+                z-index: 9999;
+            }
+
+            .mainTitle .titleCon {
+                width: 90%;
+                margin: 0 auto;
+                height: 100%;
+                position: relative;
+                text-align: center;
+            }
+
+            .mainTitle .titleCon p {
+                /* font-size: 16px; */
+                color: rgba(16, 124, 16, 1);
+                line-height: 26px;
+            }
+        </style>
+    </div>
+
+    <script type="text/javascript">
+
+        /*页面内部事件-修改页面标题*/
+        function setTitleBarHeight(height) {
+            $('.titleCon').stop(true, true).animate({ height: height + 'vh' }, 500);
+            $('.titleCon p').stop(true, true).animate({ top: (height / 2) + 'vh' }, 500);
+            return true;
+        }
+
+        /*页面内部事件-修改标题栏背景颜色*/
+        function setTitleBarColor(color) {
+            $('.titleCon').stop(true, true).animate({ 'background-color': color }, 500);
+            return true;
+        }
+
+        /*页面内部事件-修改标题内容*/
+        function setTitle(title) {
+            $('.titleCon p').html(title);
+            return true;
+        }
+
+        /*继承Json文本内容*/
+        var Start_WEB_L = {};
+        /*页面内部事件-加载页面背景轮播图和动态标题*/
+        function Launcher_JSONS(Start_WEB) {
+            if (Start_WEB) {
+                Start_WEB_L = Start_WEB;
+                if (Start_WEB.hasOwnProperty('Main') &&
+                    Start_WEB.Main.hasOwnProperty('background') &&
+                    Start_WEB.Main.hasOwnProperty('title')
+                ) {
+                    var backgroundPaths = Start_WEB.Main.background;
+                    var backgroundTitles = Start_WEB.Main.title;
+                    var titleIndex = 0;
+                    setTitle(backgroundTitles[titleIndex]);
+                    titleIndex = (titleIndex + 1) % backgroundTitles.length;
+                    setInterval(function () {
+                        setTitle(backgroundTitles[titleIndex]);
+                        titleIndex = (titleIndex + 1) % backgroundTitles.length;
+                    }, 1000 * +Start_WEB.Set.title_switchtime);
+                    $('#imgIndexBox').empty();
+                    for (var n = 0; n < backgroundPaths.length; n++) {
+                        $('#imgIndexBox').append('<span></span>');
+                    }
+                    $('#imgIndexBox span:nth-child(1)').addClass('active');
+                    var imageIndex = 0;
+                    $('.backgroundImg').css('background-image', 'url(' + backgroundPaths[imageIndex] + ')');
+                    $('#imgIndexBox span:nth-child(' + (imageIndex + 1) + ')').addClass('active').siblings().removeClass('active');
+                    imageIndex = (imageIndex + 1) % backgroundPaths.length;
+                    setInterval(function () {
+                        $('.backgroundImg').css('background-image', 'url(' + backgroundPaths[imageIndex] + ')');
+                        $('#imgIndexBox span:nth-child(' + (imageIndex + 1) + ')').addClass('active').siblings().removeClass('active');
+                        imageIndex = (imageIndex + 1) % backgroundPaths.length;
+                    }, 1000 * +Start_WEB.Set.background_switchtime);
+                } else {
+                    /*读取失败则使用默认值*/
+                }
+            } else {
+                /*读取失败则使用默认值*/
+            }
+            //  获取mian中数据
+            if (Start_WEB) {
+                if (Start_WEB.hasOwnProperty('Main') &&
+                    Start_WEB.Main.hasOwnProperty('user') &&
+                    Start_WEB.Main.hasOwnProperty('history_game_number') &&
+                    Start_WEB.Main.hasOwnProperty('history_game_name') &&
+                    Start_WEB.Main.hasOwnProperty('notice_title') &&
+                    Start_WEB.Main.hasOwnProperty('notice_data')
+                ) {
+                    var $Name = Start_WEB.Main.user
+                    // 标题和内容内容为URL编码.需要解码
+                    var $title = decodeURIComponent(((Start_WEB.Main.notice_title == "" || Start_WEB.Main.notice_title == undefined) ? "" : Start_WEB.Main.notice_title));
+                    var $noticeContent = decodeURIComponent(((Start_WEB.Main.notice_data == "" || Start_WEB.Main.notice_data == undefined) ? "" : Start_WEB.Main.notice_data));
+
+                    var $number = Start_WEB.Main.history_game_number
+                    var $gameName = Start_WEB.Main.history_game_name
+                    var $str = Start_WEB.Main.notice_data
+
+                    var noticeCon1 = document.getElementById("noticeContent");
+                    var noticeTitle = document.getElementById("noticeTitle")
+                    var roleName = document.getElementById('roleName')
+                    var server = document.getElementById('server')
+                    var triangleDown = document.getElementById('triangle-down')
+                    var up = document.getElementById('up')
+                    if ($number.length != 0) {
+                        server.innerHTML = $gameName
+                        $('#记录_历史游戏区服序号').val($number)
+                    }
+                    else {
+                        server.innerHTML = $gameName
+                        $('#记录_历史游戏区服序号').val($number)
+                        server.style.display = 'none'
+                        triangleDown.style.display = 'none'
+                        up.style.display = 'none'
+                    }
+                    // alert(roleName)
+                    noticeTitle.innerHTML = $title
+                    roleName.innerHTML = $Name
+                    // noticeCon1.innerHTML = $noticeContent
+                }
+            } else {
+            }
+            // 文字逐字输入打印
+            var i = 0;
+            var a = 0;
+            window.onload = function typing() {
+                var mydiv = document.getElementById("noticeContent");
+                var str = $noticeContent;
+                var strs = str.split('<br>')
+                // alert(a)
+                mydiv.innerHTML += strs[a].charAt(i);
+                // alert(mydiv.innerHTML)
+                // alert(strs[a])
+                i++;
+                var id = setTimeout(typing, 10);
+                if (i == strs[a].length) {
+                    a++;
+                    mydiv.innerHTML += '<br>'
+                    i = 0
+                    if (a >= strs.length) {
+                        clearTimeout(id);
+                        // 输出完成后直接替换全文本保持HTML文本格式
+                        $('.noticeContent').html($noticeContent);
+                    }
+                }
+            }
+
+        }
+		
+        /*页面载入后自动执行*/
+        $(function () {
+            /*刷新下页面.避免缓存的Json数据出现异常*/
+            // StarLauncher_WebReloadPage(3); 
+			/*设置窗口显示标题.更美观.建议等待三秒后执行*/
+			setTimeout(function (){ StarLauncher_CommandFunction('StarLauncher_SetLauncherTitle', '{name}  欢迎回家！游戏的大家庭正在召唤你速度进入服务器！'); }, 3000);
+        })
+
+    </script>
+	
+    <!-- 导入根目录Json文件.添加时间变量在尾部避免文件缓存 -->
+	<script type="text/javascript">
+		// 解决数据文件可能存在缓存文件,资源连接直接添加时间戳
+		var 局_时间戳 = new Date().getTime();
+		document.write('<script type="text/javascript" src="MineLauncher_Set.json?timestamp=' + 局_时间戳 + '"><\/script>');
+	</script>
+	
+</body>
+</html>
